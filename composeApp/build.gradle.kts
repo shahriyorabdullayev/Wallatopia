@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -7,6 +6,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -16,7 +17,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -27,12 +28,16 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.ktor.client.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -43,8 +48,42 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            //db
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
+
+            //koin
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose)
+
+            //viewModel
+            implementation(libs.lifecycle.viewmodel)
+            //navigation
+            implementation(libs.navigation.compose)
+
+            //ktor
+            implementation(libs.bundles.ktor)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.kotlin.serialization)
+
+            //coil
+            implementation(libs.coil.compose.core)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.mp)
+            implementation(libs.coil.network.ktor)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 android {
@@ -76,5 +115,6 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    ksp(libs.androidx.room.compiler)
 }
 
