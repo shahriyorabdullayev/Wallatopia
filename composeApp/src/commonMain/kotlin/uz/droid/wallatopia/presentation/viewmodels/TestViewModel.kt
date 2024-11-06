@@ -1,4 +1,4 @@
-package uz.droid.wallatopia.presentation.viewModel
+package uz.droid.wallatopia.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
