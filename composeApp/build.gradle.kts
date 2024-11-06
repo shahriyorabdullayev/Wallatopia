@@ -6,8 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.room)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -49,10 +48,6 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            //db
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.sqlite.bundled)
-
             //koin
             api(libs.koin.core)
             implementation(libs.koin.compose)
@@ -68,6 +63,10 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.kotlin.serialization)
+            implementation(libs.ktor.client.logging)
+
+            //logger
+            implementation(libs.napier)
 
             //coil
             implementation(libs.coil.compose.core)
@@ -80,10 +79,6 @@ kotlin {
             implementation(libs.ktor.client.darwin)
         }
     }
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
 }
 
 android {
@@ -115,6 +110,5 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-    ksp(libs.androidx.room.compiler)
 }
 
