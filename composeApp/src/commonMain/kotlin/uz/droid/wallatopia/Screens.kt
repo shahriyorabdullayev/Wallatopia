@@ -5,14 +5,20 @@ import kotlinx.serialization.Serializable
 object Screens {
 
     @Serializable
-    object HomeScreen
+    object SplashScreen
 
     @Serializable
-    object CategoryScreen
+    object HomeGraph {
+        @Serializable
+        object HomeScreen
 
-    @Serializable
-    object FavouriteScreen
+        @Serializable
+        object CategoriesScreen
 
-    @Serializable
-    object ProfileScreen
+        @Serializable
+        object FavouritesScreen
+
+        @Serializable
+        object ProfileScreen
+    }
 }
