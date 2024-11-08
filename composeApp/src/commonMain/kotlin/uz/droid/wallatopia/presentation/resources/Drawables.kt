@@ -1,6 +1,7 @@
 package uz.droid.wallatopia.presentation.resources
 
 import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.app_logo
 import wallatopia.composeapp.generated.resources.ic_category
 import wallatopia.composeapp.generated.resources.ic_favorite
 import wallatopia.composeapp.generated.resources.ic_home
@@ -11,6 +12,8 @@ import wallatopia.composeapp.generated.resources.sora_light
 import wallatopia.composeapp.generated.resources.sora_medium
 import wallatopia.composeapp.generated.resources.sora_regular
 import wallatopia.composeapp.generated.resources.sora_semi_bold
+import wallatopia.composeapp.generated.resources.splash_background
+import wallatopia.composeapp.generated.resources.splash_logo
 
 
 object Drawables {
@@ -19,6 +22,12 @@ object Drawables {
         val Category = Res.drawable.ic_category
         val Favorite = Res.drawable.ic_favorite
         val Profile = Res.drawable.ic_profile
+    }
+
+    object Images {
+        val SplashBackground = Res.drawable.splash_background
+        val AppLogo = Res.drawable.app_logo
+        val SplashLogo = Res.drawable.splash_logo
     }
 
     object Fonts {

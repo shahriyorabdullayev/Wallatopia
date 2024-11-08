@@ -24,6 +24,7 @@ lifecycleViewModel = "2.8.7"
 ktor = "2.3.11"
 coil3 = "3.0.0-alpha06"
 napierVersion = "2.6.1"
+core = "1.13.0"
 
 
 [libraries]
@@ -62,6 +63,7 @@ coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 napier = { module = "io.github.aakira:napier", version.ref = "napierVersion" }
+androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 
 
 [bundles]
