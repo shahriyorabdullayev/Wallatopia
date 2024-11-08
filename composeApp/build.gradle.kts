@@ -31,6 +31,7 @@ kotlin {
     sourceSets {
 
         androidMain.dependencies {
+            implementation(libs.androidx.core)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
@@ -109,6 +110,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.core)
     debugImplementation(compose.uiTooling)
 }
 

@@ -1,8 +1,10 @@
 package uz.droid.wallatopia.presentation.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigation
@@ -40,11 +42,12 @@ fun HomeNavGraph() {
         bottomBar = {
             BottomNavigationCustom(navController)
         },
-        modifier = Modifier.fillMaxSize()
-    ) {
+        modifier = Modifier.fillMaxSize(),
+    ) { scaffoldpadding ->
         NavHost(
             navController = navController,
             startDestination = Screens.HomeGraph.HomeScreen,
+            modifier = Modifier.padding(bottom = scaffoldpadding.calculateBottomPadding())
         ) {
             composable<Screens.HomeGraph.HomeScreen> {
                 HomeScreen()
@@ -76,7 +79,9 @@ fun BottomNavigationCustom(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     BottomNavigation(
-        modifier = Modifier.fillMaxWidth().height(70.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(84.dp),
         elevation = 0.dp,
         backgroundColor = Color(0xFF262626)
     ) {
@@ -84,13 +89,14 @@ fun BottomNavigationCustom(navController: NavHostController) {
             val isSelected =
                 currentDestination?.hierarchy?.any { it.route == screen.route::class.qualifiedName } == true
             BottomNavigationItem(
-                modifier = Modifier.padding(top = 8.dp),
+                modifier = Modifier
+                    .navigationBarsPadding(),
                 selected = isSelected,
                 icon = {
                     Icon(
                         painter = painterResource(screen.icon),
                         contentDescription = screen.name,
-                        modifier = Modifier.size(32.dp).padding(bottom = 4.dp),
+                        modifier = Modifier.size(32.dp),
                     )
                 },
                 label = {

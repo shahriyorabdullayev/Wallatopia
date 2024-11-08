@@ -1,13 +1,15 @@
 package uz.droid.wallatopia
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
+import uz.droid.wallatopia.common.theme.WallatopiaAppTheme
 import uz.droid.wallatopia.presentation.navigation.HomeNavGraph
 import uz.droid.wallatopia.presentation.screens.SplashScreen
 
@@ -16,7 +18,7 @@ import uz.droid.wallatopia.presentation.screens.SplashScreen
 @Preview
 fun App() {
     KoinContext {
-        MaterialTheme {
+        WallatopiaAppTheme {
             HavHostMain()
         }
     }
