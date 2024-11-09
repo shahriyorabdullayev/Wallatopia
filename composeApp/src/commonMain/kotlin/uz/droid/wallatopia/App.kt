@@ -26,13 +26,13 @@ fun App() {
 
 @Composable
 fun HavHostMain(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = Screens.SplashScreen) {
+     NavHost(navController = navController, startDestination = Screens.SplashScreen) {
         composable<Screens.SplashScreen> {
             SplashScreen(
                 navigateToHome = {
                     navController.navigate(Screens.HomeGraph) {
                         popUpTo(Screens.SplashScreen) {
-                            inclusive = true
+                             inclusive = true
                         }
                     }
                 }

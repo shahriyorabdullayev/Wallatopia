@@ -14,9 +14,6 @@ androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.0"
 junit = "4.13.2"
 kotlin = "2.0.21"
-ksp = "2.0.21-1.0.25"
-sqlite = "2.5.0-SNAPSHOT"
-androidx-room = "2.7.0-alpha11"
 koin = "3.6.0-Beta4"
 koinComposeMultiplatform = "1.2.0-Beta4"
 navigationCompose = "2.8.0-alpha10"
@@ -25,6 +22,9 @@ ktor = "2.3.11"
 coil3 = "3.0.0-alpha06"
 napierVersion = "2.6.1"
 core = "1.13.0"
+room = "2.7.0-alpha11"
+ksp = "2.0.21-1.0.25"
+sqlite = "2.5.0-alpha11"
 
 
 [libraries]
@@ -40,9 +40,6 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel"}
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
@@ -64,7 +61,9 @@ coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 napier = { module = "io.github.aakira:napier", version.ref = "napierVersion" }
 androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
-
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 [bundles]
 ktor = ["ktor-client-core", "ktor-client-content-negotiation"]
@@ -76,6 +75,6 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-room = { id = "androidx.room", version.ref = "androidx-room" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }
