@@ -9,7 +9,7 @@ import uz.droid.wallatopia.domain.model.UnsplashImage
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
 
-class TestViewModel(
+class HomeViewModel(
     private val repository: MainRepository,
     private val favoriteImagesRepository: FavoritesRepository
 ) : ViewModel() {

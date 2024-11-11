@@ -21,8 +21,8 @@ import uz.droid.wallatopia.data.repository.FavoritesRepositoryImpl
 import uz.droid.wallatopia.data.repository.MainRepositoryImpl
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
-import uz.droid.wallatopia.presentation.viewmodels.TestViewModel
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
+import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 
 expect val platformModule: Module
 
@@ -41,8 +41,8 @@ val repositoryModule = module {
 }
 
 val viewModelModule = module {
-    viewModelOf(::TestViewModel)
     viewModelOf(::FavoritesViewModel)
+    viewModelOf(::HomeViewModel)
 }
 
 val httpClientModule = module {
