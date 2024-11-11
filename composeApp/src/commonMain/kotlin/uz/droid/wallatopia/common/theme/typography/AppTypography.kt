@@ -6,29 +6,49 @@ import androidx.compose.ui.text.TextStyle
 
 @Stable
 data class AppTypography(
-    val headlineNormal: TextStyle,
-    val headlineSmall: TextStyle,
-    val bodySmall: TextStyle,
-    val titleLarge: TextStyle,
-    val titleNormal: TextStyle,
-    val titleSmall: TextStyle,
-    val paragraph: TextStyle,
+    val appNameTitle:TextStyle,
+    val splashTitle:TextStyle,
+    val pageHeadline: TextStyle,
+    val sectionHeadline: TextStyle,
+    val bodyText: TextStyle,
+    val inputText: TextStyle,
+    val hintText: TextStyle,
+    val buttonTextSmall: TextStyle,
+    val buttonTextMedium: TextStyle,
+    val buttonTextLarge: TextStyle,
+    val buttonTextPrimary: TextStyle,
+    val buttonTextSecondary: TextStyle,
+    val listTitle: TextStyle,
+    val listItemTitle: TextStyle,
+    val caption: TextStyle,
+    val labelSmall: TextStyle,
+    val labelMedium: TextStyle,
     val labelLarge: TextStyle,
-    val labelNormal: TextStyle,
-    val labelSmall: TextStyle
+    val settingsItemTitle:TextStyle,
+    val sheetItemTitle:TextStyle,
 )
 
 val LocalAppTypography = staticCompositionLocalOf {
     AppTypography(
-        headlineNormal = TextStyle.Default,
-        headlineSmall = TextStyle.Default,
-        bodySmall = TextStyle.Default,
-        titleLarge = TextStyle.Default,
-        titleNormal = TextStyle.Default,
-        titleSmall = TextStyle.Default,
-        paragraph = TextStyle.Default,
+        appNameTitle = TextStyle.Default,
+        splashTitle = TextStyle.Default,
+        pageHeadline = TextStyle.Default,
+        sectionHeadline = TextStyle.Default,
+        bodyText = TextStyle.Default,
+        inputText = TextStyle.Default,
+        hintText = TextStyle.Default,
+        buttonTextSmall = TextStyle.Default,
+        buttonTextMedium = TextStyle.Default,
+        buttonTextLarge = TextStyle.Default,
+        buttonTextPrimary = TextStyle.Default,
+        buttonTextSecondary = TextStyle.Default,
+        listTitle = TextStyle.Default,
+        listItemTitle = TextStyle.Default,
+        caption = TextStyle.Default,
+        labelSmall = TextStyle.Default,
+        labelMedium = TextStyle.Default,
         labelLarge = TextStyle.Default,
-        labelNormal = TextStyle.Default,
-        labelSmall = TextStyle.Default
+        settingsItemTitle = TextStyle.Default,
+        sheetItemTitle = TextStyle.Default
     )
 }

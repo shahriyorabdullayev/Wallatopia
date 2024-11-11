@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import uz.droid.wallatopia.data.network.response.UnsplashResponse
 import uz.droid.wallatopia.domain.repository.MainRepository
 
-class TestViewModel(private val repository: MainRepository) : ViewModel() {
+class HomeViewModel(private val repository: MainRepository) : ViewModel() {
 
     val state = MutableStateFlow(emptyList<UnsplashResponse>())
 
