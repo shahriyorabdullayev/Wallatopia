@@ -11,29 +11,25 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.compose.viewmodel.dsl.viewModelOf
-import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
+import uz.droid.wallatopia.data.local.WallatopiaDatabase
+import uz.droid.wallatopia.data.local.getRoomDatabase
 import uz.droid.wallatopia.data.network.service.MainApiService
 import uz.droid.wallatopia.data.network.service.impl.MainApiServiceImpl
+import uz.droid.wallatopia.data.repository.FavoritesRepositoryImpl
 import uz.droid.wallatopia.data.repository.MainRepositoryImpl
+import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
+import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 
 expect val platformModule: Module
 
-fun initKoin(config: KoinAppDeclaration? = null) =
-    startKoin {
-        config?.invoke(this)
-        modules(
-            repositoryModule,
-            platformModule,
-            httpClientModule,
-            apiModule,
-            viewModelModule
-        )
-    }
+val databaseModule = module {
+    single { getRoomDatabase(get()) }
+    single { get<WallatopiaDatabase>().favoriteImagesDao()}
+}
 
 val apiModule = module {
     single<MainApiService> { MainApiServiceImpl(get()) }
@@ -41,9 +37,11 @@ val apiModule = module {
 
 val repositoryModule = module {
     factory<MainRepository> { MainRepositoryImpl(get()) }
+    factory<FavoritesRepository> { FavoritesRepositoryImpl(get()) }
 }
 
 val viewModelModule = module {
+    viewModelOf(::FavoritesViewModel)
     viewModelOf(::HomeViewModel)
 }
 

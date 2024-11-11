@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -74,11 +76,18 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.mp)
             implementation(libs.coil.network.ktor)
+
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
+    }
+
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata")
     }
 }
 
@@ -111,7 +120,15 @@ android {
 
 dependencies {
     implementation(libs.androidx.core)
-    implementation(libs.androidx.core)
     debugImplementation(compose.uiTooling)
+    ksp(libs.room.compiler)
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
