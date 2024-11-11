@@ -11,10 +11,12 @@ import wallatopia.composeapp.generated.resources.sora_light
 import wallatopia.composeapp.generated.resources.sora_medium
 import wallatopia.composeapp.generated.resources.sora_regular
 import wallatopia.composeapp.generated.resources.sora_semi_bold
+import wallatopia.composeapp.generated.resources.sora_thin
 
 @Composable
 fun SoraFont() = FontFamily(
     Font(Res.font.sora_light, weight = FontWeight.Light),
+    Font(Res.font.sora_thin, weight = FontWeight.Thin),
     Font(Res.font.sora_regular, weight = FontWeight.Normal),
     Font(Res.font.sora_medium, weight = FontWeight.Medium),
     Font(Res.font.sora_semi_bold, weight = FontWeight.SemiBold),

@@ -2,11 +2,13 @@ package uz.droid.wallatopia.common.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import uz.droid.wallatopia.common.theme.colors.AppColorScheme
 import uz.droid.wallatopia.common.theme.colors.LocalAppColorScheme
@@ -99,70 +101,129 @@ val lightColorScheme = AppColorScheme(
 
 @Composable
 private fun typography() = AppTypography(
-    headlineNormal = TextStyle(
-        fontFamily = SoraFont(),
-        fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
-        lineHeight = 21.6.sp,
-        letterSpacing = 0.sp
-    ),
-    headlineSmall = TextStyle(
+    appNameTitle = TextStyle(
         fontFamily = SoraFont(),
         fontWeight = FontWeight.SemiBold,
-        fontSize = 14.sp,
-        lineHeight = 16.8.sp,
-        letterSpacing = 0.sp,
+        fontSize = 36.sp
     ),
-    bodySmall = TextStyle(
+    splashTitle = TextStyle(
         fontFamily = SoraFont(),
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 19.2.sp,
-        letterSpacing = 0.5.sp
+        fontWeight = FontWeight.Thin,
+        fontSize = 24.sp
     ),
-    titleLarge = TextStyle(
-        fontFamily = SoraFont(),
-        fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
-        lineHeight = 28.8.sp,
-        letterSpacing = 0.5.sp
-    ),
-    titleNormal = TextStyle(
+    pageHeadline = TextStyle(
         fontFamily = SoraFont(),
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp
     ),
-    titleSmall = TextStyle(
+
+    sectionHeadline = TextStyle(
         fontFamily = SoraFont(),
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 18.sp,
-        lineHeight = 21.6.sp,
-        letterSpacing = 0.5.sp
+        fontWeight = FontWeight(646),
+        fontSize = (17.5).sp
     ),
-    paragraph = TextStyle(
-        fontFamily = SoraFont(),
-        fontSize = 16.sp
-    ),
-    labelLarge = TextStyle(
-        fontFamily = SoraFont(),
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp
-    ),
-    labelNormal = TextStyle(
+
+    bodyText = TextStyle(
         fontFamily = SoraFont(),
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-        lineHeight = 16.8.sp,
-        letterSpacing = 0.sp,
+        fontSize = 13.sp
     ),
+
+    inputText = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
+
+    hintText = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp
+    ),
+
+    buttonTextSmall = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Bold,
+        fontSize = 7.sp
+    ),
+
+    buttonTextMedium = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Medium,
+        fontSize = (9.44).sp
+    ),
+
+    buttonTextLarge = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp
+    ),
+
+    buttonTextPrimary = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    ),
+
+    buttonTextSecondary = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp
+    ),
+
+    listTitle = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    ),
+
+    listItemTitle = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 10.sp
+    ),
+
+    caption = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Normal,
+        fontSize = 8.sp
+    ),
+
     labelSmall = TextStyle(
         fontFamily = SoraFont(),
-        fontSize = 12.sp
+        fontWeight = FontWeight.Normal,
+        fontSize = 8.sp
+    ),
+
+    labelMedium = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 10.sp
+    ),
+
+    labelLarge = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Light,
+        fontSize = 24.sp
+    ),
+    settingsItemTitle = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp
+    ),
+    sheetItemTitle = TextStyle(
+        fontFamily = SoraFont(),
+        fontWeight = FontWeight.Normal,
+        fontSize = 17.sp
     )
 )
 
 private val shape = AppShape(
-    circular = CircleShape
+    circular = CircleShape,
+    rounded7 = RoundedCornerShape(7.dp),
+    rounded10 = RoundedCornerShape(10.dp),
+    rounded6 = RoundedCornerShape(6.dp),
+    rounded4 = RoundedCornerShape(4.dp)
 )
 
 @Stable

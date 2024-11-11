@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.common.theme.AppTheme
-import uz.droid.wallatopia.presentation.resources.Drawables
+import uz.droid.wallatopia.common.resources.Drawables
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_logo
 import wallatopia.composeapp.generated.resources.splash_background
@@ -67,7 +67,7 @@ fun SplashScreen(
             )
             Text(
                 text = "Wallatopia",
-                style = AppTheme.typography.titleLarge.copy(fontSize = 36.sp, fontWeight = FontWeight.SemiBold),
+                style = AppTheme.typography.appNameTitle,
                 color = AppTheme.colorScheme.immutableWhite,
             )
             Spacer(modifier = Modifier.height(36.dp))
@@ -80,7 +80,7 @@ fun SplashScreen(
             Spacer(modifier = Modifier.height(36.dp))
             Text(
                 text = "4k Wallpapers",
-                style = AppTheme.typography.titleLarge.copy(fontSize = 24.sp, fontWeight = FontWeight.Thin),
+                style = AppTheme.typography.splashTitle,
                 color = AppTheme.colorScheme.immutableWhite,
             )
         }

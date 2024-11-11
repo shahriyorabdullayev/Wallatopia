@@ -19,7 +19,7 @@ import uz.droid.wallatopia.data.network.service.MainApiService
 import uz.droid.wallatopia.data.network.service.impl.MainApiServiceImpl
 import uz.droid.wallatopia.data.repository.MainRepositoryImpl
 import uz.droid.wallatopia.domain.repository.MainRepository
-import uz.droid.wallatopia.presentation.viewmodels.TestViewModel
+import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 
 expect val platformModule: Module
 
@@ -44,7 +44,7 @@ val repositoryModule = module {
 }
 
 val viewModelModule = module {
-    viewModelOf(::TestViewModel)
+    viewModelOf(::HomeViewModel)
 }
 
 val httpClientModule = module {

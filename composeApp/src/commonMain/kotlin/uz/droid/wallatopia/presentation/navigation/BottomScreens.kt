@@ -4,7 +4,7 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import uz.droid.wallatopia.Screens
-import uz.droid.wallatopia.presentation.resources.Drawables
+import uz.droid.wallatopia.common.resources.Drawables
 
 @Serializable
 sealed class BottomScreens<T>(
