@@ -12,12 +12,10 @@ val UnsplashResponse.toEntity: UnsplashImageEntity
 
 val UnsplashImage.toEntity: UnsplashImageEntity
     get()  = UnsplashImageEntity(
-        id = this.id,
         imageUrl = this.url,
     )
 
 val UnsplashImageEntity.toModel: UnsplashImage
     get() = UnsplashImage(
-        id = this.id,
         url = this.imageUrl
     )

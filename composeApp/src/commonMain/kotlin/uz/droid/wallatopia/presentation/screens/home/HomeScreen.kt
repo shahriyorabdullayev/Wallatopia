@@ -50,6 +50,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.App
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
+import uz.droid.wallatopia.domain.model.UnsplashImage
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
@@ -111,7 +112,10 @@ fun HomeScreen() {
                 MainImageItem(
                     imageUrl = image.urls.regular,
                     onClick = {},
-                    onFavoriteClick = {}
+                    onFavoriteClick = {
+                        val unsplashImage = UnsplashImage(url = image.urls.regular)
+                        vm.addToFavorites(unsplashImage)
+                    }
                 )
             }
         }
