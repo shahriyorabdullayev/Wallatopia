@@ -9,6 +9,7 @@ fun getRoomDatabase(
     builder: RoomDatabase.Builder<WallatopiaDatabase>
 ): WallatopiaDatabase {
     return builder
+        .fallbackToDestructiveMigration( true)
         .fallbackToDestructiveMigrationOnDowngrade(dropAllTables = true)
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)

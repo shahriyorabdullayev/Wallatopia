@@ -6,12 +6,16 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
 import io.ktor.http.takeFrom
+import kotlinx.serialization.json.Json
 import uz.droid.wallatopia.data.network.service.impl.token
 
 const val UNSPLASH_URL = "https://api.unsplash.com/"
 
 fun HttpRequestBuilder.json() {
     contentType(ContentType.Application.Json)
+    Json {
+        coerceInputValues = true
+    }
 }
 
 fun HttpRequestBuilder.apiUrl(path: String) {

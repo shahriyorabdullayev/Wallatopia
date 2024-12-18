@@ -5,21 +5,21 @@ import kotlinx.coroutines.flow.map
 import uz.droid.wallatopia.data.local.FavoriteImagesDao
 import uz.droid.wallatopia.data.mapper.toEntity
 import uz.droid.wallatopia.data.mapper.toModel
-import uz.droid.wallatopia.domain.model.UnsplashImage
+import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 
 class FavoritesRepositoryImpl(
     private val favoriteImagesDao: FavoriteImagesDao
 ): FavoritesRepository {
-    override suspend fun insertUnsplashImage(image: UnsplashImage) {
+    override suspend fun insertImage(image: ImageUiModel) {
         favoriteImagesDao.insertFavoriteImage(image.toEntity)
     }
 
-    override suspend fun deleteUnsplashImage(image: UnsplashImage) {
+    override suspend fun deleteImage(image: ImageUiModel) {
         favoriteImagesDao.deleteFavoriteImage(image.toEntity)
     }
 
-    override fun fetchFavoriteImages(): Flow<List<UnsplashImage>> {
+    override fun fetchFavoriteImages(): Flow<List<ImageUiModel>> {
         return favoriteImagesDao.getAllFavoriteImages().map { entities ->
             entities.map { it.toModel }
         }
