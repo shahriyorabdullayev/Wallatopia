@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import uz.droid.wallatopia.domain.model.UnsplashImage
+import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 
 class FavoritesViewModel(
     private val favoritesRepository: FavoritesRepository
 ): ViewModel() {
 
-    val state = MutableStateFlow(emptyList<UnsplashImage>())
+    val state = MutableStateFlow(emptyList<ImageUiModel>())
 
     init {
         fetchFavoriteImages()
@@ -25,9 +25,9 @@ class FavoritesViewModel(
         }
     }
 
-    fun deleteImageFromFavorites(image: UnsplashImage) {
+    fun deleteImageFromFavorites(image: ImageUiModel) {
         viewModelScope.launch {
-            favoritesRepository.deleteUnsplashImage(image)
+            favoritesRepository.deleteImage(image)
         }
     }
 

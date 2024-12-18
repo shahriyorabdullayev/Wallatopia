@@ -4,11 +4,13 @@ import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_logo
 import wallatopia.composeapp.generated.resources.category_test_background
 import wallatopia.composeapp.generated.resources.home_background
+import wallatopia.composeapp.generated.resources.home_banner
 import wallatopia.composeapp.generated.resources.ic_ai_stick
 import wallatopia.composeapp.generated.resources.ic_arrow_right
 import wallatopia.composeapp.generated.resources.ic_category
 import wallatopia.composeapp.generated.resources.ic_favorite
 import wallatopia.composeapp.generated.resources.ic_favorite_outlined
+import wallatopia.composeapp.generated.resources.ic_favorite_selected
 import wallatopia.composeapp.generated.resources.ic_home
 import wallatopia.composeapp.generated.resources.ic_popular_categories
 import wallatopia.composeapp.generated.resources.ic_profile
@@ -37,6 +39,7 @@ object Drawables {
         val AiGenerate = Res.drawable.ic_ai_stick
         val FavoriteOutlined = Res.drawable.ic_favorite_outlined
         val Trending = Res.drawable.ic_trending
+        val FavouriteSelected = Res.drawable.ic_favorite_selected
     }
 
     object Images {
@@ -45,6 +48,7 @@ object Drawables {
         val TestBackground = Res.drawable.category_test_background
         val AppLogo = Res.drawable.app_logo
         val SplashLogo = Res.drawable.splash_logo
+        val HomeBanner = Res.drawable.home_banner
     }
 
     object Fonts {

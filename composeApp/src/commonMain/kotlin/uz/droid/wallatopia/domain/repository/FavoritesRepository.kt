@@ -1,15 +1,15 @@
 package uz.droid.wallatopia.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import uz.droid.wallatopia.domain.model.UnsplashImage
+import uz.droid.wallatopia.domain.model.ImageUiModel
 
 interface FavoritesRepository {
 
-    suspend fun insertUnsplashImage(image: UnsplashImage)
+    suspend fun insertImage(image: ImageUiModel)
 
-    suspend fun deleteUnsplashImage(image: UnsplashImage)
+    suspend fun deleteImage(image: ImageUiModel)
 
     suspend fun clearFavorites()
 
-    fun fetchFavoriteImages(): Flow<List<UnsplashImage>>
+    fun fetchFavoriteImages(): Flow<List<ImageUiModel>>
 }
