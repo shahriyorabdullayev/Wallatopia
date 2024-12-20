@@ -25,8 +25,8 @@ data class UnsplashResponse (
     @SerialName("promoted_at")
     val promotedAt: String? = null,
 
-    val width: Long,
-    val height: Long,
+    val width: Int,
+    val height: Int,
     val color: String,
 
     @SerialName("blur_hash")

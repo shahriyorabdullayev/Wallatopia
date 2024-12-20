@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.AsyncImage
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.HomeCategoryModel
@@ -41,7 +42,8 @@ fun CategoryItem(
             text = category.name,
             color = AppTheme.colorScheme.gainsBoroGray,
             modifier = Modifier.padding(paddingValues = contentPaddingValues),
-            style = AppTheme.typography.listItemTitle
+            style = AppTheme.typography.listItemTitle,
+            textAlign = TextAlign.Center
         )
     }
 }

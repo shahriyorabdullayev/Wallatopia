@@ -6,7 +6,10 @@ import uz.droid.wallatopia.domain.model.ImageUiModel
 val UnsplashResponse.toUiModel: ImageUiModel
     get() = ImageUiModel(
         id = this.id,
-        url = this.urls.regular,
+        url = this.urls.small,
+        height = this.height,
+        width = this.width,
+        color = this.color,
         blurHash = this.blurHash
     )
 
