@@ -115,7 +115,7 @@ fun HomeScreen() {
 
             items(uiState.images, key = { it.id }) { image ->
                 MainImageItem(
-                    imageUrl = image.url,
+                    image = image,
                     onClick = {
                         event(HomeContract.Intent.OpenImage(image.url))
                     },

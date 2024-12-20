@@ -28,12 +28,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-@Preview
-@Composable
-fun SplashPr() {
-    WallatopiaAppTheme {
-        MainImageItem(imageUrl = "", onClick = {})
-    }
-}

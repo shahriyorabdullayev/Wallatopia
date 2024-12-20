@@ -2,7 +2,6 @@ package uz.droid.wallatopia.common.resources
 
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_logo
-import wallatopia.composeapp.generated.resources.category_test_background
 import wallatopia.composeapp.generated.resources.home_background
 import wallatopia.composeapp.generated.resources.home_banner
 import wallatopia.composeapp.generated.resources.ic_ai_stick
@@ -45,7 +44,6 @@ object Drawables {
     object Images {
         val SplashBackground = Res.drawable.splash_background
         val HomeBackground = Res.drawable.home_background
-        val TestBackground = Res.drawable.category_test_background
         val AppLogo = Res.drawable.app_logo
         val SplashLogo = Res.drawable.splash_logo
         val HomeBanner = Res.drawable.home_banner
