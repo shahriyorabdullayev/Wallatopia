@@ -12,21 +12,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import uz.droid.wallatopia.common.theme.AppTheme
-import uz.droid.wallatopia.domain.model.HomeCategoryModel
+import uz.droid.wallatopia.domain.model.CategoryUiModel
 
 @Composable
 fun CategoryItem(
     modifier: Modifier = Modifier,
-    category: HomeCategoryModel,
-    contentPaddingValues: PaddingValues
+    category: CategoryUiModel,
+    titleStyle: TextStyle = AppTheme.typography.listItemTitle
 ) {
 
     Box(
-        modifier = Modifier.then(modifier).clip(AppTheme.shape.rounded4).wrapContentWidth(),
-        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .then(modifier)
+            .wrapContentWidth(),
+        contentAlignment = Alignment.Center
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
@@ -41,9 +45,9 @@ fun CategoryItem(
         Text(
             text = category.name,
             color = AppTheme.colorScheme.gainsBoroGray,
-            modifier = Modifier.padding(paddingValues = contentPaddingValues),
-            style = AppTheme.typography.listItemTitle,
-            textAlign = TextAlign.Center
+            style = titleStyle,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 4.dp)
         )
     }
 }

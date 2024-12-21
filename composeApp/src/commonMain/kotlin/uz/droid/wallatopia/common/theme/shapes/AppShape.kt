@@ -13,6 +13,7 @@ data class AppShape(
     val rounded7: Shape,
     val rounded6: Shape,
     val rounded4: Shape,
+    val rounded5: Shape,
 )
 
 val LocalAppShape = staticCompositionLocalOf {
@@ -22,5 +23,6 @@ val LocalAppShape = staticCompositionLocalOf {
         rounded7 = RectangleShape,
         rounded6 = RectangleShape,
         rounded4 = RectangleShape,
+        rounded5 = RectangleShape,
     )
 }

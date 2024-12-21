@@ -66,7 +66,7 @@ class HomeViewModel(
         viewModelScope.launch {
             repository.fetchCategories().onSuccess {
                 _uiState.value =
-                    _uiState.value.copy(categories = it.map { it.toHomeCategoryUiModel })
+                    _uiState.value.copy(categories = it.take(4).map { it.toHomeCategoryUiModel })
             }
         }
     }

@@ -10,6 +10,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -21,6 +22,8 @@ import uz.droid.wallatopia.data.repository.FavoritesRepositoryImpl
 import uz.droid.wallatopia.data.repository.MainRepositoryImpl
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
+import uz.droid.wallatopia.presentation.screens.home.CategoryScreen
+import uz.droid.wallatopia.presentation.viewmodels.CategoryViewModel
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 
@@ -43,6 +46,7 @@ val repositoryModule = module {
 val viewModelModule = module {
     viewModelOf(::FavoritesViewModel)
     viewModelOf(::HomeViewModel)
+    viewModelOf(::CategoryViewModel)
 }
 
 val httpClientModule = module {
