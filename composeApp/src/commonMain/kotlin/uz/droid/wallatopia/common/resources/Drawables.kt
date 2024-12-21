@@ -2,10 +2,12 @@ package uz.droid.wallatopia.common.resources
 
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_logo
+import wallatopia.composeapp.generated.resources.category_background
 import wallatopia.composeapp.generated.resources.home_background
 import wallatopia.composeapp.generated.resources.home_banner
 import wallatopia.composeapp.generated.resources.ic_ai_stick
 import wallatopia.composeapp.generated.resources.ic_arrow_right
+import wallatopia.composeapp.generated.resources.ic_back
 import wallatopia.composeapp.generated.resources.ic_category
 import wallatopia.composeapp.generated.resources.ic_favorite
 import wallatopia.composeapp.generated.resources.ic_favorite_outlined
@@ -39,11 +41,13 @@ object Drawables {
         val FavoriteOutlined = Res.drawable.ic_favorite_outlined
         val Trending = Res.drawable.ic_trending
         val FavouriteSelected = Res.drawable.ic_favorite_selected
+        val Back = Res.drawable.ic_back
     }
 
     object Images {
         val SplashBackground = Res.drawable.splash_background
         val HomeBackground = Res.drawable.home_background
+        val CategoryBackground = Res.drawable.category_background
         val AppLogo = Res.drawable.app_logo
         val SplashLogo = Res.drawable.splash_logo
         val HomeBanner = Res.drawable.home_banner

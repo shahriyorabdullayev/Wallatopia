@@ -223,7 +223,8 @@ private val shape = AppShape(
     rounded7 = RoundedCornerShape(7.dp),
     rounded10 = RoundedCornerShape(10.dp),
     rounded6 = RoundedCornerShape(6.dp),
-    rounded4 = RoundedCornerShape(4.dp)
+    rounded4 = RoundedCornerShape(4.dp),
+    rounded5 = RoundedCornerShape(5.dp),
 )
 
 @Stable

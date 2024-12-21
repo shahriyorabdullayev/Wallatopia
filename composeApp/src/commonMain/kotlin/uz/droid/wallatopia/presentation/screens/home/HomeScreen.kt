@@ -1,6 +1,5 @@
 @file:OptIn(
-    KoinExperimentalAPI::class, ExperimentalMaterialApi::class,
-    ExperimentalMaterialApi::class
+    KoinExperimentalAPI::class
 )
 
 package uz.droid.wallatopia.presentation.screens.home
@@ -26,7 +25,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
@@ -48,7 +46,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
-import uz.droid.wallatopia.domain.model.HomeCategoryModel
+import uz.droid.wallatopia.domain.model.CategoryUiModel
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
@@ -220,7 +218,7 @@ fun PopularCategoriesTitleSection(modifier: Modifier = Modifier, onSeeMore: () -
 @Composable
 fun PopularCategoriesListSection(
     modifier: Modifier = Modifier,
-    categories: List<HomeCategoryModel> = emptyList()
+    categories: List<CategoryUiModel> = emptyList()
 ) {
     Row(
         modifier = Modifier.then(modifier).fillMaxWidth(),
@@ -228,9 +226,8 @@ fun PopularCategoriesListSection(
     ) {
         categories.take(4).forEach {
             CategoryItem(
-                Modifier.height(48.dp).fillMaxWidth().weight(1f),
-                category = it,
-                contentPaddingValues = PaddingValues(vertical = 17.dp)
+                Modifier.height(48.dp).clip(AppTheme.shape.rounded4).fillMaxWidth().weight(1f),
+                category = it
             )
         }
     }

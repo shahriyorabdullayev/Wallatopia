@@ -1,11 +1,11 @@
 package uz.droid.wallatopia.presentation.screens.contracts
 
-import uz.droid.wallatopia.domain.model.HomeCategoryModel
+import uz.droid.wallatopia.domain.model.CategoryUiModel
 import uz.droid.wallatopia.domain.model.ImageUiModel
 
 class HomeContract {
     data class HomeState(
-        val categories: List<HomeCategoryModel> = emptyList(),
+        val categories: List<CategoryUiModel> = emptyList(),
         val images: List<ImageUiModel> = emptyList()
     )
 

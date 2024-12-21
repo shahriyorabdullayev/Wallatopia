@@ -26,7 +26,7 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         return httpClient.handle {
             this.get {
                 json()
-                apiUrl("topics?page=1&per_page=4")
+                apiUrl("topics?page=1&per_page=15")
             }
         }
     }
