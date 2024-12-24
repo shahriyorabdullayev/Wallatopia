@@ -9,7 +9,7 @@ typealias Photos = List<UnsplashResponse>
 
 
 @Serializable
-data class UnsplashResponse (
+data class UnsplashResponse(
     val id: String,
     val slug: String,
 
@@ -39,7 +39,7 @@ data class UnsplashResponse (
 
     val breadcrumbs: JsonArray,
     val urls: Urls,
-    val links: WelcomeLinks,
+//    val links: WelcomeLinks,
     val likes: Long,
 
     @SerialName("liked_by_user")
@@ -60,7 +60,7 @@ data class UnsplashResponse (
 )
 
 @Serializable
-data class AlternativeSlugs (
+data class AlternativeSlugs(
     val en: String,
     val es: String,
     val ja: String,
@@ -73,11 +73,12 @@ data class AlternativeSlugs (
 
 @Serializable
 enum class AssetType(val value: String) {
-    @SerialName("photo") Photo("photo");
+    @SerialName("photo")
+    Photo("photo");
 }
 
 @Serializable
-data class WelcomeLinks (
+data class WelcomeLinks(
     val self: String,
     val html: String,
     val download: String,
@@ -87,7 +88,7 @@ data class WelcomeLinks (
 )
 
 @Serializable
-data class Sponsorship (
+data class Sponsorship(
     @SerialName("impression_urls")
     val impressionUrls: List<String>,
 
@@ -100,23 +101,11 @@ data class Sponsorship (
 )
 
 @Serializable
-data class User (
+data class User(
     val id: String,
-
-    @SerialName("updated_at")
-    val updatedAt: String,
 
     val username: String,
     val name: String,
-
-    @SerialName("first_name")
-    val firstName: String,
-
-    @SerialName("last_name")
-    val lastName: String? = null,
-
-    @SerialName("twitter_username")
-    val twitterUsername: String? = null,
 
     @SerialName("portfolio_url")
     val portfolioURL: String? = null,
@@ -135,31 +124,11 @@ data class User (
     val totalCollections: Long,
 
     @SerialName("total_likes")
-    val totalLikes: Long,
-
-    @SerialName("total_photos")
-    val totalPhotos: Long,
-
-    @SerialName("total_promoted_photos")
-    val totalPromotedPhotos: Long,
-
-    @SerialName("total_illustrations")
-    val totalIllustrations: Long,
-
-    @SerialName("total_promoted_illustrations")
-    val totalPromotedIllustrations: Long,
-
-    @SerialName("accepted_tos")
-    val acceptedTos: Boolean,
-
-    @SerialName("for_hire")
-    val forHire: Boolean,
-
-    val social: Social
+    val totalLikes: Long
 )
 
 @Serializable
-data class UserLinks (
+data class UserLinks(
     val self: String,
     val html: String,
     val photos: String,
@@ -170,14 +139,14 @@ data class UserLinks (
 )
 
 @Serializable
-data class ProfileImage (
+data class ProfileImage(
     val small: String,
     val medium: String,
     val large: String
 )
 
 @Serializable
-data class Social (
+data class Social(
     @SerialName("instagram_username")
     val instagramUsername: String? = null,
 
@@ -192,7 +161,7 @@ data class Social (
 )
 
 @Serializable
-data class TopicSubmissions (
+data class TopicSubmissions(
     val wallpapers: ArchitectureInterior? = null,
 
     @SerialName("3d-renders")
@@ -211,12 +180,12 @@ data class TopicSubmissions (
 )
 
 @Serializable
-data class ArchitectureInterior (
+data class ArchitectureInterior(
     val status: String
 )
 
 @Serializable
-data class The3_DRenders (
+data class The3_DRenders(
     val status: String,
 
     @SerialName("approved_on")
@@ -224,7 +193,7 @@ data class The3_DRenders (
 )
 
 @Serializable
-data class Urls (
+data class Urls(
     val raw: String,
     val full: String,
     val regular: String,

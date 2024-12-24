@@ -8,6 +8,9 @@ object Screens {
     object SplashScreen
 
     @Serializable
+    data class CategoryDetailsScreen(val categoryId: String)
+
+    @Serializable
     object HomeGraph {
         @Serializable
         object HomeScreen

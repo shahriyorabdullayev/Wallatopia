@@ -23,6 +23,7 @@ import uz.droid.wallatopia.data.repository.MainRepositoryImpl
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
 import uz.droid.wallatopia.presentation.screens.home.CategoryScreen
+import uz.droid.wallatopia.presentation.viewmodels.CategoryDetailsViewModel
 import uz.droid.wallatopia.presentation.viewmodels.CategoryViewModel
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
@@ -47,6 +48,7 @@ val viewModelModule = module {
     viewModelOf(::FavoritesViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::CategoryViewModel)
+    viewModelOf(::CategoryDetailsViewModel)
 }
 
 val httpClientModule = module {

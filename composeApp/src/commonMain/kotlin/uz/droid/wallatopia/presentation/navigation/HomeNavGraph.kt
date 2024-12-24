@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -31,8 +29,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.Screens
+import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
 import uz.droid.wallatopia.presentation.screens.home.CategoryScreen
 import uz.droid.wallatopia.presentation.screens.home.FavoriteScreen
 import uz.droid.wallatopia.presentation.screens.home.HomeScreen
@@ -57,13 +57,25 @@ fun HomeNavGraph() {
                 HomeScreen()
             }
             composable<Screens.HomeGraph.CategoriesScreen> {
-                CategoryScreen()
+                CategoryScreen(
+                    navigateToCategoryDetails = {
+                        navController.navigate(Screens.CategoryDetailsScreen(it))
+                    },
+                    onBackPressed = navController::popBackStack
+                )
             }
             composable<Screens.HomeGraph.FavouritesScreen> {
                 FavoriteScreen()
             }
             composable<Screens.HomeGraph.ProfileScreen> {
                 ProfileScreen()
+            }
+            composable<Screens.CategoryDetailsScreen> { backStackEntry ->
+                val category: Screens.CategoryDetailsScreen = backStackEntry.toRoute()
+                CategoryDetailsScreen(
+                    categoryId = category.categoryId,
+                    onBackPressed = navController::popBackStack
+                )
             }
         }
     }
