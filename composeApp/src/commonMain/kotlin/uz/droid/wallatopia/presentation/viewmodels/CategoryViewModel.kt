@@ -20,7 +20,7 @@ class CategoryViewModel(
         onEventDispatch(CategoryContract.Intent.Init)
     }
 
-    fun onEventDispatch(intent: CategoryContract.Intent) {
+    private fun onEventDispatch(intent: CategoryContract.Intent) {
         when (intent) {
             CategoryContract.Intent.Init -> {
                 handleCategoriesFetch()

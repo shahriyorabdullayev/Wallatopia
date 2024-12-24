@@ -16,5 +16,5 @@ data class UnsplashImageEntity(
     @ColumnInfo(name = "id")
     val id:String,
     @ColumnInfo(name = "blur_hash")
-    val blurHash:String
+    val blurHash:String?
 )

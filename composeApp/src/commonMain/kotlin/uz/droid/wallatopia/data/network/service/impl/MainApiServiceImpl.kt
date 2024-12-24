@@ -2,11 +2,14 @@ package uz.droid.wallatopia.data.network.service.impl
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import uz.droid.wallatopia.data.network.api.handle
 import uz.droid.wallatopia.data.network.apiUrl
 import uz.droid.wallatopia.data.network.json
+import uz.droid.wallatopia.data.network.response.CategoryPhotoResponse
 import uz.droid.wallatopia.data.network.response.CategoryResponse
 import uz.droid.wallatopia.data.network.response.Photos
+import uz.droid.wallatopia.data.network.response.UnsplashResponse
 import uz.droid.wallatopia.data.network.service.MainApiService
 
 val token = "kUsXzb97PY9dJuPL-kzDZQ0R0g8d4c759S6wrhu4RnU"
@@ -17,7 +20,7 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         return httpClient.handle {
             this.get {
                 json()
-                apiUrl("photos?page=1&per_page=20")
+                apiUrl("photos?page=2&per_page=20")
             }
         }
     }
@@ -27,6 +30,15 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
             this.get {
                 json()
                 apiUrl("topics?page=1&per_page=15")
+            }
+        }
+    }
+
+    override suspend fun fetchCategoryPhotos(categoryId: String): Result<List<CategoryPhotoResponse>> {
+        return httpClient.handle {
+            this.get {
+                json()
+                apiUrl("topics/$categoryId/photos?page=1&per_page=15")
             }
         }
     }
