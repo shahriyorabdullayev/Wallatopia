@@ -11,6 +11,9 @@ object Screens {
     data class CategoryDetailsScreen(val categoryId: String)
 
     @Serializable
+    object SearchScreen
+
+    @Serializable
     object HomeGraph {
         @Serializable
         object HomeScreen

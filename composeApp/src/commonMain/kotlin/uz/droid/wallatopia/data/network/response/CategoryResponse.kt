@@ -3,6 +3,8 @@ package uz.droid.wallatopia.data.network.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+typealias Categories = List<CategoryResponse>
+
 @Serializable
 data class CategoryResponse(
     val id: String,

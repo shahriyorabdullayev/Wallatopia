@@ -2,14 +2,12 @@ package uz.droid.wallatopia.data.network.service.impl
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
-import io.ktor.client.request.parameter
 import uz.droid.wallatopia.data.network.api.handle
 import uz.droid.wallatopia.data.network.apiUrl
 import uz.droid.wallatopia.data.network.json
-import uz.droid.wallatopia.data.network.response.CategoryPhotoResponse
-import uz.droid.wallatopia.data.network.response.CategoryResponse
+import uz.droid.wallatopia.data.network.response.Categories
 import uz.droid.wallatopia.data.network.response.Photos
-import uz.droid.wallatopia.data.network.response.UnsplashResponse
+import uz.droid.wallatopia.data.network.response.SearchResponse
 import uz.droid.wallatopia.data.network.service.MainApiService
 
 val token = "kUsXzb97PY9dJuPL-kzDZQ0R0g8d4c759S6wrhu4RnU"
@@ -25,7 +23,7 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         }
     }
 
-    override suspend fun fetchCategories(): Result<List<CategoryResponse>> {
+    override suspend fun fetchCategories(): Result<Categories> {
         return httpClient.handle {
             this.get {
                 json()
@@ -34,11 +32,20 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         }
     }
 
-    override suspend fun fetchCategoryPhotos(categoryId: String): Result<List<CategoryPhotoResponse>> {
+    override suspend fun fetchCategoryPhotos(categoryId: String): Result<Photos> {
         return httpClient.handle {
             this.get {
                 json()
                 apiUrl("topics/$categoryId/photos?page=1&per_page=15")
+            }
+        }
+    }
+
+    override suspend fun searchPhotos(query: String): Result<SearchResponse> {
+        return httpClient.handle {
+            this.get {
+                json()
+                apiUrl("search/photos?query=$query&page=1&per_page=15")
             }
         }
     }

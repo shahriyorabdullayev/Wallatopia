@@ -51,12 +51,14 @@ import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
 import uz.droid.wallatopia.presentation.components.MainImageItem
-import uz.droid.wallatopia.presentation.components.SearchField
+import uz.droid.wallatopia.presentation.components.HomeSearchSection
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateToSearch: () -> Unit
+) {
     val viewModel: HomeViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val event = viewModel::onEventDispatch
@@ -74,11 +76,9 @@ fun HomeScreen() {
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             item(span = StaggeredGridItemSpan.FullLine) {
-                SearchField(
+                HomeSearchSection(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        event(HomeContract.Intent.NavigateToSearch)
-                    }
+                    onClick = navigateToSearch
                 )
             }
 

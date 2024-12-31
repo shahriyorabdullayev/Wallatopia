@@ -33,6 +33,7 @@ import androidx.navigation.toRoute
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.Screens
 import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
+import uz.droid.wallatopia.presentation.screens.SearchScreen
 import uz.droid.wallatopia.presentation.screens.home.CategoryScreen
 import uz.droid.wallatopia.presentation.screens.home.FavoriteScreen
 import uz.droid.wallatopia.presentation.screens.home.HomeScreen
@@ -54,7 +55,11 @@ fun HomeNavGraph() {
                 .windowInsetsPadding(WindowInsets.navigationBars)
         ) {
             composable<Screens.HomeGraph.HomeScreen> {
-                HomeScreen()
+                HomeScreen(
+                    navigateToSearch = {
+                        navController.navigate(Screens.SearchScreen)
+                    }
+                )
             }
             composable<Screens.HomeGraph.CategoriesScreen> {
                 CategoryScreen(
@@ -75,6 +80,14 @@ fun HomeNavGraph() {
                 CategoryDetailsScreen(
                     categoryId = category.categoryId,
                     onBackPressed = navController::popBackStack
+                )
+            }
+            composable<Screens.SearchScreen> {
+                SearchScreen(
+                    onBackPressed = navController::popBackStack,
+                    navigateToCategoryDetails = {
+                        navController.navigate(Screens.CategoryDetailsScreen(it))
+                    }
                 )
             }
         }

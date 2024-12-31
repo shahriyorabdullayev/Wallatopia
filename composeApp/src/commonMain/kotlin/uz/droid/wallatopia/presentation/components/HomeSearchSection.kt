@@ -21,7 +21,7 @@ import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 
 @Composable
-fun SearchField(
+fun HomeSearchSection(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
