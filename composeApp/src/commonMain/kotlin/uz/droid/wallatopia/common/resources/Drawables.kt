@@ -17,6 +17,7 @@ import wallatopia.composeapp.generated.resources.ic_popular_categories
 import wallatopia.composeapp.generated.resources.ic_profile
 import wallatopia.composeapp.generated.resources.ic_search
 import wallatopia.composeapp.generated.resources.ic_trending
+import wallatopia.composeapp.generated.resources.search_background
 import wallatopia.composeapp.generated.resources.sora_bold
 import wallatopia.composeapp.generated.resources.sora_extra_bold
 import wallatopia.composeapp.generated.resources.sora_light
@@ -47,6 +48,7 @@ object Drawables {
     object Images {
         val SplashBackground = Res.drawable.splash_background
         val HomeBackground = Res.drawable.home_background
+        val SearchBackground = Res.drawable.search_background
         val CategoryBackground = Res.drawable.category_background
         val AppLogo = Res.drawable.app_logo
         val SplashLogo = Res.drawable.splash_logo

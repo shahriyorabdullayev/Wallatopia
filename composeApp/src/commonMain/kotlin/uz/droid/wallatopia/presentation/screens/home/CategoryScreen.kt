@@ -65,7 +65,7 @@ fun CategoryScreen(
                     top = 19.dp,
                     bottom = 100.dp,
                 ),
-                verticalItemSpacing = 10.dp,
+                verticalItemSpacing = 11.dp,
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 items(uiState.categories) {
