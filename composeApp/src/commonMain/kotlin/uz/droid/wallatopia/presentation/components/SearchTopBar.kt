@@ -44,6 +44,9 @@ fun SearchTopBar(
         )
         Row(
             modifier = Modifier
+                .advancedShadow(
+                    blur = 7.dp
+                )
                 .clip(AppTheme.shape.rounded10)
                 .background(AppTheme.colorScheme.jetGray)
                 .padding(start = 18.dp, end = 8.dp),

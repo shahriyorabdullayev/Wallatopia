@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
@@ -29,6 +30,10 @@ fun HomeSearchSection(
         modifier = modifier
             .clip(AppTheme.shape.rounded10)
             .background(AppTheme.colorScheme.jetGray)
+            .advancedShadow(
+                offsetY = 1.dp,
+                blur = 11.dp
+            )
             .clickable(
                 onClick = onClick,
                 interactionSource = remember { MutableInteractionSource() },

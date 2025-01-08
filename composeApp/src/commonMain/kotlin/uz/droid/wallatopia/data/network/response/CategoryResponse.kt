@@ -21,7 +21,7 @@ data class CoverPhoto (
     val color: String,
 
     @SerialName("blur_hash")
-    val blurHash: String,
+    val blurHash: String?,
 
     val urls: Urls,
 //    val links: CoverPhotoLinks,

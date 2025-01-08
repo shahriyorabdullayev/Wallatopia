@@ -52,12 +52,14 @@ import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
 import uz.droid.wallatopia.presentation.components.MainImageItem
 import uz.droid.wallatopia.presentation.components.HomeSearchSection
+import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 
 @Composable
 fun HomeScreen(
-    navigateToSearch: () -> Unit
+    navigateToSearch: () -> Unit,
+    navigateToCategories: () -> Unit
 ) {
     val viewModel: HomeViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -86,7 +88,7 @@ fun HomeScreen(
                 AIGenerateCardSection(
                     modifier = Modifier.height(136.dp),
                     onClick = {
-                        event(HomeContract.Intent.NavigateToAIGenerate)
+
                     }
                 )
             }
@@ -94,7 +96,7 @@ fun HomeScreen(
             item(span = StaggeredGridItemSpan.FullLine) {
                 PopularCategoriesTitleSection(
                     onSeeMore = {
-                        event(HomeContract.Intent.NavigateToCategories)
+                        navigateToCategories()
                     }
                 )
             }
@@ -128,7 +130,12 @@ fun HomeScreen(
 
 @Composable
 fun AIGenerateCardSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Box {
+    Box(
+        modifier = Modifier.advancedShadow(
+            offsetY = 4.dp,
+            blur = 4.dp
+        )
+    ) {
         Image(
             modifier = Modifier.then(modifier)
                 .fillMaxWidth()
@@ -226,7 +233,12 @@ fun PopularCategoriesListSection(
     ) {
         categories.take(4).forEach {
             CategoryItem(
-                Modifier.height(48.dp).clip(AppTheme.shape.rounded4).fillMaxWidth().weight(1f),
+                Modifier
+                    .advancedShadow(
+                        offsetY = 4.dp,
+                        blur = 4.dp
+                    )
+                    .height(48.dp).clip(AppTheme.shape.rounded4).fillMaxWidth().weight(1f),
                 category = it
             )
         }
