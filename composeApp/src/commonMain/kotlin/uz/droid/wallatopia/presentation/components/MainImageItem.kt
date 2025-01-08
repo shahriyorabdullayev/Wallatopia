@@ -38,6 +38,10 @@ fun MainImageItem(
 ) {
     Box(
         Modifier.then(modifier)
+            .advancedShadow(
+                offsetY = 4.dp,
+                blur = 4.dp
+            )
             .clip(AppTheme.shape.rounded7)
             .clickable(
                 onClick = onClick,

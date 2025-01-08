@@ -39,6 +39,7 @@ import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.MainImageItem
 import uz.droid.wallatopia.presentation.components.SearchTopBar
+import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.SearchContract
 import uz.droid.wallatopia.presentation.viewmodels.SearchViewModel
 
@@ -117,7 +118,13 @@ fun BrowseByCategorySection(
         ) {
             items(categories) {
                 CategoryItem(
-                    Modifier.height(64.dp).fillMaxWidth().clip(AppTheme.shape.rounded5)
+                    Modifier
+                        .height(64.dp)
+                        .advancedShadow(
+                            offsetY = 5.dp,
+                            blur = 5.dp
+                        )
+                        .fillMaxWidth().clip(AppTheme.shape.rounded5)
                         .clickable(
                             onClick = {
                                 navigateToCategoryDetails(it.id)

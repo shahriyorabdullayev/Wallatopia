@@ -18,10 +18,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -32,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.Screens
+import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
 import uz.droid.wallatopia.presentation.screens.SearchScreen
 import uz.droid.wallatopia.presentation.screens.home.CategoryScreen
@@ -40,7 +43,9 @@ import uz.droid.wallatopia.presentation.screens.home.HomeScreen
 import uz.droid.wallatopia.presentation.screens.home.ProfileScreen
 
 @Composable
-fun HomeNavGraph() {
+fun HomeNavGraph(
+    globalNavController: NavController
+) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
@@ -57,14 +62,17 @@ fun HomeNavGraph() {
             composable<Screens.HomeGraph.HomeScreen> {
                 HomeScreen(
                     navigateToSearch = {
-                        navController.navigate(Screens.SearchScreen)
+                        globalNavController.navigate(Screens.SearchScreen)
+                    },
+                    navigateToCategories = {
+                        navController.navigate(Screens.HomeGraph.CategoriesScreen)
                     }
                 )
             }
             composable<Screens.HomeGraph.CategoriesScreen> {
                 CategoryScreen(
                     navigateToCategoryDetails = {
-                        navController.navigate(Screens.CategoryDetailsScreen(it))
+                        globalNavController.navigate(Screens.CategoryDetailsScreen(it))
                     },
                     onBackPressed = navController::popBackStack
                 )
@@ -74,21 +82,6 @@ fun HomeNavGraph() {
             }
             composable<Screens.HomeGraph.ProfileScreen> {
                 ProfileScreen()
-            }
-            composable<Screens.CategoryDetailsScreen> { backStackEntry ->
-                val category: Screens.CategoryDetailsScreen = backStackEntry.toRoute()
-                CategoryDetailsScreen(
-                    categoryId = category.categoryId,
-                    onBackPressed = navController::popBackStack
-                )
-            }
-            composable<Screens.SearchScreen> {
-                SearchScreen(
-                    onBackPressed = navController::popBackStack,
-                    navigateToCategoryDetails = {
-                        navController.navigate(Screens.CategoryDetailsScreen(it))
-                    }
-                )
             }
         }
     }
@@ -110,8 +103,12 @@ fun BottomNavigationCustom(navController: NavHostController) {
     BottomNavigation(
         modifier = Modifier
             .fillMaxWidth()
-            .height(84.dp),
-        elevation = 0.dp,
+            .height(84.dp)
+            .advancedShadow(
+                shape = RectangleShape,
+                offsetY = (-9).dp,
+                blur = 18.dp
+            ),
         backgroundColor = Color(0xFF262626)
     ) {
         bottomScreens.forEach { screen ->

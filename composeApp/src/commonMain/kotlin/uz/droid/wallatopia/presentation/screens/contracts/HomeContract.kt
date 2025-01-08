@@ -11,9 +11,6 @@ class HomeContract {
 
     sealed interface Intent {
         data object Init : Intent
-        data object NavigateToCategories : Intent
-        data object NavigateToAIGenerate : Intent
-        data object NavigateToSearch : Intent
         data class AddToFavorite(val imageUiModel: ImageUiModel) : Intent
         data class OpenImage(val imageUrl: String) : Intent
     }

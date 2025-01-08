@@ -39,18 +39,6 @@ class HomeViewModel(
                 handleWallpaperFetch()
                 handleCategoriesFetch()
             }
-
-            HomeContract.Intent.NavigateToAIGenerate -> {
-
-            }
-
-            HomeContract.Intent.NavigateToCategories -> {
-
-            }
-
-            HomeContract.Intent.NavigateToSearch -> {
-
-            }
         }
     }
 
