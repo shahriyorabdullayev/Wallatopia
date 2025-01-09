@@ -21,18 +21,25 @@ class HomeViewModel(
     private val _uiState = MutableStateFlow(HomeContract.HomeState())
     val uiState: StateFlow<HomeContract.HomeState> = _uiState.asStateFlow()
 
+    private var favorites = emptyList<ImageUiModel>()
+
     init {
         onEventDispatch(HomeContract.Intent.Init)
     }
 
     fun onEventDispatch(intent: HomeContract.Intent) {
         when (intent) {
-            is HomeContract.Intent.AddToFavorite -> {
+            is HomeContract.Intent.AddToFavorites -> {
                 handleAddToFavorites(intent.imageUiModel)
             }
 
             is HomeContract.Intent.OpenImage -> {
 
+            }
+            is HomeContract.Intent.DeleteFromFavorites -> {
+                viewModelScope.launch {
+                    favoriteImagesRepository.deleteImage(intent.imageUiModel)
+                }
             }
 
             HomeContract.Intent.Init -> {
@@ -44,8 +51,14 @@ class HomeViewModel(
 
     private fun handleWallpaperFetch() {
         viewModelScope.launch {
-            repository.fetchWallpapers().onSuccess {
-                _uiState.value = _uiState.value.copy(images = it.map { it.toUiModel })
+            favoriteImagesRepository.fetchFavoriteImages().collect {
+                viewModelScope.launch {
+                    repository.fetchWallpapers().onSuccess { images ->
+                        _uiState.value = _uiState.value.copy(images = images.map {
+                            it.toUiModel(isFavorite = favoriteImagesRepository.isFavorite(it.id))
+                        })
+                    }
+                }
             }
         }
     }

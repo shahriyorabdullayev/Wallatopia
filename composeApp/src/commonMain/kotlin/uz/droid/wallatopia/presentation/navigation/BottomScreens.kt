@@ -14,28 +14,28 @@ sealed class BottomScreens<T>(
 ) {
     @Serializable
     data object Home : BottomScreens<Screens.HomeGraph.HomeScreen>(
-        name = "Home",
+        name = "",
         icon = Drawables.Icons.Home,
         route = Screens.HomeGraph.HomeScreen
     )
 
     @Serializable
     data object Categories : BottomScreens<Screens.HomeGraph.CategoriesScreen>(
-        name = "Categories",
+        name = "",
         icon = Drawables.Icons.Category,
         route = Screens.HomeGraph.CategoriesScreen
     )
 
     @Serializable
     data object Favorites : BottomScreens<Screens.HomeGraph.FavouritesScreen>(
-        name = "Favorites",
+        name = "",
         icon = Drawables.Icons.Favorite,
         route = Screens.HomeGraph.FavouritesScreen
     )
 
     @Serializable
     data object Profile : BottomScreens<Screens.HomeGraph.ProfileScreen>(
-        name = "Profile",
+        name = "",
         icon = Drawables.Icons.Profile,
         route = Screens.HomeGraph.ProfileScreen
     )

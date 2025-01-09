@@ -120,7 +120,11 @@ fun HomeScreen(
                         event(HomeContract.Intent.OpenImage(image.url))
                     },
                     onFavoriteClick = {
-                        event(HomeContract.Intent.AddToFavorite(image))
+                        if (it) {
+                            event(HomeContract.Intent.DeleteFromFavorites(image))
+                        } else {
+                            event(HomeContract.Intent.AddToFavorites(image))
+                        }
                     }
                 )
             }
@@ -137,11 +141,8 @@ fun AIGenerateCardSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
         )
     ) {
         Image(
-            modifier = Modifier.then(modifier)
-                .fillMaxWidth()
-                .height(136.dp)
-                .clip(AppTheme.shape.rounded7)
-                .clickable(
+            modifier = Modifier.then(modifier).fillMaxWidth().height(136.dp)
+                .clip(AppTheme.shape.rounded7).clickable(
                     onClick = onClick,
                     interactionSource = remember { MutableInteractionSource() },
                     indication = ripple()
@@ -168,13 +169,11 @@ fun AIGenerateCardSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 contentColor = AppTheme.colorScheme.immutableWhite
             ),
             modifier = Modifier.align(Alignment.BottomEnd).padding(
-                bottom = 27.dp,
-                end = 18.dp
+                bottom = 27.dp, end = 18.dp
             )
         ) {
             Text(
-                "Generate With A.I",
-                style = AppTheme.typography.buttonTextSmall
+                "Generate With A.I", style = AppTheme.typography.buttonTextSmall
             )
         }
     }
@@ -183,8 +182,7 @@ fun AIGenerateCardSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
 @Composable
 fun PopularCategoriesTitleSection(modifier: Modifier = Modifier, onSeeMore: () -> Unit) {
     Row(
-        modifier = Modifier.then(modifier)
-            .fillMaxWidth(),
+        modifier = Modifier.then(modifier).fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -199,14 +197,11 @@ fun PopularCategoriesTitleSection(modifier: Modifier = Modifier, onSeeMore: () -
         )
         Spacer(Modifier.weight(1f))
         Row(
-            modifier = Modifier
-                .clip(AppTheme.shape.rounded4)
-                .clickable(
+            modifier = Modifier.clip(AppTheme.shape.rounded4).clickable(
                     onClick = onSeeMore,
                     interactionSource = remember { MutableInteractionSource() },
                     indication = ripple()
-                )
-                .padding(start = 10.dp, top = 4.dp, bottom = 4.dp),
+                ).padding(start = 10.dp, top = 4.dp, bottom = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -224,8 +219,7 @@ fun PopularCategoriesTitleSection(modifier: Modifier = Modifier, onSeeMore: () -
 
 @Composable
 fun PopularCategoriesListSection(
-    modifier: Modifier = Modifier,
-    categories: List<CategoryUiModel> = emptyList()
+    modifier: Modifier = Modifier, categories: List<CategoryUiModel> = emptyList()
 ) {
     Row(
         modifier = Modifier.then(modifier).fillMaxWidth(),
@@ -233,12 +227,9 @@ fun PopularCategoriesListSection(
     ) {
         categories.take(4).forEach {
             CategoryItem(
-                Modifier
-                    .advancedShadow(
-                        offsetY = 4.dp,
-                        blur = 4.dp
-                    )
-                    .height(48.dp).clip(AppTheme.shape.rounded4).fillMaxWidth().weight(1f),
+                Modifier.advancedShadow(
+                        offsetY = 4.dp, blur = 4.dp
+                    ).height(48.dp).clip(AppTheme.shape.rounded4).fillMaxWidth().weight(1f),
                 category = it
             )
         }
@@ -253,18 +244,14 @@ fun HomeTabSection(
     var selectedIndex by remember { mutableStateOf(0) }
 
     HomeCustomTab(
-        modifier = modifier,
-        selectedItemIndex = selectedIndex,
-        onClick = {
+        modifier = modifier, selectedItemIndex = selectedIndex, onClick = {
             selectedIndex = it
-        },
-        items = tabs
+        }, items = tabs
     )
 }
 
 data class TabItem(
-    val image: DrawableResource,
-    val tabTitle: String
+    val image: DrawableResource, val tabTitle: String
 )
 
 val tabs = listOf(
