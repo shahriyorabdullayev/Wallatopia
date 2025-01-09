@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -34,7 +36,7 @@ fun MainImageItem(
     modifier: Modifier = Modifier,
     image: ImageUiModel,
     onClick: () -> Unit,
-    onFavoriteClick: () -> Unit = {}
+    onFavoriteClick: (Boolean) -> Unit = {}
 ) {
     Box(
         Modifier.then(modifier)
@@ -70,23 +72,35 @@ fun MainImageItem(
         }
 
         Box(
-            contentAlignment = Alignment.Center,
             modifier = Modifier
+                .size(40.dp)
                 .align(Alignment.BottomStart)
-                .padding(start = 4.dp, bottom = 3.dp)
-                .clip(AppTheme.shape.circular)
-                .clickable(
-                    onClick = onFavoriteClick,
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = ripple()
-                )
-                .background(AppTheme.colorScheme.charcoalBlue.copy(0.53f))
-                .padding(start = 6.dp, top = 6.dp, bottom = 5.dp, end = 6.dp)
+                .bounceClickable {
+                    onFavoriteClick(image.isFavorite)
+                },
+            contentAlignment = Alignment.BottomStart
         ) {
-            Image(
-                painter = painterResource(Drawables.Icons.FavoriteOutlined),
-                contentDescription = "favorite"
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(32.dp)
+                    .padding(start = 4.dp, bottom = 3.dp)
+                    .clip(AppTheme.shape.circular)
+                    .bounceClickable {
+                        onFavoriteClick(image.isFavorite)
+                    }
+                    .background(AppTheme.colorScheme.charcoalBlue.copy(0.53f), shape = CircleShape)
+                    .padding(top = if (image.isFavorite) 1.dp else 0.dp)
+            ) {
+                Image(
+                    painter = painterResource(
+                        if (image.isFavorite) Drawables.Icons.FavouriteSelected else Drawables.Icons.FavoriteOutlined
+                    ),
+                    contentDescription = "favorite",
+                    modifier = Modifier.size(16.dp)
+                )
+            }
         }
+
     }
 }

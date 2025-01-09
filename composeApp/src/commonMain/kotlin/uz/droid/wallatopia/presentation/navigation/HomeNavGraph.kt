@@ -1,12 +1,16 @@
 package uz.droid.wallatopia.presentation.navigation
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -19,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.Screens
+import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
 import uz.droid.wallatopia.presentation.screens.SearchScreen
@@ -90,6 +96,7 @@ fun HomeNavGraph(
 
 @Composable
 fun BottomNavigationCustom(navController: NavHostController) {
+    val navigationBarsPadding = WindowInsets.navigationBars.asPaddingValues(LocalDensity.current)
     val bottomScreens = remember {
         listOf(
             BottomScreens.Home,
@@ -103,13 +110,13 @@ fun BottomNavigationCustom(navController: NavHostController) {
     BottomNavigation(
         modifier = Modifier
             .fillMaxWidth()
-            .height(84.dp)
+            .height(74.dp)
             .advancedShadow(
                 shape = RectangleShape,
                 offsetY = (-9).dp,
                 blur = 18.dp
             ),
-        backgroundColor = Color(0xFF262626)
+        backgroundColor = AppTheme.colorScheme.charlestonGray
     ) {
         bottomScreens.forEach { screen ->
             val isSelected =
@@ -122,7 +129,9 @@ fun BottomNavigationCustom(navController: NavHostController) {
                     Icon(
                         painter = painterResource(screen.icon),
                         contentDescription = screen.name,
-                        modifier = Modifier.size(32.dp),
+                        modifier = Modifier
+                            .padding(top = 6.dp)
+                            .size(32.dp),
                     )
                 },
                 label = {

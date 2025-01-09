@@ -10,7 +10,7 @@ val ImageUiModel.toEntity: UnsplashImageEntity
         blurHash = this.blurHash
     )
 
-val UnsplashImageEntity.toModel: ImageUiModel
+val UnsplashImageEntity.toUiModel: ImageUiModel
     get() = ImageUiModel(
         id = this.id,
         url = this.imageUrl,
