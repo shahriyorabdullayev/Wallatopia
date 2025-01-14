@@ -8,12 +8,15 @@ import io.ktor.http.takeFrom
 import uz.droid.wallatopia.common.Constants.GENERATIVE_MODELS
 import uz.droid.wallatopia.data.network.UNSPLASH_URL
 import uz.droid.wallatopia.data.network.aiApiUrl
+import kotlinx.coroutines.flow.Flow
 import uz.droid.wallatopia.data.network.api.handle
 import uz.droid.wallatopia.data.network.apiUrl
 import uz.droid.wallatopia.data.network.json
+import uz.droid.wallatopia.data.network.pollinationsApiUrl
 import uz.droid.wallatopia.data.network.response.Categories
 import uz.droid.wallatopia.data.network.response.Photos
 import uz.droid.wallatopia.data.network.response.SearchResponse
+import uz.droid.wallatopia.data.network.response.SuggestionResponse
 import uz.droid.wallatopia.data.network.service.MainApiService
 
 val token = "kUsXzb97PY9dJuPL-kzDZQ0R0g8d4c759S6wrhu4RnU"
@@ -61,6 +64,15 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
             this.get {
                 json()
                 aiApiUrl("prompt/$prompt/$model")
+            }
+        }
+    }
+
+    override suspend fun getSuggestions(query: String): Result<SuggestionResponse> {
+        return httpClient.handle {
+            this.get {
+                json()
+                pollinationsApiUrl("5commonsuggestionwordsandphrasesstartingwith${query}andresponselistnamenamedsuggestions?json=true")
             }
         }
     }

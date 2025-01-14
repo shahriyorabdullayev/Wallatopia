@@ -22,4 +22,7 @@ interface FavoriteImagesDao {
 
     @Query("SELECT * FROM unsplash_images")
     fun getAllFavoriteImages(): Flow<List<UnsplashImageEntity>>
+
+    @Query("SELECT EXISTS(SELECT * FROM unsplash_images WHERE id = :id)")
+    suspend fun isFavorite(id: String): Boolean
 }

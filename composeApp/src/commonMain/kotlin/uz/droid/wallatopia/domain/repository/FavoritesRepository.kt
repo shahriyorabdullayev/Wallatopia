@@ -12,4 +12,6 @@ interface FavoritesRepository {
     suspend fun clearFavorites()
 
     fun fetchFavoriteImages(): Flow<List<ImageUiModel>>
+
+    suspend fun isFavorite(id: String): Boolean
 }

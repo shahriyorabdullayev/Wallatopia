@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -60,6 +61,7 @@ fun SearchScreen(
         ) {
             SearchTopBar(
                 query = uiState.query,
+                suggestions = uiState.suggestions,
                 modifier = Modifier
                     .padding(start = 20.dp, top = 26.dp, end = 31.dp),
                 onBack = {

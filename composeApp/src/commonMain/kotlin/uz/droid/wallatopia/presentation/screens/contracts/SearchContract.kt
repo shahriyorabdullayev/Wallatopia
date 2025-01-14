@@ -8,7 +8,8 @@ class SearchContract {
         val query: String = "",
         val lastQuery: String = "",
         val categories: List<CategoryUiModel> = emptyList(),
-        val searchResults: List<ImageUiModel> = emptyList()
+        val searchResults: List<ImageUiModel> = emptyList(),
+        val suggestions: List<String> = emptyList()
     )
 
     sealed interface Intent {

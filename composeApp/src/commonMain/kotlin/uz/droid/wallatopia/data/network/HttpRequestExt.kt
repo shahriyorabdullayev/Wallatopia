@@ -11,6 +11,7 @@ import uz.droid.wallatopia.data.network.service.impl.token
 
 const val UNSPLASH_URL = "https://api.unsplash.com/"
 const val POLLINATIONS_IMAGE_URL = "https://image.pollinations.ai/"
+const val POLLINATIONS_URL = "https://text.pollinations.ai/"
 
 fun HttpRequestBuilder.json() {
     contentType(ContentType.Application.Json)
@@ -32,6 +33,13 @@ fun HttpRequestBuilder.apiUrl(path: String) {
 fun HttpRequestBuilder.aiApiUrl(path: String) {
     url {
         takeFrom(POLLINATIONS_IMAGE_URL)
+        encodedPath = path
+    }
+}
+
+fun HttpRequestBuilder.pollinationsApiUrl(path: String) {
+    url {
+        takeFrom(POLLINATIONS_URL)
         encodedPath = path
     }
 }
