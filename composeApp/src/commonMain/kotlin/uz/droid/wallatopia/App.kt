@@ -11,6 +11,7 @@ import org.koin.compose.KoinContext
 import uz.droid.wallatopia.common.theme.WallatopiaAppTheme
 import uz.droid.wallatopia.presentation.navigation.HomeNavGraph
 import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
+import uz.droid.wallatopia.presentation.screens.ImageGenerateScreen
 import uz.droid.wallatopia.presentation.screens.SearchScreen
 import uz.droid.wallatopia.presentation.screens.SplashScreen
 
@@ -57,6 +58,11 @@ fun HavHostMain(navController: NavHostController = rememberNavController()) {
                  navigateToCategoryDetails = {
                      navController.navigate(Screens.CategoryDetailsScreen(it))
                  }
+             )
+         }
+         composable<Screens.ImageGenerateScreen> {
+             ImageGenerateScreen(
+                 onBackPressed = navController::popBackStack
              )
          }
     }

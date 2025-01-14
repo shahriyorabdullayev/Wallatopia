@@ -60,7 +60,7 @@ class SearchViewModel(
 
     private fun handlePhotoSearch(query: String) {
         viewModelScope.launch {
-            repository.searchPhotosPhotos(query).onSuccess {
+            repository.searchPhotos(query).onSuccess {
                 _uiState.value =
                     _uiState.value.copy(
                         searchResults = it.results.map { it.toUiModel },

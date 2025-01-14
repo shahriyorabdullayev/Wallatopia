@@ -2,6 +2,12 @@ package uz.droid.wallatopia.data.network.service.impl
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.http.encodedPath
+import io.ktor.http.takeFrom
+import uz.droid.wallatopia.common.Constants.GENERATIVE_MODELS
+import uz.droid.wallatopia.data.network.UNSPLASH_URL
+import uz.droid.wallatopia.data.network.aiApiUrl
 import uz.droid.wallatopia.data.network.api.handle
 import uz.droid.wallatopia.data.network.apiUrl
 import uz.droid.wallatopia.data.network.json
@@ -46,6 +52,15 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
             this.get {
                 json()
                 apiUrl("search/photos?query=$query&page=1&per_page=15")
+            }
+        }
+    }
+
+    override suspend fun generateImage(prompt: String, model: String): Result<Any> {
+        return httpClient.handle {
+            this.get {
+                json()
+                aiApiUrl("prompt/$prompt/$model")
             }
         }
     }

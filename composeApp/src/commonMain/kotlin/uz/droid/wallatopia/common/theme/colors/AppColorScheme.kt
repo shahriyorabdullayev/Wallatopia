@@ -30,7 +30,8 @@ data class AppColorScheme(
     val platinumGray: Color, //E2E2E2
     val neonFuchsiaPink: Color, //FF7DE2
     val onyxGray: Color, //404040
-    val silverGray: Color, //A7A7A7
+    val silverGray: Color, //A7A7A7,
+    val softWhite:Color //F6F6F6
 )
 
 val LocalAppColorScheme = staticCompositionLocalOf {
@@ -59,6 +60,7 @@ val LocalAppColorScheme = staticCompositionLocalOf {
         platinumGray = Color.Unspecified,
         neonFuchsiaPink = Color.Unspecified,
         onyxGray = Color.Unspecified,
-        silverGray = Color.Unspecified
+        silverGray = Color.Unspecified,
+        softWhite = Color.Unspecified
     )
 }

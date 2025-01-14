@@ -61,7 +61,7 @@ fun SearchScreen(
             SearchTopBar(
                 query = uiState.query,
                 modifier = Modifier
-                    .padding(start = 35.dp, top = 26.dp, end = 31.dp),
+                    .padding(start = 20.dp, top = 26.dp, end = 31.dp),
                 onBack = {
                     if (uiState.searchResults.isEmpty())
                         onBackPressed()

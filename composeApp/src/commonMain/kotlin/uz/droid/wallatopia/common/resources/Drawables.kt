@@ -6,6 +6,7 @@ import wallatopia.composeapp.generated.resources.category_background
 import wallatopia.composeapp.generated.resources.home_background
 import wallatopia.composeapp.generated.resources.home_banner
 import wallatopia.composeapp.generated.resources.ic_ai_stick
+import wallatopia.composeapp.generated.resources.ic_arrow_go
 import wallatopia.composeapp.generated.resources.ic_arrow_right
 import wallatopia.composeapp.generated.resources.ic_back
 import wallatopia.composeapp.generated.resources.ic_category
@@ -17,6 +18,8 @@ import wallatopia.composeapp.generated.resources.ic_popular_categories
 import wallatopia.composeapp.generated.resources.ic_profile
 import wallatopia.composeapp.generated.resources.ic_search
 import wallatopia.composeapp.generated.resources.ic_trending
+import wallatopia.composeapp.generated.resources.image_generate_background
+import wallatopia.composeapp.generated.resources.image_generate_placeholder
 import wallatopia.composeapp.generated.resources.search_background
 import wallatopia.composeapp.generated.resources.sora_bold
 import wallatopia.composeapp.generated.resources.sora_extra_bold
@@ -43,6 +46,7 @@ object Drawables {
         val Trending = Res.drawable.ic_trending
         val FavouriteSelected = Res.drawable.ic_favorite_selected
         val Back = Res.drawable.ic_back
+        val GoTo = Res.drawable.ic_arrow_go
     }
 
     object Images {
@@ -50,9 +54,11 @@ object Drawables {
         val HomeBackground = Res.drawable.home_background
         val SearchBackground = Res.drawable.search_background
         val CategoryBackground = Res.drawable.category_background
+        val ImageGenerateBackground = Res.drawable.image_generate_background
         val AppLogo = Res.drawable.app_logo
         val SplashLogo = Res.drawable.splash_logo
         val HomeBanner = Res.drawable.home_banner
+        val ImageGeneratePlaceHolder = Res.drawable.image_generate_placeholder
     }
 
     object Fonts {

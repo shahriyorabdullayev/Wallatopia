@@ -21,7 +21,7 @@ class MainRepositoryImpl(
         return apiService.fetchCategoryPhotos(categoryId = categoryId)
     }
 
-    override suspend fun searchPhotosPhotos(query: String): Result<SearchResponse> {
+    override suspend fun searchPhotos(query: String): Result<SearchResponse> {
         return apiService.searchPhotos(query)
     }
 }

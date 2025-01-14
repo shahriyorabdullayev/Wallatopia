@@ -33,6 +33,7 @@ import uz.droid.wallatopia.common.theme.colors.purple4C00AD
 import uz.droid.wallatopia.common.theme.colors.purpleA800F7
 import uz.droid.wallatopia.common.theme.colors.quickSilverGray
 import uz.droid.wallatopia.common.theme.colors.silverGray
+import uz.droid.wallatopia.common.theme.colors.softWhite
 import uz.droid.wallatopia.common.theme.colors.sonicSilverGray
 import uz.droid.wallatopia.common.theme.colors.spanishGray
 import uz.droid.wallatopia.common.theme.colors.violet6B37FF
@@ -68,7 +69,8 @@ val darkColorScheme = AppColorScheme(
     platinumGray = platinumGray,
     neonFuchsiaPink = neonFuchsiaPink,
     onyxGray = onyxGray,
-    silverGray = silverGray
+    silverGray = silverGray,
+    softWhite = softWhite
 )
 
 val lightColorScheme = AppColorScheme(
@@ -96,7 +98,8 @@ val lightColorScheme = AppColorScheme(
     platinumGray = platinumGray,
     neonFuchsiaPink = neonFuchsiaPink,
     onyxGray = onyxGray,
-    silverGray = silverGray
+    silverGray = silverGray,
+    softWhite = softWhite
 )
 
 @Composable
@@ -220,6 +223,7 @@ private fun typography() = AppTypography(
 
 private val shape = AppShape(
     circular = CircleShape,
+    rounded15 = RoundedCornerShape(15.dp),
     rounded7 = RoundedCornerShape(7.dp),
     rounded10 = RoundedCornerShape(10.dp),
     rounded6 = RoundedCornerShape(6.dp),

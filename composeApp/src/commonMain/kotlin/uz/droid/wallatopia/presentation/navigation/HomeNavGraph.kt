@@ -66,6 +66,9 @@ fun HomeNavGraph(
                     },
                     navigateToCategories = {
                         navController.navigate(Screens.HomeGraph.CategoriesScreen)
+                    },
+                    navigateToImageGenerate = {
+                        globalNavController.navigate(Screens.ImageGenerateScreen)
                     }
                 )
             }
