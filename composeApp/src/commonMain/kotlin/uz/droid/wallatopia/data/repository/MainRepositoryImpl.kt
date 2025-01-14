@@ -1,8 +1,10 @@
 package uz.droid.wallatopia.data.repository
 
+import kotlinx.coroutines.flow.Flow
 import uz.droid.wallatopia.data.network.response.Categories
 import uz.droid.wallatopia.data.network.response.Photos
 import uz.droid.wallatopia.data.network.response.SearchResponse
+import uz.droid.wallatopia.data.network.response.SuggestionResponse
 import uz.droid.wallatopia.data.network.service.MainApiService
 import uz.droid.wallatopia.domain.repository.MainRepository
 
@@ -23,5 +25,9 @@ class MainRepositoryImpl(
 
     override suspend fun searchPhotosPhotos(query: String): Result<SearchResponse> {
         return apiService.searchPhotos(query)
+    }
+
+    override suspend fun getSuggestions(query: String): Result<SuggestionResponse> {
+        return apiService.getSuggestions(query)
     }
 }
