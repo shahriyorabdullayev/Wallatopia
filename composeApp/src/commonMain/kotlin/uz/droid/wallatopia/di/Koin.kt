@@ -13,6 +13,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
             httpClientModule,
             apiModule,
             viewModelModule,
+            coroutinesModule
         )
     }
 }

@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import uz.droid.wallatopia.data.network.service.impl.token
 
 const val UNSPLASH_URL = "https://api.unsplash.com/"
+const val POLLINATIONS_IMAGE_URL = "https://image.pollinations.ai/"
 const val POLLINATIONS_URL = "https://text.pollinations.ai/"
 
 fun HttpRequestBuilder.json() {
@@ -26,6 +27,13 @@ fun HttpRequestBuilder.apiUrl(path: String) {
         if (token.isNotBlank()) {
             header("Authorization", "Client-ID $token)}")
         }
+    }
+}
+
+fun HttpRequestBuilder.aiApiUrl(path: String) {
+    url {
+        takeFrom(POLLINATIONS_IMAGE_URL)
+        encodedPath = path
     }
 }
 

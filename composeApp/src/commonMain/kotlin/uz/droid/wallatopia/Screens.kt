@@ -14,6 +14,9 @@ object Screens {
     object SearchScreen
 
     @Serializable
+    object ImageGenerateScreen
+
+    @Serializable
     object HomeGraph {
         @Serializable
         object HomeScreen

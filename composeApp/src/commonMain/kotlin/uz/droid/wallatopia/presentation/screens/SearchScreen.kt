@@ -63,7 +63,7 @@ fun SearchScreen(
                 query = uiState.query,
                 suggestions = uiState.suggestions,
                 modifier = Modifier
-                    .padding(start = 35.dp, top = 26.dp, end = 31.dp),
+                    .padding(start = 20.dp, top = 26.dp, end = 31.dp),
                 onBack = {
                     if (uiState.searchResults.isEmpty())
                         onBackPressed()

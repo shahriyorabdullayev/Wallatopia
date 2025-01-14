@@ -13,7 +13,7 @@ interface MainRepository {
 
     suspend fun fetchCategoryPhotos(categoryId:String): Result<Photos>
 
-    suspend fun searchPhotosPhotos(query:String): Result<SearchResponse>
+    suspend fun searchPhotos(query:String): Result<SearchResponse>
 
     suspend fun getSuggestions(query:String): Result<SuggestionResponse>
 }

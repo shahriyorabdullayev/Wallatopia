@@ -9,8 +9,10 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.serialization.json.Json
-import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -19,21 +21,23 @@ import uz.droid.wallatopia.data.local.getRoomDatabase
 import uz.droid.wallatopia.data.network.service.MainApiService
 import uz.droid.wallatopia.data.network.service.impl.MainApiServiceImpl
 import uz.droid.wallatopia.data.repository.FavoritesRepositoryImpl
+import uz.droid.wallatopia.data.repository.ImageGenerateRepositoryImpl
 import uz.droid.wallatopia.data.repository.MainRepositoryImpl
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
+import uz.droid.wallatopia.domain.repository.ImageGenerateRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
-import uz.droid.wallatopia.presentation.screens.home.CategoryScreen
 import uz.droid.wallatopia.presentation.viewmodels.CategoryDetailsViewModel
 import uz.droid.wallatopia.presentation.viewmodels.CategoryViewModel
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
+import uz.droid.wallatopia.presentation.viewmodels.ImageGenerateViewModel
 import uz.droid.wallatopia.presentation.viewmodels.SearchViewModel
 
 expect val platformModule: Module
 
 val databaseModule = module {
     single { getRoomDatabase(get()) }
-    single { get<WallatopiaDatabase>().favoriteImagesDao()}
+    single { get<WallatopiaDatabase>().favoriteImagesDao() }
 }
 
 val apiModule = module {
@@ -43,6 +47,13 @@ val apiModule = module {
 val repositoryModule = module {
     factory<MainRepository> { MainRepositoryImpl(get()) }
     factory<FavoritesRepository> { FavoritesRepositoryImpl(get()) }
+    factory<ImageGenerateRepository> { ImageGenerateRepositoryImpl(get()) }
+}
+
+val coroutinesModule = module {
+    single<CoroutineDispatcher> {
+        Dispatchers.IO
+    }
 }
 
 val viewModelModule = module {
@@ -51,6 +62,7 @@ val viewModelModule = module {
     viewModelOf(::CategoryViewModel)
     viewModelOf(::CategoryDetailsViewModel)
     viewModelOf(::SearchViewModel)
+    viewModelOf(::ImageGenerateViewModel)
 }
 
 val httpClientModule = module {

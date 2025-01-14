@@ -59,7 +59,8 @@ import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 @Composable
 fun HomeScreen(
     navigateToSearch: () -> Unit,
-    navigateToCategories: () -> Unit
+    navigateToCategories: () -> Unit,
+    navigateToImageGenerate: () -> Unit
 ) {
     val viewModel: HomeViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -87,9 +88,7 @@ fun HomeScreen(
             item(span = StaggeredGridItemSpan.FullLine) {
                 AIGenerateCardSection(
                     modifier = Modifier.height(136.dp),
-                    onClick = {
-
-                    }
+                    onClick = navigateToImageGenerate
                 )
             }
 

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Shape
 @Stable
 data class AppShape(
     val circular: Shape,
+    val rounded15: Shape,
     val rounded10: Shape,
     val rounded7: Shape,
     val rounded6: Shape,
@@ -19,6 +20,7 @@ data class AppShape(
 val LocalAppShape = staticCompositionLocalOf {
     AppShape(
         circular = CircleShape,
+        rounded15 = RectangleShape,
         rounded10 = RectangleShape,
         rounded7 = RectangleShape,
         rounded6 = RectangleShape,
