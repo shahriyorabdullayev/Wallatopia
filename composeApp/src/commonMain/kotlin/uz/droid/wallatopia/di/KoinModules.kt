@@ -21,10 +21,8 @@ import uz.droid.wallatopia.data.local.getRoomDatabase
 import uz.droid.wallatopia.data.network.service.MainApiService
 import uz.droid.wallatopia.data.network.service.impl.MainApiServiceImpl
 import uz.droid.wallatopia.data.repository.FavoritesRepositoryImpl
-import uz.droid.wallatopia.data.repository.ImageGenerateRepositoryImpl
 import uz.droid.wallatopia.data.repository.MainRepositoryImpl
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
-import uz.droid.wallatopia.domain.repository.ImageGenerateRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
 import uz.droid.wallatopia.presentation.viewmodels.CategoryDetailsViewModel
 import uz.droid.wallatopia.presentation.viewmodels.CategoryViewModel
@@ -47,7 +45,6 @@ val apiModule = module {
 val repositoryModule = module {
     factory<MainRepository> { MainRepositoryImpl(get()) }
     factory<FavoritesRepository> { FavoritesRepositoryImpl(get()) }
-    factory<ImageGenerateRepository> { ImageGenerateRepositoryImpl(get()) }
 }
 
 val coroutinesModule = module {

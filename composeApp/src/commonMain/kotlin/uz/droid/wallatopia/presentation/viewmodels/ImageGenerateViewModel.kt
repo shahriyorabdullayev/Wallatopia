@@ -9,12 +9,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import uz.droid.wallatopia.common.Constants.GENERATIVE_MODELS
 import uz.droid.wallatopia.data.mapper.toUiModel
-import uz.droid.wallatopia.domain.repository.ImageGenerateRepository
+import uz.droid.wallatopia.data.network.POLLINATIONS_IMAGE_URL
 import uz.droid.wallatopia.domain.repository.MainRepository
 import uz.droid.wallatopia.presentation.screens.contracts.ImageGenerateContract
 
 class ImageGenerateViewModel(
-    private val imageGenerateRepository: ImageGenerateRepository,
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
@@ -39,7 +38,7 @@ class ImageGenerateViewModel(
             is ImageGenerateContract.Intent.Generate -> {
                 _generationState.value = ImageGenerateContract.ImageGenerateProcessState.Generating
                 val imageUrl =
-                    "https://image.pollinations.ai/prompt/${uiState.value.prompt}/${GENERATIVE_MODELS[1]}?width=${intent.screenSize.width}&height=${intent.screenSize.height}&safe=true"
+                    "${POLLINATIONS_IMAGE_URL}prompt/${uiState.value.prompt}/${GENERATIVE_MODELS[1]}?width=${intent.screenSize.width}&height=${intent.screenSize.height}&safe=true"
 
                 _uiState.value = _uiState.value.copy(
                     generatedImageUrl = imageUrl,

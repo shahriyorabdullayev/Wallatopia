@@ -30,13 +30,6 @@ fun HttpRequestBuilder.apiUrl(path: String) {
     }
 }
 
-fun HttpRequestBuilder.aiApiUrl(path: String) {
-    url {
-        takeFrom(POLLINATIONS_IMAGE_URL)
-        encodedPath = path
-    }
-}
-
 fun HttpRequestBuilder.pollinationsApiUrl(path: String) {
     url {
         takeFrom(POLLINATIONS_URL)
