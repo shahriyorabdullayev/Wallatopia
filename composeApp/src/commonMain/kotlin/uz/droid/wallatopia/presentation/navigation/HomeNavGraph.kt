@@ -1,6 +1,5 @@
 package uz.droid.wallatopia.presentation.navigation
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -36,17 +34,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.Screens
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.components.advancedShadow
-import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
-import uz.droid.wallatopia.presentation.screens.SearchScreen
 import uz.droid.wallatopia.presentation.screens.home.CategoryScreen
 import uz.droid.wallatopia.presentation.screens.home.FavoriteScreen
 import uz.droid.wallatopia.presentation.screens.home.HomeScreen
-import uz.droid.wallatopia.presentation.screens.home.ProfileScreen
+import uz.droid.wallatopia.presentation.screens.home.SettingsScreen
 
 @Composable
 fun HomeNavGraph(
@@ -90,7 +85,17 @@ fun HomeNavGraph(
                 FavoriteScreen()
             }
             composable<Screens.HomeGraph.ProfileScreen> {
-                ProfileScreen()
+                SettingsScreen(
+                    navigateToLanguage = {
+                        globalNavController.navigate(Screens.LanguageScreen)
+                    },
+                    navigateToTerms = {
+                        globalNavController.navigate(Screens.TermsScreen)
+                    },
+                    navigateToPrivacy = {
+                        globalNavController.navigate(Screens.PrivacyScreen)
+                    }
+                )
             }
         }
     }
@@ -99,7 +104,6 @@ fun HomeNavGraph(
 
 @Composable
 fun BottomNavigationCustom(navController: NavHostController) {
-    val navigationBarsPadding = WindowInsets.navigationBars.asPaddingValues(LocalDensity.current)
     val bottomScreens = remember {
         listOf(
             BottomScreens.Home,
