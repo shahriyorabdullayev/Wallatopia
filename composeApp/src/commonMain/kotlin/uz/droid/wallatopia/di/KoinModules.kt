@@ -30,6 +30,7 @@ import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 import uz.droid.wallatopia.presentation.viewmodels.ImageGenerateViewModel
 import uz.droid.wallatopia.presentation.viewmodels.SearchViewModel
+import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 
 expect val platformModule: Module
 
@@ -60,6 +61,7 @@ val viewModelModule = module {
     viewModelOf(::CategoryDetailsViewModel)
     viewModelOf(::SearchViewModel)
     viewModelOf(::ImageGenerateViewModel)
+    viewModelOf(::SettingsViewModel)
 }
 
 val httpClientModule = module {

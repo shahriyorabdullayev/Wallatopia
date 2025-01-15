@@ -17,6 +17,15 @@ object Screens {
     object ImageGenerateScreen
 
     @Serializable
+    object LanguageScreen
+
+    @Serializable
+    object PrivacyScreen
+
+    @Serializable
+    object TermsScreen
+
+    @Serializable
     object HomeGraph {
         @Serializable
         object HomeScreen

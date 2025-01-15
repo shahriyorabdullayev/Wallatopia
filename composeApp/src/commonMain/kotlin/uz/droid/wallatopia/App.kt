@@ -57,8 +57,11 @@ import uz.droid.wallatopia.common.utils.NoRippleInteractionSource
 import uz.droid.wallatopia.presentation.navigation.HomeNavGraph
 import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
 import uz.droid.wallatopia.presentation.screens.ImageGenerateScreen
+import uz.droid.wallatopia.presentation.screens.LanguageScreen
+import uz.droid.wallatopia.presentation.screens.PrivacyPolicyScreen
 import uz.droid.wallatopia.presentation.screens.SearchScreen
 import uz.droid.wallatopia.presentation.screens.SplashScreen
+import uz.droid.wallatopia.presentation.screens.TermsAndConditionsScreen
 
 
 @Composable
@@ -67,246 +70,19 @@ fun App() {
     KoinContext {
         WallatopiaAppTheme {
             HavHostMain()
-//            AutoComplete()
         }
     }
-}
-
-@Composable
-fun AutoComplete() {
-
-    val animals = listOf(
-        "Lion",
-        "Tiger",
-        "Leopard",
-        "Cheetah",
-        "Giraffe",
-        "Elephant",
-        "Zebra",
-        "Kangaroo",
-        "Koala",
-        "Panda",
-        "Gorilla",
-        "Hippopotamus",
-        "Rhinoceros",
-        "Orangutan",
-        "Polar Bear",
-        "Grizzly Bear",
-        "Sloth",
-        "Kangaroo",
-        "Koala",
-        "Panda",
-        "Gorilla",
-        "Hippopotamus",
-        "Rhinoceros",
-        "Orangutan",
-        "Polar Bear",
-        "Grizzly Bear",
-        "Sloth",
-        "Kangaroo",
-        "Koala",
-        "Panda",
-        "Gorilla",
-        "Hippopotamus",
-        "Rhinoceros",
-        "Orangutan",
-        "Polar Bear",
-        "Grizzly Bear",
-        "Sloth",
-        "Kangaroo",
-        "Koala",
-        "Panda",
-        "Gorilla",
-        "Hippopotamus",
-        "Rhinoceros",
-        "Orangutan",
-        "Polar Bear",
-        "Grizzly Bear",
-        "Sloth"
-    )
-
-
-    var category by remember {
-        mutableStateOf("")
-    }
-
-    val heightTextFields by remember {
-        mutableStateOf(55.dp)
-    }
-
-    var textFieldSize by remember {
-        mutableStateOf(Size.Zero)
-    }
-
-    var expanded by remember {
-        mutableStateOf(false)
-    }
-    // Category Field
-    Column(
-        modifier = Modifier
-            .padding(30.dp)
-            .fillMaxWidth()
-            .clickable(
-                interactionSource = NoRippleInteractionSource(),
-                indication = null,
-                onClick = {
-                    expanded = false
-                }
-            )
-    ) {
-
-        Text(
-            modifier = Modifier.padding(start = 3.dp, bottom = 2.dp),
-            text = "Animals",
-            fontSize = 16.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Medium
-        )
-
-        Column(modifier = Modifier.fillMaxWidth()) {
-
-            Row(modifier = Modifier.fillMaxWidth()) {
-                TextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(heightTextFields)
-                        .border(
-                            width = 1.8.dp,
-                            color = Color.Black,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .onGloballyPositioned { coordinates ->
-                            textFieldSize = coordinates.size.toSize()
-                        },
-                    value = category,
-                    onValueChange = {
-                        category = it
-                        expanded = true
-                    },
-                    placeholder = { Text("Enter any Animals Name") },
-                    colors = TextFieldDefaults.textFieldColors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = Color.Black
-                    ),
-                    textStyle = TextStyle(
-                        color = Color.Black,
-                        fontSize = 16.sp
-                    ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done
-                    ),
-                    singleLine = true,
-                    trailingIcon = {
-                        IconButton(onClick = { expanded = !expanded }) {
-                            Icon(
-                                modifier = Modifier.size(24.dp),
-                                imageVector = Icons.Rounded.KeyboardArrowDown,
-                                contentDescription = "arrow",
-                                tint = Color.Black
-                            )
-                        }
-                    }
-                )
-            }
-
-            if (expanded) {
-                Popup(
-                    alignment = Alignment.TopCenter,
-                    onDismissRequest = { },
-                    offset = IntOffset(x= 0, y = 120),
-                    content = {
-                    Card(
-                        modifier = Modifier
-                            .background(color = Color.White)
-                            .padding(horizontal = 5.dp)
-                            .fillMaxWidth()
-                        ,
-                        shape = RoundedCornerShape(10.dp)
-                    ) {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .heightIn(max = 150.dp),
-                        ) {
-
-                            if (category.isNotEmpty()) {
-                                items(
-                                    animals.filter {
-                                        it.lowercase()
-                                            .contains(category.lowercase()) || it.lowercase()
-                                            .contains("others")
-                                    }
-                                        .sorted()
-                                ) {
-                                    ItemsCategory(title = it) { title ->
-                                        category = title
-                                        expanded = false
-                                    }
-                                }
-                            } else {
-                                items(
-                                    animals.sorted()
-                                ) {
-                                    ItemsCategory(title = it) { title ->
-                                        category = title
-                                        expanded = false
-                                    }
-                                }
-                            }
-
-                        }
-
-                    }
-                    }
-                )
-            }
-
-
-            Text(
-                modifier = Modifier.padding(start = 3.dp, bottom = 2.dp),
-                text = "Animals",
-                fontSize = 16.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Medium
-            )
-
-        }
-
-    }
-
-
-}
-
-@Composable
-fun ItemsCategory(
-    title: String,
-    onSelect: (String) -> Unit
-) {
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable {
-                onSelect(title)
-            }
-            .padding(10.dp)
-    ) {
-        Text(text = title, fontSize = 16.sp)
-    }
-
 }
 
 @Composable
 fun HavHostMain(navController: NavHostController = rememberNavController()) {
-     NavHost(navController = navController, startDestination = Screens.SplashScreen) {
+    NavHost(navController = navController, startDestination = Screens.SplashScreen) {
         composable<Screens.SplashScreen> {
             SplashScreen(
                 navigateToHome = {
                     navController.navigate(Screens.HomeGraph) {
                         popUpTo(Screens.SplashScreen) {
-                             inclusive = true
+                            inclusive = true
                         }
                     }
                 }
@@ -317,25 +93,39 @@ fun HavHostMain(navController: NavHostController = rememberNavController()) {
                 globalNavController = navController
             )
         }
-         composable<Screens.CategoryDetailsScreen> { backStackEntry ->
-             val category: Screens.CategoryDetailsScreen = backStackEntry.toRoute()
-             CategoryDetailsScreen(
-                 categoryId = category.categoryId,
-                 onBackPressed = navController::popBackStack
-             )
-         }
-         composable<Screens.SearchScreen> {
-             SearchScreen(
-                 onBackPressed = navController::popBackStack,
-                 navigateToCategoryDetails = {
-                     navController.navigate(Screens.CategoryDetailsScreen(it))
-                 }
-             )
-         }
-         composable<Screens.ImageGenerateScreen> {
-             ImageGenerateScreen(
-                 onBackPressed = navController::popBackStack
-             )
-         }
+        composable<Screens.CategoryDetailsScreen> { backStackEntry ->
+            val category: Screens.CategoryDetailsScreen = backStackEntry.toRoute()
+            CategoryDetailsScreen(
+                categoryId = category.categoryId,
+                onBackPressed = navController::popBackStack
+            )
+        }
+        composable<Screens.SearchScreen> {
+            SearchScreen(
+                onBackPressed = navController::popBackStack,
+                navigateToCategoryDetails = {
+                    navController.navigate(Screens.CategoryDetailsScreen(it))
+                }
+            )
+        }
+        composable<Screens.ImageGenerateScreen> {
+            ImageGenerateScreen(
+                onBackPressed = navController::popBackStack
+            )
+        }
+
+        composable<Screens.LanguageScreen> {
+            LanguageScreen(
+                onBackPressed = navController::popBackStack
+            )
+        }
+
+        composable<Screens.TermsScreen> {
+            TermsAndConditionsScreen()
+        }
+
+        composable<Screens.PrivacyScreen> {
+            PrivacyPolicyScreen()
+        }
     }
 }
