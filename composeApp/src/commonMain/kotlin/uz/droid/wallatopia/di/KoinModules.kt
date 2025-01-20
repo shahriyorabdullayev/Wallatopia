@@ -1,5 +1,6 @@
 package uz.droid.wallatopia.di
 
+import com.russhwolf.settings.Settings
 import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
@@ -22,8 +23,10 @@ import uz.droid.wallatopia.data.network.service.MainApiService
 import uz.droid.wallatopia.data.network.service.impl.MainApiServiceImpl
 import uz.droid.wallatopia.data.repository.FavoritesRepositoryImpl
 import uz.droid.wallatopia.data.repository.MainRepositoryImpl
+import uz.droid.wallatopia.data.repository.SettingsRepositoryImpl
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
+import uz.droid.wallatopia.domain.repository.SettingsRepository
 import uz.droid.wallatopia.presentation.viewmodels.CategoryDetailsViewModel
 import uz.droid.wallatopia.presentation.viewmodels.CategoryViewModel
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
@@ -46,6 +49,7 @@ val apiModule = module {
 val repositoryModule = module {
     factory<MainRepository> { MainRepositoryImpl(get()) }
     factory<FavoritesRepository> { FavoritesRepositoryImpl(get()) }
+    factory<SettingsRepository> { SettingsRepositoryImpl(get<Settings>()) }
 }
 
 val coroutinesModule = module {

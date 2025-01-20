@@ -1,31 +1,31 @@
 [versions]
-agp = "8.7.0"
-android-compileSdk = "34"
+agp = "8.7.3"
+android-compileSdk = "35"
 android-minSdk = "24"
-android-targetSdk = "34"
-androidx-activityCompose = "1.9.3"
+android-targetSdk = "35"
+androidx-activityCompose = "1.10.0"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.0"
-androidx-core-ktx = "1.13.1"
+androidx-core-ktx = "1.15.0"
 androidx-espresso-core = "3.6.1"
-androidx-lifecycle = "2.8.3"
+androidx-lifecycle = "2.8.4"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-compose-multiplatform = "1.7.0"
+compose-multiplatform = "1.7.3"
 junit = "4.13.2"
-kotlin = "2.0.21"
-koin = "3.6.0-Beta4"
-koinComposeMultiplatform = "1.2.0-Beta4"
-navigationCompose = "2.8.0-alpha10"
+kotlin = "2.1.0"
+koin = "4.0.1"
+koinComposeMultiplatform = "4.0.1"
+navigationCompose = "2.8.0-alpha11"
 lifecycleViewModel = "2.8.7"
 ktor = "2.3.11"
 coil3 = "3.0.0-alpha06"
 napierVersion = "2.6.1"
-core = "1.13.0"
-room = "2.7.0-alpha11"
+core = "1.15.0"
+room = "2.7.0-alpha12"
 ksp = "2.0.21-1.0.25"
-sqlite = "2.5.0-alpha11"
-
+sqlite = "2.5.0-alpha12"
+multiplatformSettings = "1.1.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -64,6 +64,9 @@ androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
+multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
 
 [bundles]
 ktor = ["ktor-client-core", "ktor-client-content-negotiation"]

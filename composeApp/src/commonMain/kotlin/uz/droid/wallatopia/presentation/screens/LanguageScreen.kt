@@ -17,34 +17,34 @@ import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.Language
 import uz.droid.wallatopia.LocalizedApp
 import uz.droid.wallatopia.changeLang
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
-import uz.droid.wallatopia.common.utils.AppLanguage
-import uz.droid.wallatopia.getAppCurrentLanguage
-import uz.droid.wallatopia.presentation.components.CategoryTopBar
+import uz.droid.wallatopia.presentation.screens.contracts.SettingsContract
+import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_language
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun LanguageScreen(
     onBackPressed: ()-> Unit = {}
 ) {
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
-    var currentLanguage by remember { mutableStateOf(getAppCurrentLanguage()) }
-    LocalizedApp(language = currentLanguage) {
+    val viewModel: SettingsViewModel = koinViewModel()
+    val uiState = viewModel.uiState.collectAsState()
+    LocalizedApp(language = uiState.value.language) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -56,10 +56,10 @@ fun LanguageScreen(
                 onBackPressed = onBackPressed
             )
             LanguageSection(
-                currentLanguage = currentLanguage,
+                currentLanguage = uiState.value.language,
                 changeLanguage = {
-                    currentLanguage = it
-                    changeLang(currentLanguage)
+                    changeLang(it)
+                    viewModel.onEventDispatch(SettingsContract.Intent.ChangeLanguage(it))
                 }
             )
         }
