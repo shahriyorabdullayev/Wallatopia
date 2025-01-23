@@ -53,12 +53,12 @@ fun MainImageItem(
             .height(170.dp)
     ) {
 
-        val placeHolderColor = "FF${image.color.takeLast(6)}".toLong(16)
+//        val placeHolderColor = "FF${image.color.takeLast(6)}".toLong(16)
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(
                 LocalPlatformContext.current
             ).data(image.url).crossfade(true).build(),
-            placeholder = ColorPainter(Color(placeHolderColor)),
+//            placeholder = ColorPainter(Color(placeHolderColor)),
             contentScale = ContentScale.Crop
         )
 

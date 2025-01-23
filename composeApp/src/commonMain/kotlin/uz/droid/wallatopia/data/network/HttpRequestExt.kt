@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import uz.droid.wallatopia.data.network.service.impl.token
 
 const val UNSPLASH_URL = "https://api.unsplash.com/"
+const val PIXABAY_URL = "https://pixabay.com/"
 const val POLLINATIONS_IMAGE_URL = "https://image.pollinations.ai/"
 const val POLLINATIONS_URL = "https://text.pollinations.ai/"
 
@@ -29,6 +30,14 @@ fun HttpRequestBuilder.apiUrl(path: String) {
         }
     }
 }
+
+fun HttpRequestBuilder.pixabayApiUrl(path: String) {
+    url {
+        takeFrom(PIXABAY_URL)
+        encodedPath = path
+    }
+}
+
 
 fun HttpRequestBuilder.pollinationsApiUrl(path: String) {
     url {

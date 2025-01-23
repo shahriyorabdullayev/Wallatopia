@@ -36,6 +36,7 @@ class HomeViewModel(
             is HomeContract.Intent.OpenImage -> {
 
             }
+
             is HomeContract.Intent.DeleteFromFavorites -> {
                 viewModelScope.launch {
                     favoriteImagesRepository.deleteImage(intent.imageUiModel)
@@ -43,8 +44,19 @@ class HomeViewModel(
             }
 
             HomeContract.Intent.Init -> {
-                handleWallpaperFetch()
-                handleCategoriesFetch()
+                viewModelScope.launch {
+                    repository.fetchWallpapersFromPixabay().onSuccess { response ->
+                        favoriteImagesRepository.fetchFavoriteImages().collect {
+                            _uiState.value = _uiState.value.copy(images = response.hits.map {
+                                it.toUiModel(
+                                    isFavorite = favoriteImagesRepository.isFavorite(it.id.toString())
+                                )
+                            })
+                        }
+                    }
+                }
+//                handleWallpaperFetch()
+//                handleCategoriesFetch()
             }
         }
     }

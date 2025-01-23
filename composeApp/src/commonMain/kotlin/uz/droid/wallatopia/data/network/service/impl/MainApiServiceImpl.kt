@@ -5,9 +5,11 @@ import io.ktor.client.request.get
 import uz.droid.wallatopia.data.network.api.handle
 import uz.droid.wallatopia.data.network.apiUrl
 import uz.droid.wallatopia.data.network.json
+import uz.droid.wallatopia.data.network.pixabayApiUrl
 import uz.droid.wallatopia.data.network.pollinationsApiUrl
 import uz.droid.wallatopia.data.network.response.Categories
 import uz.droid.wallatopia.data.network.response.Photos
+import uz.droid.wallatopia.data.network.response.PixabayResponse
 import uz.droid.wallatopia.data.network.response.SearchResponse
 import uz.droid.wallatopia.data.network.response.SuggestionResponse
 import uz.droid.wallatopia.data.network.service.MainApiService
@@ -21,6 +23,15 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
             this.get {
                 json()
                 apiUrl("photos?page=2&per_page=20")
+            }
+        }
+    }
+
+    override suspend fun fetchWallpapersFromPixabay(): Result<PixabayResponse> {
+        return httpClient.handle {
+            this.get {
+                json()
+                pixabayApiUrl("api/?key=26668198-7ea1a3552ef573fa65c198a0e&image_type=all&pretty=true")
             }
         }
     }
