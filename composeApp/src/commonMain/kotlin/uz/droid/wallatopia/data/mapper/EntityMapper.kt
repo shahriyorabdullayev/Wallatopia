@@ -6,14 +6,15 @@ import uz.droid.wallatopia.domain.model.ImageUiModel
 val ImageUiModel.toEntity: UnsplashImageEntity
     get() = UnsplashImageEntity(
         id = this.id,
-        imageUrl = this.url,
+        imageUrl = this.thumbUrl,
         blurHash = this.blurHash
     )
 
 val UnsplashImageEntity.toUiModel: ImageUiModel
     get() = ImageUiModel(
         id = this.id,
-        url = this.imageUrl,
+        thumbUrl = this.imageUrl,
+        originalUrl = this.imageUrl,
         blurHash = this.blurHash,
         isFavorite = true
     )

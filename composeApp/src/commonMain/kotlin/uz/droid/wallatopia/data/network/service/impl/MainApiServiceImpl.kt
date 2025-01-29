@@ -9,12 +9,14 @@ import uz.droid.wallatopia.data.network.pixabayApiUrl
 import uz.droid.wallatopia.data.network.pollinationsApiUrl
 import uz.droid.wallatopia.data.network.response.Categories
 import uz.droid.wallatopia.data.network.response.Photos
+import uz.droid.wallatopia.data.network.response.PixabayImage
 import uz.droid.wallatopia.data.network.response.PixabayResponse
 import uz.droid.wallatopia.data.network.response.SearchResponse
 import uz.droid.wallatopia.data.network.response.SuggestionResponse
 import uz.droid.wallatopia.data.network.service.MainApiService
 
 val token = "kUsXzb97PY9dJuPL-kzDZQ0R0g8d4c759S6wrhu4RnU"
+const val PIXABAY_KEY = "26668198-7ea1a3552ef573fa65c198a0e"
 
 class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
 
@@ -27,11 +29,11 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         }
     }
 
-    override suspend fun fetchWallpapersFromPixabay(): Result<PixabayResponse> {
+    override suspend fun fetchWallpapersFromPixabay(page: Int): Result<PixabayResponse> {
         return httpClient.handle {
             this.get {
                 json()
-                pixabayApiUrl("api/?key=26668198-7ea1a3552ef573fa65c198a0e&image_type=all&pretty=true")
+                pixabayApiUrl("api/?key=$PIXABAY_KEY&image_type=all&pretty=true&page=$page")
             }
         }
     }

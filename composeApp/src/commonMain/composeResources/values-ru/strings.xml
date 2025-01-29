@@ -1,4 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_language">Язык приложения</string>
+    <string name="terms_title">Пользовательское соглашение</string>
+    <string name="privacy_title">Политика конфиденциальности</string>
+    <string name="settings_title">Настройки</string>
+    <string name="favorites_title">Избранное</string>
+    <string name="categories_title">Категории</string>
+    <string name="wallpapers">Обои</string>
+    <string name="let_ai_paint_your_screen">Позвольте A.I нарисовать ваш экран</string>
+    <string name="generate_with_ai">Создать с помощью A.I</string>
+    <string name="popular_categories">Популярные категории</string>
+    <string name="see_more">Посмотреть больше</string>
+    <string name="trending">В тренде</string>
+    <string name="ai_generated">Создано ИИ</string>
+    <string name="browse_by_category">Просмотр по категориям</string>
+    <string name="abstract_wallpaper">Абстрактные обои</string>
+    <string name="start_generating">Начать создание</string>
+    <string name="generate_again">Создать снова</string>
+    <string name="set_as_wallpaper">Установить как обои</string>
+    <string name="stop">Стоп</string>
+    <string name="please_wait">Пожалуйста, подождите, пока мы создадим уникальное произведение искусства для вас</string>
+    <string name="search_for_wallpapers">Поиск обоев</string>
+    <string name="search_results_for">Результаты поиска для</string>
+    <string name="privacy_policy">1. Введение
+
+Эта Политика конфиденциальности объясняет, как Wallatopia ("мы", "наш" или "нас") собирает, использует и защищает вашу личную информацию при использовании нашего Приложения.
+
+2. Какие данные мы собираем
+
+Приложение не собирает персональные данные.
+
+Некоторые анонимные данные (например, производительность приложения) могут собираться для аналитики.
+
+3. Сторонние сервисы
+
+Мы используем Pixabay, Pexels и Pollinations AI для предоставления обоев.
+
+Эти сервисы могут иметь свои политики конфиденциальности:
+
+Pixabay: https://pixabay.com/
+
+Pexels: https://www.pexels.com/
+
+Pollinations AI</string>
+    <string name="terms">Добро пожаловать в Wallatopia ("Приложение", "мы", "наш" или "нас"). Используя это Приложение, вы соглашаетесь с данными Условиями. Если вы не согласны, пожалуйста, не используйте Приложение.
+
+1. Использование Приложения
+
+Wallatopia предоставляет обои, полученные из Pixabay API, Pexels API и Pollinations AI API.
+
+Вам предоставляется ограниченная, неисключительная, непередаваемая лицензия на личное, некоммерческое использование.
+
+Вы не можете модифицировать или распространять контент незаконно.
+
+2. API сторонних сервисов и контент
+
+Приложение использует контент из Pixabay, Pexels и Pollinations AI.
+
+Мы не владеем обоями, предоставляемыми этими сервисами. Ознакомьтесь с их условиями лицензирования:
+
+Pixabay: https://pixabay.com/
+
+Pexels: https://www.pexels.com/
+
+Pollinations AI
+
+Вы несёте ответственность за проверку прав использования изображений.
+
+3. Ограничение ответственности
+
+Мы не несем ответственности за нарушение авторских прав или неправильное использование контента.
+
+Приложение предоставляется "как есть" без гарантий.</string>
 </resources>

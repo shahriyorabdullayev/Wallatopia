@@ -26,6 +26,9 @@ object Screens {
     object TermsScreen
 
     @Serializable
+    data class ImageDetailsScreen(val thumbUrl: String, val originalUrl: String)
+
+    @Serializable
     object HomeGraph {
         @Serializable
         object HomeScreen

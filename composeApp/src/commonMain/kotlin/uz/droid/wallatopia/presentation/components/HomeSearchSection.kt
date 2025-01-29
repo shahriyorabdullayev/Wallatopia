@@ -18,8 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
+import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.search_for_wallpapers
 
 @Composable
 fun HomeSearchSection(
@@ -45,7 +48,7 @@ fun HomeSearchSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            "Search For Wallpapers",
+            text = stringResource(Res.string.search_for_wallpapers),
             color = AppTheme.colorScheme.ashGray,
             style = AppTheme.typography.hintText
         )

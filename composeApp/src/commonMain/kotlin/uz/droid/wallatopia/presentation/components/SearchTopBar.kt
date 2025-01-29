@@ -35,8 +35,11 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
+import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.search_for_wallpapers
 
 @Composable
 fun SearchTopBar(
@@ -89,7 +92,7 @@ fun SearchTopBar(
                     onValueChange(it)
                     showSuggestions = it.length > 2
                 },
-                hintText = "Search For Wallpapers",
+                hintText = stringResource(Res.string.search_for_wallpapers),
                 onDoneAction = onSearch,
                 keyboardActions = KeyboardActions(
                     onSearch = {

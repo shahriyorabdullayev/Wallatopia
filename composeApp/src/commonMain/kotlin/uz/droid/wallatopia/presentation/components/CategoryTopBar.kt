@@ -10,13 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
+import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.categories_title
 
 @Composable
 fun CategoryTopBar(
     modifier: Modifier,
-    title: String = "Categories",
+    title: String = stringResource(Res.string.categories_title),
     onBack: () -> Unit
 ) {
     Row(

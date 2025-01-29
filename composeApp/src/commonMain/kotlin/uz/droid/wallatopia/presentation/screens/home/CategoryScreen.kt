@@ -1,5 +1,3 @@
-@file:OptIn(KoinExperimentalAPI::class)
-
 package uz.droid.wallatopia.presentation.screens.home
 
 import androidx.compose.foundation.clickable

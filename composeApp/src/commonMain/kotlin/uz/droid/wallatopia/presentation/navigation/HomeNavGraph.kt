@@ -70,7 +70,10 @@ fun HomeNavGraph(
                     },
                     navigateToImageGenerate = {
                         globalNavController.navigate(Screens.ImageGenerateScreen)
-                    }
+                    },
+                    navigateToImageDetails = { thumbUrl, originalUrl ->
+                        globalNavController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                    },
                 )
             }
             composable<Screens.HomeGraph.CategoriesScreen> {

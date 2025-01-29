@@ -1,4 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_language">App Language</string>
+    <string name="terms_title">Terms and Conditions</string>
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="settings_title">Settings</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="categories_title">Categories</string>
+    <string name="wallpapers">Wallpapers</string>
+    <string name="let_ai_paint_your_screen">Let AI Paint Your Screen</string>
+    <string name="generate_with_ai">Generate with A.I</string>
+    <string name="popular_categories">Popular Categories</string>
+    <string name="see_more">See More</string>
+    <string name="trending">Trending</string>
+    <string name="ai_generated">A.I Generated</string>
+    <string name="browse_by_category">Browse By Category</string>
+    <string name="abstract_wallpaper">Abstract Wallpaper</string>
+    <string name="start_generating">Start Generating</string>
+    <string name="generate_again">Generate Again</string>
+    <string name="set_as_wallpaper">Set as Wallpaper</string>
+    <string name="stop">Stop</string>
+    <string name="please_wait">Please hang tight while we craft a unique masterpiece for you</string>
+    <string name="search_for_wallpapers">Search for Wallpapers</string>
+    <string name="search_results_for">Search Results For</string>
+    <string name="privacy_policy">1. Introduction
+
+This Privacy Policy explains how Wallatopia ("we," "our," or "us") collects, uses, and protects your personal information when using our App.
+
+2. Information We Collect
+
+The App does not collect personal data.
+
+Some anonymous usage data (e.g., app performance) may be collected for analytics.
+
+3. Third-Party Services
+
+We use Pixabay, Pexels, and Pollinations AI to provide wallpapers.
+
+These services may have their own privacy policies:
+
+Pixabay: https://pixabay.com/
+
+Pexels: https://www.pexels.com/
+
+Pollinations AI</string>
+    <string name="terms">Welcome to Wallatopia ("App," "we," "our," or "us"). By using this App, you agree to these Terms and Conditions. If you do not agree, please do not use the App.
+
+1. Use of the App
+
+Wallatopia provides wallpapers sourced from Pixabay API, Pexels API, and Pollinations AI API.
+
+You are granted a limited, non-exclusive, non-transferable license to use the App for personal, non-commercial purposes.
+
+You may not misuse, modify, or redistribute the content unlawfully.
+
+2. Third-Party APIs and Content
+
+The App integrates content from Pixabay, Pexels, and Pollinations AI.
+
+We do not own the wallpapers provided by these services. Please review their licensing terms:
+
+Pixabay: https://pixabay.com/
+
+Pexels: https://www.pexels.com/
+
+Pollinations AI
+
+You are responsible for verifying image usage rights.
+
+3. Limitation of Liability
+
+We are not responsible for copyright claims or misuse of content.
+
+The App is provided "as is" with no guarantees.</string>
 </resources>

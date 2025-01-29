@@ -36,7 +36,6 @@ import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_language
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun LanguageScreen(
     onBackPressed: ()-> Unit = {}

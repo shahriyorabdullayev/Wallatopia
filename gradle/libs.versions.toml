@@ -26,6 +26,8 @@ room = "2.7.0-alpha12"
 ksp = "2.0.21-1.0.25"
 sqlite = "2.5.0-alpha12"
 multiplatformSettings = "1.1.1"
+pagingCommonVersion = "3.3.0-alpha02-0.4.0"
+
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -64,6 +66,8 @@ androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+#paging 3
+paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingCommonVersion" }
 
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }

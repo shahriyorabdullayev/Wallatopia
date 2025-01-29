@@ -16,6 +16,7 @@ import kotlinx.coroutines.IO
 import kotlinx.serialization.json.Json
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import uz.droid.wallatopia.data.local.WallatopiaDatabase
 import uz.droid.wallatopia.data.local.getRoomDatabase
@@ -59,13 +60,13 @@ val coroutinesModule = module {
 }
 
 val viewModelModule = module {
-    viewModelOf(::FavoritesViewModel)
-    viewModelOf(::HomeViewModel)
-    viewModelOf(::CategoryViewModel)
-    viewModelOf(::CategoryDetailsViewModel)
-    viewModelOf(::SearchViewModel)
-    viewModelOf(::ImageGenerateViewModel)
-    viewModelOf(::SettingsViewModel)
+    viewModel { FavoritesViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
+    viewModel { CategoryViewModel(get()) }
+    viewModel { CategoryDetailsViewModel(get(), get()) }
+    viewModel { SearchViewModel(get(), get()) }
+    viewModel { ImageGenerateViewModel(get()) }
+    viewModel { SettingsViewModel(get()) }
 }
 
 val httpClientModule = module {
