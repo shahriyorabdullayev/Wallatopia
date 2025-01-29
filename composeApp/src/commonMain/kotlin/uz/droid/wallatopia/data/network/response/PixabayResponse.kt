@@ -11,5 +11,6 @@ data class PixabayResponse(
 @Serializable
 data class PixabayImage(
     @SerialName ("id") val id: Long,
-    @SerialName ("webformatURL") val largeImageURL: String
+    @SerialName ("webformatURL") val thumbImageUrl: String,
+    @SerialName ("largeImageURL") val originalImageUrl: String,
 )

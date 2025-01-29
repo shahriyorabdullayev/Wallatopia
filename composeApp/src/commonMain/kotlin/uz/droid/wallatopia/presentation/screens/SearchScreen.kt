@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
@@ -43,6 +44,9 @@ import uz.droid.wallatopia.presentation.components.SearchTopBar
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.SearchContract
 import uz.droid.wallatopia.presentation.viewmodels.SearchViewModel
+import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.browse_by_category
+import wallatopia.composeapp.generated.resources.search_results_for
 
 @Composable
 fun SearchScreen(
@@ -107,7 +111,7 @@ fun BrowseByCategorySection(
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         Text(
-            "Browse By Category",
+            text = stringResource(Res.string.browse_by_category),
             style = AppTheme.typography.listTitle,
             color = AppTheme.colorScheme.immutableWhite
         )
@@ -155,7 +159,7 @@ fun SearchResultsSection(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "Search Results For ",
+                text = stringResource(Res.string.search_results_for),
                 style = AppTheme.typography.inputText,
                 color = AppTheme.colorScheme.immutableWhite
             )

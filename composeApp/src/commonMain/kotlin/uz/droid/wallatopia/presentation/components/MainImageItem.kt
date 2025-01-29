@@ -16,13 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
-import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -57,7 +53,7 @@ fun MainImageItem(
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(
                 LocalPlatformContext.current
-            ).data(image.url).crossfade(true).build(),
+            ).data(image.thumbUrl).crossfade(true).build(),
 //            placeholder = ColorPainter(Color(placeHolderColor)),
             contentScale = ContentScale.Crop
         )
@@ -66,7 +62,7 @@ fun MainImageItem(
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = painter,
-                contentDescription = image.url,
+                contentDescription = image.thumbUrl,
                 contentScale = ContentScale.Crop,
             )
         }

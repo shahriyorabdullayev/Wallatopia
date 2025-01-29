@@ -9,7 +9,8 @@ import uz.droid.wallatopia.data.network.response.SuggestionResponse
 interface MainApiService {
     suspend fun fetchWallpapers(): Result<Photos>
 
-    suspend fun fetchWallpapersFromPixabay(): Result<PixabayResponse>
+    suspend fun fetchWallpapersFromPixabay(page: Int): Result<PixabayResponse>
+
     suspend fun fetchCategories(): Result<Categories>
 
     suspend fun fetchCategoryPhotos(categoryId: String): Result<Photos>

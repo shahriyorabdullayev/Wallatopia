@@ -13,6 +13,8 @@ const val UNSPLASH_URL = "https://api.unsplash.com/"
 const val PIXABAY_URL = "https://pixabay.com/"
 const val POLLINATIONS_IMAGE_URL = "https://image.pollinations.ai/"
 const val POLLINATIONS_URL = "https://text.pollinations.ai/"
+const val PIXELS_API_KEY = "YfnXeuPMNatC1GgNcaJH0knqve0K7qZRZ9BOyHo09IzZq13X7fPRv0Vv"
+const val PIXELS_URL = "https://api.pexels.com/"
 
 fun HttpRequestBuilder.json() {
     contentType(ContentType.Application.Json)
@@ -30,6 +32,15 @@ fun HttpRequestBuilder.apiUrl(path: String) {
         }
     }
 }
+
+fun HttpRequestBuilder.pixelsApiUrl(path: String) {
+    url {
+        takeFrom(PIXELS_URL)
+        encodedPath = path
+        header("Authorization", PIXELS_API_KEY)
+    }
+}
+
 
 fun HttpRequestBuilder.pixabayApiUrl(path: String) {
     url {

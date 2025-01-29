@@ -1,4 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_language">Ilova tili</string>
+    <string name="terms_title">Foydalanish shartlari</string>
+    <string name="privacy_title">Maxfiylik siyosati</string>
+    <string name="settings_title">Sozlamalar</string>
+    <string name="favorites_title">Sevimlilar</string>
+    <string name="categories_title">Kategoriyalar</string>
+    <string name="wallpapers">Fon rasmlari</string>
+    <string name="let_ai_paint_your_screen">AI yordamida ekraningizni chizing</string>
+    <string name="generate_with_ai">AI bilan yaratish</string>
+    <string name="popular_categories">Mashhur kategoriyalar</string>
+    <string name="see_more">Ko'proq ko'rish</string>
+    <string name="trending">Trendlarda</string>
+    <string name="ai_generated">AI tomonidan yaratilgan</string>
+    <string name="browse_by_category">Kategoriyalar bo'yicha ko'rish</string>
+    <string name="abstract_wallpaper">Abstrakt fon rasmi</string>
+    <string name="start_generating">Yaratishni boshlash</string>
+    <string name="generate_again">Yana yaratish</string>
+    <string name="set_as_wallpaper">Fon rasmi sifatida o'rnatish</string>
+    <string name="stop">To'xtatish</string>
+    <string name="please_wait">Biz siz uchun noyob asar yaratib berayotganimizda, kuting</string>
+    <string name="search_for_wallpapers">Fon rasmlarini qidiring</string>
+    <string name="search_results_for">Natijalar qidiruvi uchun</string>
+    <string name="privacy_policy">1. Kirish
+
+Ushbu Maxfiylik siyosati Wallatopia ("biz", "bizning" yoki "bizga") ilovasi sizning shaxsiy ma'lumotlaringizni qanday to'plashini, foydalanishini va himoya qilishini tushuntiradi.
+
+2. Biz qanday ma'lumot to‘playmiz
+
+Ilova shaxsiy ma’lumotlarni yig‘maydi.
+
+Ba’zi anonim ma’lumotlar (masalan, ilovaning ishlash statistikasi) tahlil uchun to‘planishi mumkin.
+
+3. Uchinchi tomon xizmatlari
+
+Biz Pixabay, Pexels va Pollinations AI xizmatlaridan foydalanamiz.
+
+Ushbu xizmatlarning o‘z maxfiylik siyosati mavjud bo‘lishi mumkin:
+
+Pixabay: https://pixabay.com/
+
+Pexels: https://www.pexels.com/
+
+Pollinations AI</string>
+    <string name="terms">Wallatopia ("Ilova", "biz", "bizning" yoki "bizga") ga xush kelibsiz. Ushbu ilovadan foydalanish orqali siz quyidagi shartlarga rozilik bildirasiz. Agar siz ushbu shartlarga rozi bo‘lmasangiz, ilovadan foydalanmang.
+
+1. Ilovadan foydalanish
+
+Wallatopia devorlari Pixabay API, Pexels API va Pollinations AI API orqali olinadi.
+
+Sizga cheklangan, eksklyuziv bo‘lmagan, o‘tkazib bo‘lmaydigan litsenziya beriladi.
+
+Siz kontentni noqonuniy ravishda o‘zgartirish yoki tarqatish huquqiga ega emassiz.
+
+2. Uchinchi tomon API’lari va kontent
+
+Ilova Pixabay, Pexels va Pollinations AI xizmatlaridan tarkib oladi.
+
+Biz ushbu xizmatlar tomonidan taqdim etilgan rasmlarga egalık qilmaymiz. Iltimos, ularning litsenziya shartlarini o‘qing:
+
+Pixabay: https://pixabay.com/
+
+Pexels: https://www.pexels.com/
+
+Pollinations AI
+
+Rasmlar litsenziyasini tekshirish sizning mas’uliyatingiz hisoblanadi.
+
+3. Mas’uliyatni cheklash
+
+Biz mualliflik huquqlarini buzish yoki noto‘g‘ri foydalanish uchun javobgar emasmiz.
+
+Ilova "bor holida" taqdim etiladi va hech qanday kafolat bermaydi.</string>
 </resources>

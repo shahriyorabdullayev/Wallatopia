@@ -44,6 +44,7 @@ import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
@@ -55,6 +56,11 @@ import uz.droid.wallatopia.presentation.components.ImageGenerateTopBar
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.ImageGenerateContract
 import uz.droid.wallatopia.presentation.viewmodels.ImageGenerateViewModel
+import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.generate_again
+import wallatopia.composeapp.generated.resources.please_wait
+import wallatopia.composeapp.generated.resources.set_as_wallpaper
+import wallatopia.composeapp.generated.resources.stop
 
 @Composable
 fun ImageGenerateScreen(
@@ -135,7 +141,7 @@ fun ImageGenerateScreen(
                                 },
                                 backgroundColor = AppTheme.colorScheme.vividOrange.copy(.4f),
                                 contentColor = AppTheme.colorScheme.vividOrange,
-                                text = "Stop"
+                                text = stringResource(Res.string.stop)
                             )
                         }
 
@@ -148,7 +154,7 @@ fun ImageGenerateScreen(
                                 },
                                 backgroundColor = AppTheme.colorScheme.softWhite,
                                 contentColor = AppTheme.colorScheme.eerieBlack,
-                                text = "Set As Wallpaper"
+                                text = stringResource(Res.string.set_as_wallpaper)
                             )
                             AppButton(
                                 modifier = Modifier.fillMaxWidth()
@@ -157,7 +163,7 @@ fun ImageGenerateScreen(
                                 onClick = {
                                     event(ImageGenerateContract.Intent.GenerateAgain)
                                 },
-                                text = "Generate  Again"
+                                text = stringResource(Res.string.generate_again)
                             )
                         }
                     }
@@ -233,7 +239,7 @@ fun StartAiWallpaperItem(
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(
             LocalPlatformContext.current
-        ).data(image.url).crossfade(true).build(),
+        ).data(image.thumbUrl).crossfade(true).build(),
         placeholder = ColorPainter(Color(placeHolderColor)),
         contentScale = ContentScale.Crop
     )
@@ -247,7 +253,7 @@ fun StartAiWallpaperItem(
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painter,
-            contentDescription = image.url,
+            contentDescription = image.thumbUrl,
             contentScale = ContentScale.Crop
         )
 
@@ -277,7 +283,6 @@ fun StartAiWallpaperItem(
 @Composable
 fun GeneratedImage(
     modifier: Modifier = Modifier,
-
     generatedImageUrl: String,
     onImageLoaded: () -> Unit
 ) {
@@ -321,7 +326,7 @@ fun ImageGeneratingPlaceHolder(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                "Please hang tight while we craft a\nunique masterpiece for you",
+                text = stringResource(Res.string.please_wait),
                 style = AppTheme.typography.bodyText,
                 color = AppTheme.colorScheme.immutableWhite,
                 textAlign = TextAlign.Center

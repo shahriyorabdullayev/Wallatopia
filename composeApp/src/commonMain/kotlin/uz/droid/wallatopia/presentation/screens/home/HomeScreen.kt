@@ -1,7 +1,3 @@
-@file:OptIn(
-    KoinExperimentalAPI::class
-)
-
 package uz.droid.wallatopia.presentation.screens.home
 
 import androidx.compose.foundation.Image
@@ -22,7 +18,6 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
@@ -40,10 +35,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.cash.paging.compose.collectAsLazyPagingItems
+import kotlinx.serialization.Contextual
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.CategoryUiModel
@@ -55,16 +53,25 @@ import uz.droid.wallatopia.presentation.components.HomeSearchSection
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
+import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.ai_generated
+import wallatopia.composeapp.generated.resources.generate_with_ai
+import wallatopia.composeapp.generated.resources.let_ai_paint_your_screen
+import wallatopia.composeapp.generated.resources.popular_categories
+import wallatopia.composeapp.generated.resources.see_more
+import wallatopia.composeapp.generated.resources.trending
 
 @Composable
 fun HomeScreen(
     navigateToSearch: () -> Unit,
     navigateToCategories: () -> Unit,
-    navigateToImageGenerate: () -> Unit
+    navigateToImageGenerate: () -> Unit,
+    navigateToImageDetails: (String, String) -> Unit,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val event = viewModel::onEventDispatch
+    val pagingItems = uiState.homeImages.collectAsLazyPagingItems()
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
 
     BaseBackground(backgroundImage = Drawables.Images.HomeBackground) {
@@ -112,11 +119,12 @@ fun HomeScreen(
                 )
             }
 
-            items(uiState.images, key = { it.id }) { image ->
+            items(pagingItems.itemCount, key = { it }) { index ->
+                val image = pagingItems[index] ?: return@items
                 MainImageItem(
                     image = image,
                     onClick = {
-                        event(HomeContract.Intent.OpenImage(image.url))
+                        navigateToImageDetails(image.thumbUrl, image.originalUrl)
                     },
                     onFavoriteClick = {
                         if (it) {
@@ -152,7 +160,7 @@ fun AIGenerateCardSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
         )
 
         Text(
-            "Let AI Paint Your\nScreen",
+            text = stringResource(Res.string.let_ai_paint_your_screen),
             color = AppTheme.colorScheme.immutableWhite,
             textAlign = TextAlign.End,
             style = AppTheme.typography.sectionHeadline,
@@ -172,7 +180,7 @@ fun AIGenerateCardSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
             )
         ) {
             Text(
-                "Generate With A.I", style = AppTheme.typography.buttonTextSmall
+                text = stringResource(Res.string.generate_with_ai), style = AppTheme.typography.buttonTextSmall
             )
         }
     }
@@ -185,7 +193,7 @@ fun PopularCategoriesTitleSection(modifier: Modifier = Modifier, onSeeMore: () -
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            "Popular Categories",
+            text = stringResource(Res.string.popular_categories),
             color = AppTheme.colorScheme.immutableWhite,
             style = AppTheme.typography.listTitle
         )
@@ -204,7 +212,7 @@ fun PopularCategoriesTitleSection(modifier: Modifier = Modifier, onSeeMore: () -
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                "See More",
+                text = stringResource(Res.string.see_more),
                 style = AppTheme.typography.labelSmall,
                 color = AppTheme.colorScheme.immutableWhite
             )
@@ -250,10 +258,11 @@ fun HomeTabSection(
 }
 
 data class TabItem(
-    val image: DrawableResource, val tabTitle: String
+    val image: DrawableResource, @Contextual val tabTitle: StringResource
 )
 
+
 val tabs = listOf(
-    TabItem(Drawables.Icons.Trending, "Trending"),
-    TabItem(Drawables.Icons.AiGenerate, "A.I Generated"),
+    TabItem(Drawables.Icons.Trending, Res.string.trending),
+    TabItem(Drawables.Icons.AiGenerate, Res.string.ai_generated),
 )

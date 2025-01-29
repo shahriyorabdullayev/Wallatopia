@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.screens.home.TabItem
 
@@ -63,11 +64,11 @@ fun HomeTabItem(
             horizontalArrangement = Arrangement.spacedBy(3.dp)
         ) {
             Image(
-                painter = painterResource(tabItem.image), contentDescription = tabItem.tabTitle,
+                painter = painterResource(tabItem.image), contentDescription = "Tab image",
                 colorFilter = ColorFilter.tint(color = if (isActive) activeContentColor else inActiveContentColor)
             )
             Text(
-                tabItem.tabTitle,
+                text = stringResource(tabItem.tabTitle),
                 style = AppTheme.typography.labelMedium.copy(letterSpacing = if (isActive) 1.sp else 0.sp),
                 color = if (isActive) activeContentColor else inActiveContentColor
             )

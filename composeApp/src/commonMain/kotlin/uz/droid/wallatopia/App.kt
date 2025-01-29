@@ -2,7 +2,6 @@ package uz.droid.wallatopia
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +13,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.theme.WallatopiaAppTheme
 import uz.droid.wallatopia.presentation.navigation.HomeNavGraph
 import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
+import uz.droid.wallatopia.presentation.screens.ImageDetailsScreen
 import uz.droid.wallatopia.presentation.screens.ImageGenerateScreen
 import uz.droid.wallatopia.presentation.screens.LanguageScreen
 import uz.droid.wallatopia.presentation.screens.PrivacyPolicyScreen
@@ -85,11 +85,24 @@ fun HavHostMain(navController: NavHostController) {
         }
 
         composable<Screens.TermsScreen> {
-            TermsAndConditionsScreen()
+            TermsAndConditionsScreen(
+                onBackPressed = navController::popBackStack
+            )
         }
 
         composable<Screens.PrivacyScreen> {
-            PrivacyPolicyScreen()
+            PrivacyPolicyScreen(
+                onBackPressed = navController::popBackStack
+            )
+        }
+
+        composable<Screens.ImageDetailsScreen> { backStackEntry ->
+            val imageUrl: Screens.ImageDetailsScreen = backStackEntry.toRoute()
+            ImageDetailsScreen(
+                thumbUrl = imageUrl.thumbUrl,
+                originalUrl = imageUrl.originalUrl,
+                onBackPressed = navController::popBackStack
+            )
         }
     }
 }

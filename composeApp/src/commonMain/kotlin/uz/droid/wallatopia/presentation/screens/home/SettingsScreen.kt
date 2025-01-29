@@ -21,21 +21,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.app_language
 import wallatopia.composeapp.generated.resources.app_logo
+import wallatopia.composeapp.generated.resources.privacy_title
+import wallatopia.composeapp.generated.resources.settings_title
+import wallatopia.composeapp.generated.resources.terms_title
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun SettingsScreen(
     navigateToLanguage: () -> Unit,
@@ -84,25 +89,26 @@ private fun SettingsSection(
             modifier = Modifier
                 .clickable(onClick = languageOnClick)
                 .padding(horizontal = 16.dp),
-            settingName = "Launguage"
-        )
-        SettingsItem(
-            modifier = Modifier
-                .clickable(onClick = rateUsOnClick)
-                .padding(horizontal = 16.dp),
-            settingName = "Rate Us"
+            settingName = stringResource(Res.string.app_language)
         )
         SettingsItem(
             modifier = Modifier
                 .clickable(onClick = termsOnClick)
                 .padding(horizontal = 16.dp),
-            settingName = "Terms&Conditions"
+            settingName = stringResource(Res.string.terms_title)
         )
         SettingsItem(
             modifier = Modifier
                 .clickable(onClick = privacyOnClick)
                 .padding(horizontal = 16.dp),
-            settingName = "Privacy Policy"
+            settingName = stringResource(Res.string.privacy_title)
+        )
+        SettingsItem(
+            modifier = Modifier
+                .clickable(onClick = rateUsOnClick)
+                .padding(horizontal = 16.dp)
+                .alpha(0.7f),
+            settingName = "Rate Us"
         )
     }
 }
@@ -135,7 +141,7 @@ fun SettingsItem(
 @Composable
 private fun TopBarSection() {
     Text(
-        text = "Settings",
+        text = stringResource(Res.string.settings_title),
         style = AppTheme.typography.pageHeadline,
         color = AppTheme.colorScheme.immutableWhite,
         modifier = Modifier

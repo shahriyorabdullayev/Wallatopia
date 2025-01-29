@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.resources.Drawables
@@ -34,6 +35,8 @@ import uz.droid.wallatopia.presentation.screens.contracts.FavoritesContract
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
+import wallatopia.composeapp.generated.resources.Res
+import wallatopia.composeapp.generated.resources.favorites_title
 
 @Composable
 fun FavoriteScreen() {
@@ -53,7 +56,7 @@ fun FavoriteScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Favorites",
+                text = stringResource(Res.string.favorites_title),
                 style = AppTheme.typography.pageHeadline,
                 color = AppTheme.colorScheme.immutableWhite,
                 modifier = Modifier

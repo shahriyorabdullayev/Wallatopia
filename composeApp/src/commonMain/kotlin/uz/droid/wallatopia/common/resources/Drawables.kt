@@ -17,6 +17,11 @@ import wallatopia.composeapp.generated.resources.ic_home
 import wallatopia.composeapp.generated.resources.ic_popular_categories
 import wallatopia.composeapp.generated.resources.ic_profile
 import wallatopia.composeapp.generated.resources.ic_search
+import wallatopia.composeapp.generated.resources.ic_set_both
+import wallatopia.composeapp.generated.resources.ic_set_home
+import wallatopia.composeapp.generated.resources.ic_set_lock
+import wallatopia.composeapp.generated.resources.ic_set_wallpaper
+import wallatopia.composeapp.generated.resources.ic_share
 import wallatopia.composeapp.generated.resources.ic_trending
 import wallatopia.composeapp.generated.resources.image_generate_background
 import wallatopia.composeapp.generated.resources.image_generate_placeholder
@@ -47,6 +52,11 @@ object Drawables {
         val FavouriteSelected = Res.drawable.ic_favorite_selected
         val Back = Res.drawable.ic_back
         val GoTo = Res.drawable.ic_arrow_go
+        val SetWallpaper = Res.drawable.ic_set_wallpaper
+        val SetBoth = Res.drawable.ic_set_both
+        val SetLock = Res.drawable.ic_set_lock
+        val SetHome = Res.drawable.ic_set_home
+        val Share = Res.drawable.ic_share
     }
 
     object Images {

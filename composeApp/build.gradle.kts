@@ -82,6 +82,9 @@ kotlin {
 
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
+
+            //Paging
+            implementation(libs.paging.compose.common)
         }
 
         iosMain.dependencies {
