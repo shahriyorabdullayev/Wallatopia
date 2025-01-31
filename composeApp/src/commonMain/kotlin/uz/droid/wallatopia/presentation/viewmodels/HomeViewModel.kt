@@ -11,8 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.droid.wallatopia.data.PixabayPagingSource
-import uz.droid.wallatopia.data.mapper.toHomeCategoryUiModel
+import uz.droid.wallatopia.data.paging.PixabayPagingSource
 import uz.droid.wallatopia.data.mapper.toUiModel
 import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
@@ -48,6 +47,7 @@ class HomeViewModel(
             }
 
             HomeContract.Intent.Init -> {
+                handleCategoriesFetch()
                 viewModelScope.launch {
                     val pagingResponse = Pager(
                         config = PagingConfig(
@@ -64,31 +64,6 @@ class HomeViewModel(
 
                     _uiState.value = uiState.value.copy(homeImages = pagingResponse)
                 }
-
-
-//                    repository.fetchWallpapersFromPixabay().onSuccess { response ->
-//                        favoriteImagesRepository.fetchFavoriteImages().collect {
-//                            _uiState.value = _uiState.value.coxpy(images = response.hits.map {
-//                                it.toUiModel(
-//                                    isFavorite = favoriteImagesRepository.isFavorite(it.id.toString())
-//                                )
-//                            })
-//                        }
-//                    }
-            }
-        }
-    }
-
-    private fun handleWallpaperFetch() {
-        viewModelScope.launch {
-            favoriteImagesRepository.fetchFavoriteImages().collect {
-                viewModelScope.launch {
-                    repository.fetchWallpapers().onSuccess { images ->
-                        _uiState.value = _uiState.value.copy(images = images.map {
-                            it.toUiModel(isFavorite = favoriteImagesRepository.isFavorite(it.id))
-                        })
-                    }
-                }
             }
         }
     }
@@ -97,7 +72,7 @@ class HomeViewModel(
         viewModelScope.launch {
             repository.fetchCategories().onSuccess {
                 _uiState.value =
-                    _uiState.value.copy(categories = it.take(4).map { it.toHomeCategoryUiModel })
+                    _uiState.value.copy(categories = it.take(4))
             }
         }
     }

@@ -2,15 +2,21 @@ package uz.droid.wallatopia.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
+import androidx.paging.map
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.droid.wallatopia.data.mapper.toHomeCategoryUiModel
 import uz.droid.wallatopia.data.mapper.toUiModel
+import uz.droid.wallatopia.data.paging.PixabaySearchPagingSource
 import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
@@ -74,19 +80,29 @@ class SearchViewModel(
         _uiState.value = _uiState.value.copy(
             query = "",
             lastQuery = "",
-            searchResults = emptyList()
+            searchResults = emptyFlow()
         )
     }
 
     private fun handlePhotoSearch(query: String) {
         viewModelScope.launch {
-            repository.searchPhotos(query).onSuccess {
-                _uiState.value =
-                    _uiState.value.copy(
-                        searchResults = it.results.map { it.toUiModel },
-                        lastQuery = query.trim()
-                    )
-            }
+            val pagingResponse = Pager(
+                config = PagingConfig(
+                    pageSize = 20,
+                    enablePlaceholders = false
+                ),
+                pagingSourceFactory = { PixabaySearchPagingSource(repository,query) }
+            ).flow
+                .map { pagingData ->
+                    pagingData.map {
+                        it.toUiModel
+                    }
+                }.cachedIn(viewModelScope)
+
+            _uiState.value = uiState.value.copy(
+                searchResults = pagingResponse,
+                lastQuery = query.trim()
+            )
         }
     }
 
@@ -94,7 +110,7 @@ class SearchViewModel(
         viewModelScope.launch {
             repository.fetchCategories().onSuccess {
                 _uiState.value =
-                    _uiState.value.copy(categories = it.map { it.toHomeCategoryUiModel })
+                    _uiState.value.copy(categories = it.take(12))
             }
         }
     }

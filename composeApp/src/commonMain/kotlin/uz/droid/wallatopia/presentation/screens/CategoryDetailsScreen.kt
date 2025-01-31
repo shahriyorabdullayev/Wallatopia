@@ -1,5 +1,3 @@
-@file:OptIn(KoinExperimentalAPI::class)
-
 package uz.droid.wallatopia.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
@@ -12,15 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.cash.paging.compose.collectAsLazyPagingItems
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryTopBar
@@ -30,14 +28,19 @@ import uz.droid.wallatopia.presentation.viewmodels.CategoryDetailsViewModel
 
 @Composable
 fun CategoryDetailsScreen(
-    categoryId: String,
-    onBackPressed: () -> Unit
+    categoryName: String,
+    onBackPressed: () -> Unit,
+    navigateToImageDetails: (String, String) -> Unit,
 ) {
     val viewModel: CategoryDetailsViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val event = viewModel::onEventDispatch
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
-    event(CategoryDetailsContract.Intent.Init(categoryId))
+    val categoryPhotos = uiState.categoryPhotos.collectAsLazyPagingItems()
+
+    LaunchedEffect(categoryName){
+        event(CategoryDetailsContract.Intent.LoadCategoryImages(categoryName))
+    }
 
     BaseBackground(backgroundImage = Drawables.Images.CategoryBackground) {
         Column(
@@ -61,11 +64,12 @@ fun CategoryDetailsScreen(
                 verticalItemSpacing = 10.dp,
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                items(uiState.categoryPhotos, key = { it.id }) { image ->
+                items(categoryPhotos.itemCount, key = { it }) { index ->
+                    val image = categoryPhotos[index] ?: return@items
                     MainImageItem(
                         image = image,
                         onClick = {
-
+                            navigateToImageDetails(image.thumbUrl,image.originalUrl)
                         },
                         onFavoriteClick = {
                             event(CategoryDetailsContract.Intent.AddToFavorite(image))

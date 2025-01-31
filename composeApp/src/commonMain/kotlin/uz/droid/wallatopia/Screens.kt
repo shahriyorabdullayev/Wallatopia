@@ -8,7 +8,7 @@ object Screens {
     object SplashScreen
 
     @Serializable
-    data class CategoryDetailsScreen(val categoryId: String)
+    data class CategoryDetailsScreen(val categoryName: String)
 
     @Serializable
     object SearchScreen

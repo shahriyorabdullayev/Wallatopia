@@ -2,7 +2,6 @@ package uz.droid.wallatopia.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -82,7 +81,7 @@ class ImageGenerateViewModel(
             mainRepository.searchPhotos("abstract art").onSuccess {
                 _uiState.value =
                     _uiState.value.copy(
-                        starterImages = it.results.take(4).map { it.toUiModel }
+                        starterImages = it.hits.shuffled().take(4).map { it.toUiModel }
                     )
             }
         }
