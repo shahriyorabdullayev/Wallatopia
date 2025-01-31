@@ -57,7 +57,9 @@ fun SearchTopBar(
     val focusRequester = remember { FocusRequester() }
     val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
     LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
+        if (query.isEmpty()) {
+            focusRequester.requestFocus()
+        }
     }
     Row(
         verticalAlignment = Alignment.CenterVertically,

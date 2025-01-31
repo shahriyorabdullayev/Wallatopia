@@ -1,5 +1,3 @@
-@file:OptIn(KoinExperimentalAPI::class)
-
 package uz.droid.wallatopia.presentation.screens
 
 import androidx.compose.foundation.Image
@@ -46,7 +44,6 @@ import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.ImageUiModel
@@ -64,7 +61,8 @@ import wallatopia.composeapp.generated.resources.stop
 
 @Composable
 fun ImageGenerateScreen(
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    navigateToImageDetails: (String, String) -> Unit
 ) {
 
     val viewModel: ImageGenerateViewModel = koinViewModel()
@@ -87,7 +85,7 @@ fun ImageGenerateScreen(
                 ) {
                     ImageGenerateTopBar(
                         textFieldEnabled = uiState.searchFieldEnabled,
-                        modifier = Modifier.padding(start = 15.dp, top = 26.dp, end = 31.dp),
+                        modifier = Modifier.padding(start = 15.dp, top = 26.dp, end = 34.dp),
                         prompt = uiState.prompt,
                         onValueChange = {
                             event(ImageGenerateContract.Intent.OnPromptChange(it))
@@ -150,7 +148,7 @@ fun ImageGenerateScreen(
                                 modifier = Modifier.fillMaxWidth()
                                     .padding(horizontal = 34.dp),
                                 onClick = {
-
+                                    navigateToImageDetails(uiState.generatedImageUrl,uiState.generatedImageUrl)
                                 },
                                 backgroundColor = AppTheme.colorScheme.softWhite,
                                 contentColor = AppTheme.colorScheme.eerieBlack,

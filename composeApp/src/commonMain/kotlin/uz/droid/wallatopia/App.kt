@@ -60,8 +60,11 @@ fun HavHostMain(navController: NavHostController) {
         composable<Screens.CategoryDetailsScreen> { backStackEntry ->
             val category: Screens.CategoryDetailsScreen = backStackEntry.toRoute()
             CategoryDetailsScreen(
-                categoryId = category.categoryId,
-                onBackPressed = navController::popBackStack
+                categoryName = category.categoryName,
+                onBackPressed = navController::popBackStack,
+                navigateToImageDetails = { thumbUrl, originalUrl ->
+                    navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                }
             )
         }
         composable<Screens.SearchScreen> {
@@ -69,12 +72,18 @@ fun HavHostMain(navController: NavHostController) {
                 onBackPressed = navController::popBackStack,
                 navigateToCategoryDetails = {
                     navController.navigate(Screens.CategoryDetailsScreen(it))
+                },
+                navigateToImageDetails = { thumbUrl, originalUrl ->
+                    navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
                 }
             )
         }
         composable<Screens.ImageGenerateScreen> {
             ImageGenerateScreen(
-                onBackPressed = navController::popBackStack
+                onBackPressed = navController::popBackStack,
+                navigateToImageDetails = { thumbUrl, originalUrl ->
+                    navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                }
             )
         }
 

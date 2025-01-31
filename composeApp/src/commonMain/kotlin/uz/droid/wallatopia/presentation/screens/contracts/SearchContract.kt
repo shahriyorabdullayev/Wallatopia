@@ -1,5 +1,8 @@
 package uz.droid.wallatopia.presentation.screens.contracts
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import uz.droid.wallatopia.domain.model.CategoryUiModel
 import uz.droid.wallatopia.domain.model.ImageUiModel
 
@@ -8,7 +11,7 @@ class SearchContract {
         val query: String = "",
         val lastQuery: String = "",
         val categories: List<CategoryUiModel> = emptyList(),
-        val searchResults: List<ImageUiModel> = emptyList(),
+        val searchResults: Flow<PagingData<ImageUiModel>> = emptyFlow(),
         val suggestions: List<String> = emptyList()
     )
 

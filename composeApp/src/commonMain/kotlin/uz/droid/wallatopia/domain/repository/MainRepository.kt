@@ -1,24 +1,17 @@
 package uz.droid.wallatopia.domain.repository
 
-import androidx.paging.PagingData
-import kotlinx.coroutines.flow.Flow
 import uz.droid.wallatopia.data.network.response.Categories
-import uz.droid.wallatopia.data.network.response.Photos
-import uz.droid.wallatopia.data.network.response.PixabayImage
 import uz.droid.wallatopia.data.network.response.PixabayResponse
 import uz.droid.wallatopia.data.network.response.SearchResponse
 import uz.droid.wallatopia.data.network.response.SuggestionResponse
 
 interface MainRepository {
-    suspend fun fetchWallpapers(): Result<Photos>
 
-    suspend fun fetchWallpapersFromPixabay(page:Int): Result<PixabayResponse>
+    suspend fun fetchWallpapersFromPixabay(page: Int): Result<PixabayResponse>
 
     suspend fun fetchCategories(): Result<Categories>
 
-    suspend fun fetchCategoryPhotos(categoryId:String): Result<Photos>
+    suspend fun searchPhotos(query: String, page: Int = 1): Result<SearchResponse>
 
-    suspend fun searchPhotos(query:String): Result<SearchResponse>
-
-    suspend fun getSuggestions(query:String): Result<SuggestionResponse>
+    suspend fun getSuggestions(query: String): Result<SuggestionResponse>
 }

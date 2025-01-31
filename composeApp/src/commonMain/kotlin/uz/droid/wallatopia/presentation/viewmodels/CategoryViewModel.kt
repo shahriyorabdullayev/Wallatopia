@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import uz.droid.wallatopia.data.mapper.toHomeCategoryUiModel
 import uz.droid.wallatopia.domain.repository.MainRepository
 import uz.droid.wallatopia.presentation.screens.contracts.CategoryContract
 
@@ -32,7 +31,7 @@ class CategoryViewModel(
         viewModelScope.launch {
             repository.fetchCategories().onSuccess {
                 _uiState.value =
-                    _uiState.value.copy(categories = it.map { it.toHomeCategoryUiModel })
+                    _uiState.value.copy(categories = it.take(15))
             }
         }
     }

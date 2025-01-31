@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.components.BaseBackground
@@ -35,7 +34,7 @@ import uz.droid.wallatopia.presentation.viewmodels.CategoryViewModel
 
 @Composable
 fun CategoryScreen(
-    navigateToCategoryDetails: (categoryId:String) -> Unit,
+    navigateToCategoryDetails: (categoryName:String) -> Unit,
     onBackPressed: () -> Unit
 ) {
 
@@ -71,7 +70,7 @@ fun CategoryScreen(
                         Modifier.height(90.dp).fillMaxWidth().clip(AppTheme.shape.rounded5)
                             .clickable(
                                 onClick = {
-                                    navigateToCategoryDetails(it.id)
+                                    navigateToCategoryDetails(it.name)
                                 },
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = ripple()

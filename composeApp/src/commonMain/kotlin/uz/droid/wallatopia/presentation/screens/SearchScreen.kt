@@ -1,5 +1,3 @@
-@file:OptIn(KoinExperimentalAPI::class)
-
 package uz.droid.wallatopia.presentation.screens
 
 import androidx.compose.foundation.clickable
@@ -21,7 +19,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -30,9 +27,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.collectAsLazyPagingItems
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.CategoryUiModel
@@ -50,13 +48,15 @@ import wallatopia.composeapp.generated.resources.search_results_for
 
 @Composable
 fun SearchScreen(
-    navigateToCategoryDetails: (categoryId: String) -> Unit,
+    navigateToCategoryDetails: (categoryName: String) -> Unit,
+    navigateToImageDetails: (String, String) -> Unit,
     onBackPressed: () -> Unit
 ) {
     val viewModel: SearchViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val event = viewModel::onEventDispatch
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
+    val searchResultsPaging = uiState.searchResults.collectAsLazyPagingItems()
 
     BaseBackground(backgroundImage = Drawables.Images.SearchBackground) {
         Column(
@@ -69,7 +69,7 @@ fun SearchScreen(
                 modifier = Modifier
                     .padding(start = 20.dp, top = 26.dp, end = 31.dp),
                 onBack = {
-                    if (uiState.searchResults.isEmpty())
+                    if (searchResultsPaging.itemCount == 0)
                         onBackPressed()
                     else
                         event(SearchContract.Intent.ClearSearch)
@@ -82,7 +82,7 @@ fun SearchScreen(
                 }
             )
 
-            if (uiState.searchResults.isEmpty()) {
+            if (searchResultsPaging.itemCount == 0) {
                 BrowseByCategorySection(
                     categories = uiState.categories,
                     navigateToCategoryDetails = navigateToCategoryDetails
@@ -90,9 +90,12 @@ fun SearchScreen(
             } else {
                 SearchResultsSection(
                     searchedQuery = uiState.lastQuery,
-                    searchResults = uiState.searchResults,
+                    searchResults = searchResultsPaging,
                     onAddToFavorite = { image ->
                         event(SearchContract.Intent.AddToFavorite(image))
+                    },
+                    onClick = { image ->
+                        navigateToImageDetails(image.thumbUrl, image.originalUrl)
                     }
                 )
             }
@@ -103,7 +106,7 @@ fun SearchScreen(
 @Composable
 fun BrowseByCategorySection(
     categories: List<CategoryUiModel>,
-    navigateToCategoryDetails: (categoryId: String) -> Unit
+    navigateToCategoryDetails: (categoryName: String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -133,7 +136,7 @@ fun BrowseByCategorySection(
                         .fillMaxWidth().clip(AppTheme.shape.rounded5)
                         .clickable(
                             onClick = {
-                                navigateToCategoryDetails(it.id)
+                                navigateToCategoryDetails(it.name)
                             },
                             interactionSource = remember { MutableInteractionSource() },
                             indication = ripple()
@@ -149,8 +152,9 @@ fun BrowseByCategorySection(
 @Composable
 fun SearchResultsSection(
     searchedQuery: String,
-    searchResults: List<ImageUiModel>,
-    onAddToFavorite: (ImageUiModel) -> Unit
+    searchResults: LazyPagingItems<ImageUiModel>,
+    onAddToFavorite: (ImageUiModel) -> Unit,
+    onClick: (ImageUiModel) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -164,7 +168,7 @@ fun SearchResultsSection(
                 color = AppTheme.colorScheme.immutableWhite
             )
             Text(
-                searchedQuery,
+                " $searchedQuery",
                 style = AppTheme.typography.listTitle,
                 color = AppTheme.colorScheme.immutableWhite
             )
@@ -179,11 +183,12 @@ fun SearchResultsSection(
                 bottom = 100.dp,
             )
         ) {
-            items(searchResults) { image ->
+            items(searchResults.itemCount) { index ->
+                val image = searchResults[index] ?: return@items
                 MainImageItem(
                     image = image,
                     onClick = {
-
+                        onClick(image)
                     },
                     onFavoriteClick = {
                         onAddToFavorite(image)
