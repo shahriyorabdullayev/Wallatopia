@@ -1,7 +1,6 @@
 package uz.droid.wallatopia.data.network
 
 import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.encodedPath
@@ -11,8 +10,6 @@ import kotlinx.serialization.json.Json
 const val PIXABAY_URL = "https://pixabay.com/"
 const val POLLINATIONS_IMAGE_URL = "https://image.pollinations.ai/"
 const val POLLINATIONS_URL = "https://text.pollinations.ai/"
-const val PIXELS_API_KEY = "YfnXeuPMNatC1GgNcaJH0knqve0K7qZRZ9BOyHo09IzZq13X7fPRv0Vv"
-const val PIXELS_URL = "https://api.pexels.com/"
 
 fun HttpRequestBuilder.json() {
     contentType(ContentType.Application.Json)
