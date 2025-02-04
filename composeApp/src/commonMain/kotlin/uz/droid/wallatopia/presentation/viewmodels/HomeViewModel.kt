@@ -9,7 +9,7 @@ import androidx.paging.map
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import uz.droid.wallatopia.data.paging.PixabayPagingSource
 import uz.droid.wallatopia.data.mapper.toUiModel
@@ -33,7 +33,11 @@ class HomeViewModel(
     fun onEventDispatch(intent: HomeContract.Intent) {
         when (intent) {
             is HomeContract.Intent.AddToFavorites -> {
-                handleAddToFavorites(intent.imageUiModel)
+                handleAddToFavorites(intent.imageUiModel.copy(isFavorite = true))
+            }
+
+            is HomeContract.Intent.SelectTab -> {
+                _uiState.value = uiState.value.copy(selectedTabIndex = intent.index)
             }
 
             is HomeContract.Intent.OpenImage -> {
@@ -42,27 +46,40 @@ class HomeViewModel(
 
             is HomeContract.Intent.DeleteFromFavorites -> {
                 viewModelScope.launch {
-                    favoriteImagesRepository.deleteImage(intent.imageUiModel)
+                    if (intent.imageUiModel.isAiGenerated) {
+                        favoriteImagesRepository.updateImage(intent.imageUiModel.copy(isFavorite = false))
+                    } else {
+                        favoriteImagesRepository.deleteImage(intent.imageUiModel)
+                    }
                 }
             }
 
             HomeContract.Intent.Init -> {
                 handleCategoriesFetch()
-                viewModelScope.launch {
-                    val pagingResponse = Pager(
-                        config = PagingConfig(
-                            pageSize = 20,
-                            enablePlaceholders = false
-                        ),
-                        pagingSourceFactory = { PixabayPagingSource(repository) }
-                    ).flow
-                        .map { pagingData ->
-                            pagingData.map {
-                                it.toUiModel
-                            }
-                        }.cachedIn(viewModelScope)
+                val pagingResponseFlow = Pager(
+                    config = PagingConfig(
+                        pageSize = 20,
+                        enablePlaceholders = false
+                    ),
+                    pagingSourceFactory = { PixabayPagingSource(repository) }
+                ).flow.cachedIn(viewModelScope)
 
-                    _uiState.value = uiState.value.copy(homeImages = pagingResponse)
+                val favoriteImagesFlow = favoriteImagesRepository.fetchFavoriteImages()
+
+                val combinedFlow =
+                    combine(pagingResponseFlow, favoriteImagesFlow) { pagingData, favoriteList ->
+                        pagingData.map {
+                            it.toUiModel(isFavorite = favoriteImagesRepository.isFavorite(it.id.toString()))
+                        }
+                    }.cachedIn(viewModelScope)
+
+
+                _uiState.value = uiState.value.copy(homeImages = combinedFlow)
+
+                viewModelScope.launch {
+                    favoriteImagesRepository.fetchAiGeneratedImages().collect {
+                        _uiState.value = uiState.value.copy(aiGeneratedImages = it)
+                    }
                 }
             }
         }

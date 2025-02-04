@@ -51,6 +51,7 @@ import uz.droid.wallatopia.presentation.components.HomeCustomTab
 import uz.droid.wallatopia.presentation.components.MainImageItem
 import uz.droid.wallatopia.presentation.components.HomeSearchSection
 import uz.droid.wallatopia.presentation.components.advancedShadow
+import uz.droid.wallatopia.presentation.navigation.BottomScreens
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 import wallatopia.composeapp.generated.resources.Res
@@ -73,7 +74,6 @@ fun HomeScreen(
     val event = viewModel::onEventDispatch
     val pagingItems = uiState.homeImages.collectAsLazyPagingItems()
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
-
     BaseBackground(backgroundImage = Drawables.Images.HomeBackground) {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(3),
@@ -115,12 +115,19 @@ fun HomeScreen(
             item(span = StaggeredGridItemSpan.FullLine) {
                 HomeTabSection(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
-                    tabs = tabs
+                    tabs = tabs,
+                    selectedIndex = uiState.selectedTabIndex,
+                    selectedTab = {
+                        event(HomeContract.Intent.SelectTab(it))
+                    }
                 )
             }
 
-            items(pagingItems.itemCount, key = { it }) { index ->
-                val image = pagingItems[index] ?: return@items
+            items(if (uiState.selectedTabIndex == 0) pagingItems.itemCount else uiState.aiGeneratedImages.size,
+                key = { it }
+            ) { index ->
+                val image = if (uiState.selectedTabIndex == 0) pagingItems[index]
+                    ?: return@items else uiState.aiGeneratedImages.ifEmpty { return@items }[index]
                 MainImageItem(
                     image = image,
                     onClick = {
@@ -180,7 +187,8 @@ fun AIGenerateCardSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
             )
         ) {
             Text(
-                text = stringResource(Res.string.generate_with_ai), style = AppTheme.typography.buttonTextSmall
+                text = stringResource(Res.string.generate_with_ai),
+                style = AppTheme.typography.buttonTextSmall
             )
         }
     }
@@ -205,10 +213,10 @@ fun PopularCategoriesTitleSection(modifier: Modifier = Modifier, onSeeMore: () -
         Spacer(Modifier.weight(1f))
         Row(
             modifier = Modifier.clip(AppTheme.shape.rounded4).clickable(
-                    onClick = onSeeMore,
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = ripple()
-                ).padding(start = 10.dp, top = 4.dp, bottom = 4.dp),
+                onClick = onSeeMore,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = ripple()
+            ).padding(start = 10.dp, top = 4.dp, bottom = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -235,8 +243,8 @@ fun PopularCategoriesListSection(
         categories.take(4).forEach {
             CategoryItem(
                 Modifier.advancedShadow(
-                        offsetY = 4.dp, blur = 4.dp
-                    ).height(48.dp).clip(AppTheme.shape.rounded4).fillMaxWidth().weight(1f),
+                    offsetY = 4.dp, blur = 4.dp
+                ).height(48.dp).clip(AppTheme.shape.rounded4).fillMaxWidth().weight(1f),
                 category = it
             )
         }
@@ -247,13 +255,16 @@ fun PopularCategoriesListSection(
 fun HomeTabSection(
     modifier: Modifier = Modifier,
     tabs: List<TabItem>,
+    selectedIndex: Int = 0,
+    selectedTab: (Int) -> Unit
 ) {
-    var selectedIndex by remember { mutableStateOf(0) }
-
     HomeCustomTab(
-        modifier = modifier, selectedItemIndex = selectedIndex, onClick = {
-            selectedIndex = it
-        }, items = tabs
+        modifier = modifier,
+        selectedItemIndex = selectedIndex,
+        onClick = {
+            selectedTab(it)
+        },
+        items = tabs
     )
 }
 

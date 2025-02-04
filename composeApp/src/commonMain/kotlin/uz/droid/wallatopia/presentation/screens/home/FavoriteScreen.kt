@@ -39,7 +39,9 @@ import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.favorites_title
 
 @Composable
-fun FavoriteScreen() {
+fun FavoriteScreen(
+    navigateToImageDetails: (String, String) -> Unit,
+) {
     val viewModel: FavoritesViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val event = viewModel::onEventDispatch
@@ -78,7 +80,7 @@ fun FavoriteScreen() {
                         MainImageItem(
                             image = image,
                             onClick = {
-
+                                navigateToImageDetails(image.thumbUrl, image.originalUrl)
                             },
                             onFavoriteClick = {
                                 event(FavoritesContract.Intent.DeleteFromFavorites(image))

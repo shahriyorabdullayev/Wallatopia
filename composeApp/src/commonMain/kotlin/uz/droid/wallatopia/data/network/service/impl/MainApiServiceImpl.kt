@@ -21,7 +21,7 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         return httpClient.handle {
             this.get {
                 json()
-                pixabayApiUrl("api/?key=$PIXABAY_KEY&image_type=all&pretty=true&page=$page")
+                pixabayApiUrl("api/?key=$PIXABAY_KEY&image_type=all&pretty=true&page=$page&safesearch=true")
             }
         }
     }

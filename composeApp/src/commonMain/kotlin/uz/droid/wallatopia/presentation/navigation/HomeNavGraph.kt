@@ -85,7 +85,11 @@ fun HomeNavGraph(
                 )
             }
             composable<Screens.HomeGraph.FavouritesScreen> {
-                FavoriteScreen()
+                FavoriteScreen(
+                    navigateToImageDetails = { thumbUrl, originalUrl ->
+                        globalNavController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                    }
+                )
             }
             composable<Screens.HomeGraph.ProfileScreen> {
                 SettingsScreen(

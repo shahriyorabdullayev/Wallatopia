@@ -8,10 +8,7 @@ val PixabayImage.toUiModel: ImageUiModel
         id = this.id.toString(),
         thumbUrl = this.thumbImageUrl,
         originalUrl = this.originalImageUrl,
-        height = 0,
-        width = 0,
         color = "",
-        blurHash = ""
     )
 
 fun PixabayImage.toUiModel(
@@ -21,10 +18,7 @@ fun PixabayImage.toUiModel(
         id = this.id.toString(),
         thumbUrl = this.thumbImageUrl,
         originalUrl = this.originalImageUrl,
-        height = 0,
-        width = 0,
         color = "",
-        blurHash = "",
         isFavorite = isFavorite
     )
 }

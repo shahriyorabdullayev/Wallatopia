@@ -2,34 +2,44 @@ package uz.droid.wallatopia.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import uz.droid.wallatopia.data.local.FavoriteImagesDao
+import uz.droid.wallatopia.data.local.WallatopiaImagesDao
 import uz.droid.wallatopia.data.mapper.toEntity
 import uz.droid.wallatopia.data.mapper.toUiModel
 import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 
 class FavoritesRepositoryImpl(
-    private val favoriteImagesDao: FavoriteImagesDao
+    private val wallatopiaImagesDao: WallatopiaImagesDao
 ): FavoritesRepository {
     override suspend fun insertImage(image: ImageUiModel) {
-        favoriteImagesDao.insertFavoriteImage(image.toEntity)
+        wallatopiaImagesDao.insertFavoriteImage(image.toEntity)
     }
 
     override suspend fun deleteImage(image: ImageUiModel) {
-        favoriteImagesDao.deleteFavoriteImage(image.toEntity)
+        wallatopiaImagesDao.deleteFavoriteImage(image.toEntity)
+    }
+
+    override suspend fun updateImage(image: ImageUiModel) {
+        wallatopiaImagesDao.updateFavoriteImage(image.toEntity)
     }
 
     override fun fetchFavoriteImages(): Flow<List<ImageUiModel>> {
-        return favoriteImagesDao.getAllFavoriteImages().map { entities ->
+        return wallatopiaImagesDao.getAllFavoriteImages().map { entities ->
+            entities.map { it.toUiModel }
+        }
+    }
+
+    override fun fetchAiGeneratedImages(): Flow<List<ImageUiModel>> {
+        return wallatopiaImagesDao.getAllAiGeneratedImagesByOrdered().map { entities ->
             entities.map { it.toUiModel }
         }
     }
 
     override suspend fun clearFavorites() {
-        favoriteImagesDao.deleteAllFavorites()
+        wallatopiaImagesDao.deleteAllFavorites()
     }
 
     override suspend fun isFavorite(id: String): Boolean {
-        return favoriteImagesDao.isFavorite(id)
+        return wallatopiaImagesDao.isFavorite(id)
     }
 }

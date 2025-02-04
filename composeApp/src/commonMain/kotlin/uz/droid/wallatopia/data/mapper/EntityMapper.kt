@@ -1,20 +1,22 @@
 package uz.droid.wallatopia.data.mapper
 
-import uz.droid.wallatopia.data.entities.UnsplashImageEntity
+import uz.droid.wallatopia.data.entities.WallatopiaImageEntity
 import uz.droid.wallatopia.domain.model.ImageUiModel
 
-val ImageUiModel.toEntity: UnsplashImageEntity
-    get() = UnsplashImageEntity(
+val ImageUiModel.toEntity: WallatopiaImageEntity
+    get() = WallatopiaImageEntity(
         id = this.id,
-        imageUrl = this.thumbUrl,
-        blurHash = this.blurHash
+        thumbUrl = this.thumbUrl,
+        originalUrl = this.originalUrl,
+        isFavorite = this.isFavorite,
+        isAiGenerated = this.isAiGenerated,
     )
 
-val UnsplashImageEntity.toUiModel: ImageUiModel
+val WallatopiaImageEntity.toUiModel: ImageUiModel
     get() = ImageUiModel(
         id = this.id,
-        thumbUrl = this.imageUrl,
-        originalUrl = this.imageUrl,
-        blurHash = this.blurHash,
-        isFavorite = true
+        thumbUrl = this.thumbUrl,
+        originalUrl = this.originalUrl,
+        isFavorite = this.isFavorite,
+        isAiGenerated = this.isAiGenerated
     )
