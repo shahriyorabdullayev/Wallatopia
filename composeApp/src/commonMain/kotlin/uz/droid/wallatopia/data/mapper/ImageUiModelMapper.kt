@@ -9,6 +9,7 @@ val PixabayImage.toUiModel: ImageUiModel
         thumbUrl = this.thumbImageUrl,
         originalUrl = this.originalImageUrl,
         color = "",
+        timestamp = 0L
     )
 
 fun PixabayImage.toUiModel(
@@ -19,7 +20,8 @@ fun PixabayImage.toUiModel(
         thumbUrl = this.thumbImageUrl,
         originalUrl = this.originalImageUrl,
         color = "",
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
+        timestamp = 0L
     )
 }
 

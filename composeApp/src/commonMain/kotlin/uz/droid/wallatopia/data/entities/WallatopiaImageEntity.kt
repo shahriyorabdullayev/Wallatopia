@@ -13,7 +13,7 @@ data class WallatopiaImageEntity(
     @ColumnInfo(name = "id")
     val id:String,
     @ColumnInfo("timestamp")
-    val timestamp: Long = currentTimeInMilliSeconds,
+    val timestamp: Long,
     @ColumnInfo(name = "thumb_url")
     val thumbUrl: String,
     @ColumnInfo(name = "original_url")

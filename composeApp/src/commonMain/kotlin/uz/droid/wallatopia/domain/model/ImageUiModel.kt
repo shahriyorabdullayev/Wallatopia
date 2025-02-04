@@ -7,4 +7,5 @@ data class ImageUiModel(
     val color: String = "",
     val isFavorite: Boolean = false,
     val isAiGenerated: Boolean = false,
+    val timestamp: Long
 )

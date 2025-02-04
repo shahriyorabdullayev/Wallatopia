@@ -46,6 +46,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
+import uz.droid.wallatopia.currentTimeInMilliSeconds
 import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.presentation.components.AppButton
 import uz.droid.wallatopia.presentation.components.BaseBackground
@@ -108,9 +109,10 @@ fun ImageGenerateScreen(
                                     thumbUrl = generatedImageUrl,
                                     originalUrl = generatedImageUrl,
                                     isFavorite = false,
-                                    isAiGenerated = true
+                                    isAiGenerated = true,
+                                    timestamp = currentTimeInMilliSeconds
                                 )
-                                event(ImageGenerateContract.Intent.AddToFavorites(generatedImageUiModel))
+                                event(ImageGenerateContract.Intent.AddToImageGenerated(generatedImageUiModel))
                             }
                         )
                     } else if (uiState.starterImages.isNotEmpty()) {

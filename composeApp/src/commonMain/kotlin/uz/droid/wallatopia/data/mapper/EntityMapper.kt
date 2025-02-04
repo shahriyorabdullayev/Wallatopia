@@ -10,6 +10,7 @@ val ImageUiModel.toEntity: WallatopiaImageEntity
         originalUrl = this.originalUrl,
         isFavorite = this.isFavorite,
         isAiGenerated = this.isAiGenerated,
+        timestamp = this.timestamp
     )
 
 val WallatopiaImageEntity.toUiModel: ImageUiModel
@@ -18,5 +19,6 @@ val WallatopiaImageEntity.toUiModel: ImageUiModel
         thumbUrl = this.thumbUrl,
         originalUrl = this.originalUrl,
         isFavorite = this.isFavorite,
-        isAiGenerated = this.isAiGenerated
+        isAiGenerated = this.isAiGenerated,
+        timestamp = this.timestamp
     )

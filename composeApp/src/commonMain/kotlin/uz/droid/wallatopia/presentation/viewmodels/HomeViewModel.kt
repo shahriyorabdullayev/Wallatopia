@@ -33,21 +33,23 @@ class HomeViewModel(
     fun onEventDispatch(intent: HomeContract.Intent) {
         when (intent) {
             is HomeContract.Intent.AddToFavorites -> {
-                handleAddToFavorites(intent.imageUiModel.copy(isFavorite = true))
+                viewModelScope.launch {
+                    if (intent.imageUiModel.isAiGenerated) {
+                        favoriteImagesRepository.updateImage(intent.imageUiModel.copy(isFavorite = true, timestamp = intent.imageUiModel.timestamp))
+                    } else {
+                        favoriteImagesRepository.insertImage(intent.imageUiModel.copy(isFavorite = true))
+                    }
+                }
             }
 
             is HomeContract.Intent.SelectTab -> {
                 _uiState.value = uiState.value.copy(selectedTabIndex = intent.index)
             }
 
-            is HomeContract.Intent.OpenImage -> {
-
-            }
-
             is HomeContract.Intent.DeleteFromFavorites -> {
                 viewModelScope.launch {
                     if (intent.imageUiModel.isAiGenerated) {
-                        favoriteImagesRepository.updateImage(intent.imageUiModel.copy(isFavorite = false))
+                        favoriteImagesRepository.updateImage(intent.imageUiModel.copy(isFavorite = false, timestamp = intent.imageUiModel.timestamp))
                     } else {
                         favoriteImagesRepository.deleteImage(intent.imageUiModel)
                     }
@@ -67,7 +69,10 @@ class HomeViewModel(
                 val favoriteImagesFlow = favoriteImagesRepository.fetchFavoriteImages()
 
                 val combinedFlow =
-                    combine(pagingResponseFlow, favoriteImagesFlow) { pagingData, favoriteList ->
+                    combine(
+                        pagingResponseFlow,
+                        favoriteImagesFlow
+                    ) { pagingData, favoriteList ->
                         pagingData.map {
                             it.toUiModel(isFavorite = favoriteImagesRepository.isFavorite(it.id.toString()))
                         }
@@ -96,7 +101,7 @@ class HomeViewModel(
 
     private fun handleAddToFavorites(image: ImageUiModel) {
         viewModelScope.launch {
-            favoriteImagesRepository.insertImage(image)
+
         }
     }
 }
