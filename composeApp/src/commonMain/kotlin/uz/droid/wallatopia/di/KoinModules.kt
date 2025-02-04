@@ -65,7 +65,7 @@ val viewModelModule = module {
     viewModel { CategoryViewModel(get()) }
     viewModel { CategoryDetailsViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get()) }
-    viewModel { ImageGenerateViewModel(get()) }
+    viewModel { ImageGenerateViewModel(get(), get()) }
     viewModel { SettingsViewModel(get()) }
 }
 

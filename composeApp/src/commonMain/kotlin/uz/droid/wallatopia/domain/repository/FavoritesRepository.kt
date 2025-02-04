@@ -9,9 +9,13 @@ interface FavoritesRepository {
 
     suspend fun deleteImage(image: ImageUiModel)
 
+    suspend fun updateImage(image: ImageUiModel)
+
     suspend fun clearFavorites()
 
     fun fetchFavoriteImages(): Flow<List<ImageUiModel>>
+
+    fun fetchAiGeneratedImages(): Flow<List<ImageUiModel>>
 
     suspend fun isFavorite(id: String): Boolean
 }

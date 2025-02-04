@@ -9,11 +9,15 @@ import kotlinx.coroutines.launch
 import uz.droid.wallatopia.common.Constants.GENERATIVE_MODELS
 import uz.droid.wallatopia.data.mapper.toUiModel
 import uz.droid.wallatopia.data.network.POLLINATIONS_IMAGE_URL
+import uz.droid.wallatopia.domain.model.ImageUiModel
+import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
 import uz.droid.wallatopia.presentation.screens.contracts.ImageGenerateContract
+import uz.droid.wallatopia.randomUUID
 
 class ImageGenerateViewModel(
-    private val mainRepository: MainRepository
+    private val mainRepository: MainRepository,
+    private val favoritesRepository: FavoritesRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ImageGenerateContract.ImageGenerateState())
@@ -43,6 +47,12 @@ class ImageGenerateViewModel(
                     generatedImageUrl = imageUrl,
                     searchFieldEnabled = false
                 )
+            }
+
+            is ImageGenerateContract.Intent.AddToFavorites -> {
+                viewModelScope.launch {
+                    favoritesRepository.insertImage(intent.imageUiModel)
+                }
             }
 
             is ImageGenerateContract.Intent.OnPromptChange -> {

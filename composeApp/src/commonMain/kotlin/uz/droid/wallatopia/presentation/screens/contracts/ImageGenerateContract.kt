@@ -18,6 +18,7 @@ class ImageGenerateContract {
         data class Generate(val screenSize: IntSize) : Intent
         data object StopGenerating : Intent
         data object GenerateAgain : Intent
+        data class AddToFavorites(val imageUiModel: ImageUiModel): Intent
     }
 
     sealed interface ImageGenerateProcessState {

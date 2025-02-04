@@ -4,9 +4,7 @@ data class ImageUiModel(
     val id: String,
     val thumbUrl: String,
     val originalUrl: String,
-    val blurHash: String?,
-    val width: Int = 0,
-    val height: Int = 0,
     val color: String = "",
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val isAiGenerated: Boolean = false,
 )

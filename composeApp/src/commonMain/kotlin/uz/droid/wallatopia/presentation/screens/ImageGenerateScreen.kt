@@ -53,6 +53,7 @@ import uz.droid.wallatopia.presentation.components.ImageGenerateTopBar
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.ImageGenerateContract
 import uz.droid.wallatopia.presentation.viewmodels.ImageGenerateViewModel
+import uz.droid.wallatopia.randomUUID
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.generate_again
 import wallatopia.composeapp.generated.resources.please_wait
@@ -101,6 +102,15 @@ fun ImageGenerateScreen(
                             generatedImageUrl = uiState.generatedImageUrl,
                             onImageLoaded = {
                                 event(ImageGenerateContract.Intent.GenerationFinished)
+                                val generatedImageUrl = uiState.generatedImageUrl
+                                val generatedImageUiModel = ImageUiModel(
+                                    id = randomUUID,
+                                    thumbUrl = generatedImageUrl,
+                                    originalUrl = generatedImageUrl,
+                                    isFavorite = false,
+                                    isAiGenerated = true
+                                )
+                                event(ImageGenerateContract.Intent.AddToFavorites(generatedImageUiModel))
                             }
                         )
                     } else if (uiState.starterImages.isNotEmpty()) {

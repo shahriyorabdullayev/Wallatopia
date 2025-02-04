@@ -12,7 +12,7 @@ import uz.droid.wallatopia.presentation.screens.contracts.FavoritesContract
 
 class FavoritesViewModel(
     private val favoritesRepository: FavoritesRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FavoritesContract.FavoritesState())
     val uiState: StateFlow<FavoritesContract.FavoritesState> = _uiState.asStateFlow()
@@ -22,12 +22,19 @@ class FavoritesViewModel(
     }
 
     fun onEventDispatch(event: FavoritesContract.Intent) {
-        when(event) {
+        when (event) {
             FavoritesContract.Intent.Init -> {
                 fetchFavoriteImages()
             }
+
             is FavoritesContract.Intent.DeleteFromFavorites -> {
-                deleteImageFromFavorites(event.imageUiModel)
+                viewModelScope.launch {
+                    if (event.imageUiModel.isAiGenerated) {
+                        favoritesRepository.updateImage(event.imageUiModel.copy(isFavorite = false))
+                    } else {
+                        deleteImageFromFavorites(event.imageUiModel)
+                    }
+                }
             }
         }
     }
