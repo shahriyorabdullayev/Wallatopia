@@ -43,49 +43,38 @@ fun SplashScreen(
         delay(2000)
         navigateToHome()
     }
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+            .fillMaxSize()
+            .background(color = Color(0xFF1D5967)),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(Drawables.Images.SplashBackground),
-            contentDescription = "Splash background",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            painter = painterResource(Drawables.Images.SplashLogo),
+            contentDescription = "App logo",
+            modifier = Modifier.width(140.dp).height(110.dp),
         )
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(Drawables.Images.SplashLogo),
-                contentDescription = "App logo",
-                modifier = Modifier.width(170.dp).height(140.dp),
-            )
-            Text(
-                text = "Wallatopia",
-                style = AppTheme.typography.appNameTitle,
-                color = AppTheme.colorScheme.immutableWhite,
-            )
-            Spacer(modifier = Modifier.height(36.dp))
-            LinearProgressIndicator(
-                modifier = Modifier.width(160.dp),
-                strokeCap = StrokeCap.Round,
-                backgroundColor = AppTheme.colorScheme.spanishGray,
-                color = AppTheme.colorScheme.immutableWhite
-            )
-            Spacer(modifier = Modifier.height(36.dp))
-            Text(
-                text = "4k Wallpapers",
-                style = AppTheme.typography.splashTitle,
-                color = AppTheme.colorScheme.immutableWhite,
-            )
-        }
+        Text(
+            text = "Wallatopia",
+            style = AppTheme.typography.appNameTitle,
+            color = AppTheme.colorScheme.immutableWhite,
+            modifier = Modifier.padding(top = 24.dp)
+        )
+        Spacer(modifier = Modifier.height(36.dp))
+        LinearProgressIndicator(
+            modifier = Modifier.width(160.dp),
+            strokeCap = StrokeCap.Round,
+            backgroundColor = AppTheme.colorScheme.spanishGray,
+            color = AppTheme.colorScheme.immutableWhite
+        )
+        Spacer(modifier = Modifier.height(36.dp))
+        Text(
+            text = "4k Wallpapers",
+            style = AppTheme.typography.splashTitle,
+            color = AppTheme.colorScheme.immutableWhite,
+        )
     }
-
 }
 
 
