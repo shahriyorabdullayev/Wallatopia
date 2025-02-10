@@ -37,7 +37,7 @@ class ImageGenerateViewModel(
             is ImageGenerateContract.Intent.Generate -> {
                 _generationState.value = ImageGenerateContract.ImageGenerateProcessState.Generating
                 val imageUrl =
-                    "${POLLINATIONS_IMAGE_URL}prompt/${uiState.value.prompt}/${GENERATIVE_MODELS[1]}?width=${intent.screenSize.width}&height=${intent.screenSize.height}&safe=true"
+                    "${POLLINATIONS_IMAGE_URL}prompt/${uiState.value.prompt}/pl${GENERATIVE_MODELS[1]}?width=${intent.screenSize.width}&height=${intent.screenSize.height}&safe=true"
 
                 _uiState.value = _uiState.value.copy(
                     generatedImageUrl = imageUrl,

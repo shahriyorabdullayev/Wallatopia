@@ -1,7 +1,6 @@
 package uz.droid.wallatopia.di
 
 import android.preference.PreferenceManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.room.RoomDatabase
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings

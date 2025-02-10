@@ -10,6 +10,7 @@ import wallatopia.composeapp.generated.resources.ic_arrow_go
 import wallatopia.composeapp.generated.resources.ic_arrow_right
 import wallatopia.composeapp.generated.resources.ic_back
 import wallatopia.composeapp.generated.resources.ic_category
+import wallatopia.composeapp.generated.resources.ic_download
 import wallatopia.composeapp.generated.resources.ic_favorite
 import wallatopia.composeapp.generated.resources.ic_favorite_outlined
 import wallatopia.composeapp.generated.resources.ic_favorite_selected
@@ -57,6 +58,7 @@ object Drawables {
         val SetLock = Res.drawable.ic_set_lock
         val SetHome = Res.drawable.ic_set_home
         val Share = Res.drawable.ic_share
+        val Download = Res.drawable.ic_download
     }
 
     object Images {
@@ -69,15 +71,5 @@ object Drawables {
         val SplashLogo = Res.drawable.splash_logo
         val HomeBanner = Res.drawable.home_banner
         val ImageGeneratePlaceHolder = Res.drawable.image_generate_placeholder
-    }
-
-    object Fonts {
-        val soraRegular = Res.font.sora_regular
-        val soraMedium = Res.font.sora_medium
-        val soraLight = Res.font.sora_light
-        val soraThin = Res.font.sora_thin
-        val soraBold = Res.font.sora_bold
-        val soraSemiBold = Res.font.sora_semi_bold
-        val soraExtraBold = Res.font.sora_extra_bold
     }
 }
