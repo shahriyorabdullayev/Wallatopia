@@ -22,6 +22,9 @@
     <string name="please_wait">Biz siz uchun noyob asar yaratib berayotganimizda, kuting</string>
     <string name="search_for_wallpapers">Fon rasmlarini qidiring</string>
     <string name="search_results_for">Natijalar qidiruvi uchun</string>
+    <string name="share">Uzatish</string>
+    <string name="set">O'RNATISH</string>
+    <string name="download">YUKLASH</string>
     <string name="privacy_policy">1. Kirish
 
 Ushbu Maxfiylik siyosati Wallatopia ("biz", "bizning" yoki "bizga") ilovasi sizning shaxsiy ma'lumotlaringizni qanday to'plashini, foydalanishini va himoya qilishini tushuntiradi.
