@@ -9,12 +9,15 @@ import wallatopia.composeapp.generated.resources.ic_ai_stick
 import wallatopia.composeapp.generated.resources.ic_arrow_go
 import wallatopia.composeapp.generated.resources.ic_arrow_right
 import wallatopia.composeapp.generated.resources.ic_back
+import wallatopia.composeapp.generated.resources.ic_both_screens
 import wallatopia.composeapp.generated.resources.ic_category
 import wallatopia.composeapp.generated.resources.ic_download
 import wallatopia.composeapp.generated.resources.ic_favorite
 import wallatopia.composeapp.generated.resources.ic_favorite_outlined
 import wallatopia.composeapp.generated.resources.ic_favorite_selected
 import wallatopia.composeapp.generated.resources.ic_home
+import wallatopia.composeapp.generated.resources.ic_home_screen
+import wallatopia.composeapp.generated.resources.ic_lock_screen
 import wallatopia.composeapp.generated.resources.ic_popular_categories
 import wallatopia.composeapp.generated.resources.ic_profile
 import wallatopia.composeapp.generated.resources.ic_search
@@ -59,6 +62,9 @@ object Drawables {
         val SetHome = Res.drawable.ic_set_home
         val Share = Res.drawable.ic_share
         val Download = Res.drawable.ic_download
+        val HomeScreen = Res.drawable.ic_home_screen
+        val LockScreen = Res.drawable.ic_lock_screen
+        val BothScreens = Res.drawable.ic_both_screens
     }
 
     object Images {

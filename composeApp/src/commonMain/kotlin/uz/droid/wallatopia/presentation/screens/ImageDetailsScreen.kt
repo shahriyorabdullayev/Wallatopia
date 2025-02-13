@@ -2,6 +2,7 @@ package uz.droid.wallatopia.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,20 +10,25 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -31,8 +37,12 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import uz.droid.wallatopia.ImageDetailsBottomSheetContent
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.isAndroid
@@ -54,108 +64,187 @@ fun ImageDetailsScreen(
 ) {
     val statusBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
     val navigationBarsPadding = WindowInsets.navigationBars.asPaddingValues(LocalDensity.current)
+    val scaffoldState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden
+    )
+    val scope = rememberCoroutineScope()
+
     val painterBlur = rememberAsyncImagePainter(
         model = ImageRequest.Builder(
             LocalPlatformContext.current
         ).data(thumbUrl).crossfade(true).build(),
         contentScale = ContentScale.Crop
     )
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Image(
-            painter = painterBlur,
-            contentDescription = "Wallpaper",
-            modifier = Modifier.fillMaxSize().blur(radius = 70.dp),
-            contentScale = ContentScale.Crop
-        )
-        if (isVersionBelow12) {
-            Box(Modifier.fillMaxSize().background(AppTheme.colorScheme.cyanBlue.copy(.5f)))
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            ImageDetailsTopBar(
-                modifier = Modifier
-                    .padding(
-                        top = statusBarsPadding.calculateTopPadding() + 8.dp,
-                        start = 10.dp,
-                        end = 10.dp
-                    ),
-                onBackPressed = onBackPressed
+    ModalBottomSheetLayout(
+        sheetState = scaffoldState,
+        sheetElevation = 0.dp,
+        sheetBackgroundColor = AppTheme.colorScheme.eerieBlack,
+        sheetContent = {
+            SetWallpaperSheetContent(
+                imageOriginalUrl = originalUrl,
+                onClose = {
+                    scope.launch {
+                        scaffoldState.hide()
+                    }
+                }
             )
-
-            SubcomposeAsyncImage(
-                modifier = Modifier.weight(1f)
-                    .padding(vertical = 24.dp)
-                    .padding(horizontal = 40.dp)
-                    .advancedShadow(
-                        blur = 13.dp
-                    )
-                    .clip(AppTheme.shape.rounded15),
-                model = ImageRequest.Builder(
-                    LocalPlatformContext.current
-                )
-                    .data(originalUrl)
-                    .crossfade(true).build(),
-                contentDescription = "image",
+        },
+        sheetShape = AppTheme.shape.rounded15
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Image(
+                painter = painterBlur,
+                contentDescription = "Wallpaper",
+                modifier = Modifier.fillMaxSize().blur(radius = 70.dp),
                 contentScale = ContentScale.Crop
             )
-
-            Row(
+            if (isVersionBelow12) {
+                Box(Modifier.fillMaxSize().background(AppTheme.colorScheme.cyanBlue.copy(.5f)))
+            }
+            Column(
                 modifier = Modifier
-                    .padding(bottom = navigationBarsPadding.calculateBottomPadding() + 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
-                verticalAlignment = Alignment.Bottom
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                DetailsActionButton(
-                    titleRes = Res.string.share,
-                    iconRes = Drawables.Icons.Share,
-                    onClick = {}
+                ImageDetailsTopBar(
+                    modifier = Modifier
+                        .padding(
+                            top = statusBarsPadding.calculateTopPadding() + 8.dp,
+                            start = 10.dp,
+                            end = 10.dp
+                        ),
+                    onBackPressed = onBackPressed
                 )
 
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                SubcomposeAsyncImage(
+                    modifier = Modifier.weight(1f)
+                        .padding(vertical = 24.dp)
+                        .padding(horizontal = 40.dp)
+                        .advancedShadow(
+                            blur = 13.dp
+                        )
+                        .clip(AppTheme.shape.rounded15),
+                    model = ImageRequest.Builder(
+                        LocalPlatformContext.current
+                    )
+                        .data(originalUrl)
+                        .crossfade(true).build(),
+                    contentDescription = "image",
+                    contentScale = ContentScale.Crop
+                )
+
+                Row(
+                    modifier = Modifier
+                        .padding(bottom = navigationBarsPadding.calculateBottomPadding() + 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                    verticalAlignment = Alignment.Bottom
                 ) {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            painter = painterResource(if (isAndroid) Drawables.Icons.SetWallpaper else Drawables.Icons.Download),
-                            contentDescription = "Share download icon",
+                    DetailsActionButton(
+                        titleRes = Res.string.share,
+                        iconRes = Drawables.Icons.Share,
+                        onClick = {}
+                    )
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        IconButton(onClick = {
+                            scope.launch {
+                                scaffoldState.show()
+                            }
+                        }) {
+                            Icon(
+                                painter = painterResource(if (isAndroid) Drawables.Icons.SetWallpaper else Drawables.Icons.Download),
+                                contentDescription = "Share download icon",
+                                modifier = Modifier
+                                    .size(56.dp)
+                                    .clip(CircleShape)
+                                    .background(
+                                        color = AppTheme.colorScheme.immutableWhite,
+                                        shape = CircleShape
+                                    )
+                                    .padding(14.dp),
+                                tint = AppTheme.colorScheme.immutableDark
+                            )
+                        }
+                        Text(
+                            text = stringResource(if (isAndroid) Res.string.set else Res.string.download),
+                            style = AppTheme.typography.buttonTextMedium,
+                            color = AppTheme.colorScheme.immutableWhite,
                             modifier = Modifier
-                                .size(56.dp)
-                                .clip(CircleShape)
                                 .background(
-                                    color = AppTheme.colorScheme.immutableWhite,
-                                    shape = CircleShape
+                                    color = AppTheme.colorScheme.charcoalBlue.copy(
+                                        alpha = 0.53f
+                                    ),
+                                    shape = AppTheme.shape.rounded10
                                 )
-                                .padding(14.dp),
-                            tint = AppTheme.colorScheme.immutableDark
+                                .padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
-                    Text(
-                        text = stringResource(if (isAndroid) Res.string.set else Res.string.download),
-                        style = AppTheme.typography.buttonTextMedium,
-                        color = AppTheme.colorScheme.immutableWhite,
-                        modifier = Modifier
-                            .background(
-                                color = AppTheme.colorScheme.charcoalBlue.copy(
-                                    alpha = 0.53f
-                                ),
-                                shape = AppTheme.shape.rounded10
-                            )
-                            .padding(horizontal = 12.dp, vertical = 4.dp)
+
+                    DetailsActionButton(
+                        titleRes = Res.string.favorites_title,
+                        iconRes = Drawables.Icons.FavoriteOutlined,
+                        onClick = {
+
+                        }
                     )
                 }
-
-                DetailsActionButton(
-                    titleRes = Res.string.favorites_title,
-                    iconRes = Drawables.Icons.FavoriteOutlined,
-                    onClick = {}
-                )
             }
         }
     }
+}
+
+@Composable
+fun SetWallpaperSheetContent(
+    modifier: Modifier = Modifier,
+    imageOriginalUrl: String,
+    onClose: () -> Unit
+) {
+    ImageDetailsBottomSheetContent(
+        modifier = modifier,
+        imageOriginalUrl = imageOriginalUrl,
+        onClose = onClose
+    )
+}
+
+@Composable
+fun SetScreenTypeItem(
+    modifier: Modifier = Modifier,
+    icon: DrawableResource,
+    title: StringResource,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(modifier)
+            .clickable(onClick = onClick)
+            .padding(start = 50.dp, top = 26.dp, bottom = 15.dp, end = 24.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(32.dp)
+    ) {
+        Image(
+            painter = painterResource(icon),
+            contentDescription = "home screen"
+        )
+        Text(
+            text = stringResource(title),
+            style = AppTheme.typography.sheetItemTitle
+                .copy(AppTheme.colorScheme.immutableWhite)
+        )
+    }
+}
+
+@Composable
+fun SetScreenTypeItemDivider() {
+    Divider(
+        modifier = Modifier.fillMaxWidth()
+            .padding(start = 26.dp, end = 24.dp),
+        color = AppTheme.colorScheme.darkCharcoal,
+        thickness = 1.dp
+    )
 }
