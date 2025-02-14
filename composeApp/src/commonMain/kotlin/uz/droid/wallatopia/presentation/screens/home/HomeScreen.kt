@@ -1,7 +1,6 @@
 package uz.droid.wallatopia.presentation.screens.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -19,27 +18,26 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.cash.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Contextual
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -52,10 +50,10 @@ import uz.droid.wallatopia.domain.model.CategoryUiModel
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
-import uz.droid.wallatopia.presentation.components.MainImageItem
 import uz.droid.wallatopia.presentation.components.HomeSearchSection
+import uz.droid.wallatopia.presentation.components.MainImageItem
+import uz.droid.wallatopia.presentation.components.ScrollToTopButton
 import uz.droid.wallatopia.presentation.components.advancedShadow
-import uz.droid.wallatopia.presentation.navigation.BottomScreens
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 import wallatopia.composeapp.generated.resources.Res
@@ -68,6 +66,7 @@ import wallatopia.composeapp.generated.resources.trending
 
 @Composable
 fun HomeScreen(
+    paddingValues: PaddingValues = PaddingValues(),
     navigateToSearch: () -> Unit,
     navigateToCategories: () -> Unit,
     navigateToImageGenerate: () -> Unit,
@@ -78,6 +77,11 @@ fun HomeScreen(
     val event = viewModel::onEventDispatch
     val pagingItems = uiState.homeImages.collectAsLazyPagingItems()
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
+    val scope = rememberCoroutineScope()
+    val gridState = rememberLazyStaggeredGridState()
+    val scrollTopVisible by derivedStateOf {
+        gridState.firstVisibleItemIndex >= 25
+    }
     BaseBackground(backgroundImage = Drawables.Images.HomeBackground) {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(3),
@@ -86,6 +90,7 @@ fun HomeScreen(
                 top = systemBarsPadding.calculateTopPadding() + 17.dp,
                 bottom = 100.dp,
             ),
+            state = gridState,
             verticalItemSpacing = 18.dp,
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
@@ -147,6 +152,18 @@ fun HomeScreen(
                 )
             }
         }
+        ScrollToTopButton(
+            scrollTopVisible = scrollTopVisible,
+            onClick = {
+                scope.launch {
+                    gridState.animateScrollToItem(0)
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 8.dp)
+                .padding(paddingValues)
+        )
     }
 }
 

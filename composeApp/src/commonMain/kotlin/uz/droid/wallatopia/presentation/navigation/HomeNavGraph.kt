@@ -62,6 +62,7 @@ fun HomeNavGraph(
         ) {
             composable<Screens.HomeGraph.HomeScreen> {
                 HomeScreen(
+                    paddingValues = scaffoldpadding,
                     navigateToSearch = {
                         globalNavController.navigate(Screens.SearchScreen)
                     },
