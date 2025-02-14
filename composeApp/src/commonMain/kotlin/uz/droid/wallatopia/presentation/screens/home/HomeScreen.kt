@@ -1,12 +1,6 @@
 package uz.droid.wallatopia.presentation.screens.home
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -20,20 +14,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -64,6 +52,7 @@ import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
 import uz.droid.wallatopia.presentation.components.HomeSearchSection
 import uz.droid.wallatopia.presentation.components.MainImageItem
+import uz.droid.wallatopia.presentation.components.ScrollToTopButton
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
@@ -88,6 +77,7 @@ fun HomeScreen(
     val event = viewModel::onEventDispatch
     val pagingItems = uiState.homeImages.collectAsLazyPagingItems()
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
+    val scope = rememberCoroutineScope()
     val gridState = rememberLazyStaggeredGridState()
     val scrollTopVisible by derivedStateOf {
         gridState.firstVisibleItemIndex >= 25
@@ -162,32 +152,18 @@ fun HomeScreen(
                 )
             }
         }
-        AnimatedVisibility(
-            visible = scrollTopVisible,
-            enter = fadeIn() + slideInHorizontally(initialOffsetX = { it }),
-            exit = fadeOut() + slideOutHorizontally(targetOffsetX = { it }),
+        ScrollToTopButton(
+            scrollTopVisible = scrollTopVisible,
+            onClick = {
+                scope.launch {
+                    gridState.animateScrollToItem(0)
+                }
+            },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = 8.dp)
                 .padding(paddingValues)
-        ) {
-            val scope = rememberCoroutineScope()
-            IconButton(
-                modifier = Modifier
-                    .size(56.dp)
-                    .clip(CircleShape)
-                    .background(AppTheme.colorScheme.charlestonGray),
-                onClick = {
-                    scope.launch { gridState.animateScrollToItem(0) }
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.KeyboardArrowUp,
-                    contentDescription = null,
-                    tint = AppTheme.colorScheme.immutableWhite
-                )
-            }
-        }
+        )
     }
 }
 
