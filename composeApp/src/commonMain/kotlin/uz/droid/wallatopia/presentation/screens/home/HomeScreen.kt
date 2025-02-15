@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,12 +27,13 @@ import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
@@ -56,7 +56,6 @@ import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
 import uz.droid.wallatopia.presentation.components.HomeSearchSection
-import uz.droid.wallatopia.presentation.components.MainImageItem
 import uz.droid.wallatopia.presentation.components.ScrollToTopButton
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
