@@ -21,6 +21,7 @@ class HomeContract {
         data object Init : Intent
         data class AddToFavorites(val imageUiModel: ImageUiModel) : Intent
         data class DeleteFromFavorites(val imageUiModel: ImageUiModel) : Intent
+        data class DeleteAiGeneratedImage(val imageUiModel: ImageUiModel) : Intent
         data class SelectTab(val index: Int) : Intent
     }
 }

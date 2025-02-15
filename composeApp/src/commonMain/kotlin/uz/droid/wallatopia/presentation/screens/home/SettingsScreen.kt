@@ -33,6 +33,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
+import uz.droid.wallatopia.presentation.components.JiggleIconGridSample
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_language
@@ -58,16 +59,17 @@ fun SettingsScreen(
             .padding(top = systemBarsPadding.calculateTopPadding()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TopBarSection()
-        AppLogoSection()
-        SettingsSection(
-            languageOnClick = navigateToLanguage,
-            termsOnClick = navigateToTerms,
-            privacyOnClick = navigateToPrivacy,
-            rateUsOnClick = {
-
-            },
-        )
+        JiggleIconGridSample(Modifier.fillMaxSize())
+//        TopBarSection()
+//        AppLogoSection()
+//        SettingsSection(
+//            languageOnClick = navigateToLanguage,
+//            termsOnClick = navigateToTerms,
+//            privacyOnClick = navigateToPrivacy,
+//            rateUsOnClick = {
+//
+//            },
+//        )
     }
 }
 

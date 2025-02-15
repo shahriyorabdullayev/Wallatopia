@@ -3,6 +3,7 @@ package uz.droid.wallatopia.presentation.screens.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +52,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.CategoryUiModel
+import uz.droid.wallatopia.presentation.components.AiGeneratedImageItem
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
@@ -78,10 +82,22 @@ fun HomeScreen(
     val event = viewModel::onEventDispatch
     val pagingItems = uiState.homeImages.collectAsLazyPagingItems()
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
+    var isSelectionMode by remember { mutableStateOf(false) }
     BaseBackground(backgroundImage = Drawables.Images.HomeBackground) {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Fixed(3),
-            modifier = Modifier.fillMaxSize().padding(start = 32.dp, end = 36.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 32.dp, end = 36.dp)
+                .pointerInput(Unit){
+                    detectTapGestures(
+                        onTap = {
+                            if (isSelectionMode) {
+                                isSelectionMode = false
+                            }
+                        }
+                    )
+                },
             contentPadding = PaddingValues(
                 top = systemBarsPadding.calculateTopPadding() + 17.dp,
                 bottom = 100.dp,
@@ -132,7 +148,26 @@ fun HomeScreen(
             ) { index ->
                 val image = if (uiState.selectedTabIndex == 0) pagingItems[index]
                     ?: return@items else uiState.aiGeneratedImages.ifEmpty { return@items }[index]
-                MainImageItem(
+                AiGeneratedImageItem(
+                    modifier = if (uiState.selectedTabIndex != 0) {
+                        Modifier
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onTap = {
+                                        if (isSelectionMode) {
+                                            isSelectionMode = false
+                                        } else {
+                                            navigateToImageDetails(image.thumbUrl, image.originalUrl)
+                                        }
+                                    },
+                                    onLongPress = {
+                                        isSelectionMode = !isSelectionMode
+                                    },
+                                )
+                            }
+                    } else {
+                        Modifier
+                    },
                     image = image,
                     onClick = {
                         navigateToImageDetails(image.thumbUrl, image.originalUrl)
@@ -143,6 +178,10 @@ fun HomeScreen(
                         } else {
                             event(HomeContract.Intent.AddToFavorites(image))
                         }
+                    },
+                    isSelectionMode = isSelectionMode,
+                    deleteOnClick = {
+                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
                     }
                 )
             }
