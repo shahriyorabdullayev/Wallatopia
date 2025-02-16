@@ -1,6 +1,12 @@
 package uz.droid.wallatopia
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,7 +28,11 @@ import uz.droid.wallatopia.presentation.screens.SplashScreen
 import uz.droid.wallatopia.presentation.screens.TermsAndConditionsScreen
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
+private val LocalSharedTransition = staticCompositionLocalOf<SharedTransitionScope?> { null }
+private val LocalAnimatedVisibility = staticCompositionLocalOf<AnimatedVisibilityScope?> { null }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 @Preview
 fun App() {
@@ -33,7 +43,11 @@ fun App() {
             changeLang(state.value.language)
             val navController = rememberNavController()
 
-            HavHostMain(navController = navController)
+            SharedTransitionLayout {
+                CompositionLocalProvider(LocalSharedTransition provides this) {
+                    HavHostMain(navController = navController)
+                }
+            }
         }
     }
 }
@@ -53,9 +67,11 @@ fun HavHostMain(navController: NavHostController) {
             )
         }
         composable<Screens.HomeGraph> {
-            HomeNavGraph(
-                globalNavController = navController
-            )
+            CompositionLocalProvider(LocalAnimatedVisibility provides this) {
+                HomeNavGraph(
+                    globalNavController = navController
+                )
+            }
         }
         composable<Screens.CategoryDetailsScreen> { backStackEntry ->
             val category: Screens.CategoryDetailsScreen = backStackEntry.toRoute()
@@ -107,11 +123,13 @@ fun HavHostMain(navController: NavHostController) {
 
         composable<Screens.ImageDetailsScreen> { backStackEntry ->
             val imageUrl: Screens.ImageDetailsScreen = backStackEntry.toRoute()
-            ImageDetailsScreen(
-                thumbUrl = imageUrl.thumbUrl,
-                originalUrl = imageUrl.originalUrl,
-                onBackPressed = navController::popBackStack
-            )
+            CompositionLocalProvider(LocalAnimatedVisibility provides this) {
+                ImageDetailsScreen(
+                    thumbUrl = imageUrl.thumbUrl,
+                    originalUrl = imageUrl.originalUrl,
+                    onBackPressed = navController::popBackStack
+                )
+            }
         }
     }
 }
