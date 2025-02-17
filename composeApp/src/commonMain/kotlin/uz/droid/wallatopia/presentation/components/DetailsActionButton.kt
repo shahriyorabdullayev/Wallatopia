@@ -24,6 +24,7 @@ import uz.droid.wallatopia.common.theme.AppTheme
 fun DetailsActionButton(
     titleRes: StringResource,
     iconRes: DrawableResource,
+    sharedAnimationModifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Column(
@@ -36,6 +37,7 @@ fun DetailsActionButton(
                 contentDescription = "DetailsActionButton",
                 modifier = Modifier
                     .size(38.dp)
+                    .then(sharedAnimationModifier)
                     .clip(CircleShape)
                     .background(
                         color = AppTheme.colorScheme.charcoalBlue.copy(alpha = 0.53f),

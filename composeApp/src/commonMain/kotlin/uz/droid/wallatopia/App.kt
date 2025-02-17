@@ -29,8 +29,8 @@ import uz.droid.wallatopia.presentation.screens.TermsAndConditionsScreen
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
-private val LocalSharedTransition = staticCompositionLocalOf<SharedTransitionScope?> { null }
-private val LocalAnimatedVisibility = staticCompositionLocalOf<AnimatedVisibilityScope?> { null }
+val LocalSharedTransition = staticCompositionLocalOf<SharedTransitionScope?> { null }
+val LocalAnimatedVisibility = staticCompositionLocalOf<AnimatedVisibilityScope?> { null }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
