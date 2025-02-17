@@ -39,7 +39,7 @@ class FavoritesRepositoryImpl(
         wallatopiaImagesDao.deleteAllFavorites()
     }
 
-    override suspend fun isFavorite(id: String): Boolean {
+    override  fun isFavorite(id: String): Flow<Boolean> {
         return wallatopiaImagesDao.isFavorite(id)
     }
 }

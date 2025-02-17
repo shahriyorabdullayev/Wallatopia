@@ -71,8 +71,8 @@ fun HomeNavGraph(
                     navigateToImageGenerate = {
                         globalNavController.navigate(Screens.ImageGenerateScreen)
                     },
-                    navigateToImageDetails = { thumbUrl, originalUrl ->
-                        globalNavController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                    navigateToImageDetails = { imageUiModel ->
+                        globalNavController.navigate(Screens.ImageDetailsScreen(imageUiModel))
                     },
                 )
             }
@@ -86,8 +86,8 @@ fun HomeNavGraph(
             }
             composable<Screens.HomeGraph.FavouritesScreen> {
                 FavoriteScreen(
-                    navigateToImageDetails = { thumbUrl, originalUrl ->
-                        globalNavController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                    navigateToImageDetails = { imageUiModel ->
+                        globalNavController.navigate(Screens.ImageDetailsScreen(imageUiModel))
                     }
                 )
             }

@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
 }
 
 kotlin {
@@ -86,6 +87,8 @@ kotlin {
 
             //Paging
             implementation(libs.paging.compose.common)
+
+            implementation(libs.uri.kmp)
         }
 
         iosMain.dependencies {

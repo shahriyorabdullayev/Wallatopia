@@ -11,16 +11,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.theme.WallatopiaAppTheme
+import uz.droid.wallatopia.domain.model.ImageUiModel
+import uz.droid.wallatopia.domain.model.ImageUiModelNavType
 import uz.droid.wallatopia.presentation.navigation.HomeNavGraph
 import uz.droid.wallatopia.presentation.screens.CategoryDetailsScreen
 import uz.droid.wallatopia.presentation.screens.ImageDetailsScreen
 import uz.droid.wallatopia.presentation.screens.ImageGenerateScreen
 import uz.droid.wallatopia.presentation.screens.LanguageScreen
+import uz.droid.wallatopia.presentation.screens.NewGeneratedImageId
 import uz.droid.wallatopia.presentation.screens.PrivacyPolicyScreen
 import uz.droid.wallatopia.presentation.screens.SearchScreen
 import uz.droid.wallatopia.presentation.screens.SplashScreen
 import uz.droid.wallatopia.presentation.screens.TermsAndConditionsScreen
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
+import kotlin.reflect.typeOf
 
 
 @Composable
@@ -62,8 +66,12 @@ fun HavHostMain(navController: NavHostController) {
             CategoryDetailsScreen(
                 categoryName = category.categoryName,
                 onBackPressed = navController::popBackStack,
-                navigateToImageDetails = { thumbUrl, originalUrl ->
-                    navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                navigateToImageDetails = { imageUiModel ->
+                    navController.navigate(
+                        Screens.ImageDetailsScreen(
+                            imageUiModel
+                        )
+                    )
                 }
             )
         }
@@ -73,16 +81,31 @@ fun HavHostMain(navController: NavHostController) {
                 navigateToCategoryDetails = {
                     navController.navigate(Screens.CategoryDetailsScreen(it))
                 },
-                navigateToImageDetails = { thumbUrl, originalUrl ->
-                    navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                navigateToImageDetails = { imageUiModel ->
+                    navController.navigate(
+                        Screens.ImageDetailsScreen(
+                            imageUiModel
+                        )
+                    )
                 }
             )
         }
         composable<Screens.ImageGenerateScreen> {
             ImageGenerateScreen(
                 onBackPressed = navController::popBackStack,
-                navigateToImageDetails = { thumbUrl, originalUrl ->
-                    navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                navigateToImageDetails = { generatedImageUrl ->
+                    val imageUiModel = ImageUiModel(
+                        id = NewGeneratedImageId,
+                        thumbUrl = generatedImageUrl,
+                        originalUrl = generatedImageUrl,
+                        timestamp = currentTimeInMilliSeconds,
+                        isAiGenerated = true
+                    )
+                    navController.navigate(
+                        Screens.ImageDetailsScreen(
+                            imageUiModel
+                        )
+                    )
                 }
             )
         }
@@ -105,11 +128,12 @@ fun HavHostMain(navController: NavHostController) {
             )
         }
 
-        composable<Screens.ImageDetailsScreen> { backStackEntry ->
-            val imageUrl: Screens.ImageDetailsScreen = backStackEntry.toRoute()
+        composable<Screens.ImageDetailsScreen>(
+            typeMap = mapOf(typeOf<ImageUiModel>() to ImageUiModelNavType),
+        ) { backStackEntry ->
+            val imageUiModel = backStackEntry.toRoute<Screens.ImageDetailsScreen>().imageUiModel
             ImageDetailsScreen(
-                thumbUrl = imageUrl.thumbUrl,
-                originalUrl = imageUrl.originalUrl,
+                imageUiModel = imageUiModel,
                 onBackPressed = navController::popBackStack
             )
         }

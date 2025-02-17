@@ -49,7 +49,7 @@ import wallatopia.composeapp.generated.resources.search_results_for
 @Composable
 fun SearchScreen(
     navigateToCategoryDetails: (categoryName: String) -> Unit,
-    navigateToImageDetails: (String, String) -> Unit,
+    navigateToImageDetails: (ImageUiModel) -> Unit,
     onBackPressed: () -> Unit
 ) {
     val viewModel: SearchViewModel = koinViewModel()
@@ -95,7 +95,7 @@ fun SearchScreen(
                         event(SearchContract.Intent.AddToFavorite(image))
                     },
                     onClick = { image ->
-                        navigateToImageDetails(image.thumbUrl, image.originalUrl)
+                        navigateToImageDetails(image)
                     }
                 )
             }

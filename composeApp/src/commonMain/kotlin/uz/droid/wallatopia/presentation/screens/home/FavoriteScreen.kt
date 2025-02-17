@@ -1,7 +1,5 @@
 package uz.droid.wallatopia.presentation.screens.home
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,24 +20,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil3.compose.AsyncImage
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
+import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.MainImageItem
 import uz.droid.wallatopia.presentation.screens.contracts.FavoritesContract
-import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
-import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.favorites_title
 
 @Composable
 fun FavoriteScreen(
-    navigateToImageDetails: (String, String) -> Unit,
+    navigateToImageDetails: (ImageUiModel) -> Unit,
 ) {
     val viewModel: FavoritesViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -80,7 +74,7 @@ fun FavoriteScreen(
                         MainImageItem(
                             image = image,
                             onClick = {
-                                navigateToImageDetails(image.thumbUrl, image.originalUrl)
+                                navigateToImageDetails(image)
                             },
                             onFavoriteClick = {
                                 event(FavoritesContract.Intent.DeleteFromFavorites(image))

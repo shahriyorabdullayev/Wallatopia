@@ -35,7 +35,12 @@ class HomeViewModel(
             is HomeContract.Intent.AddToFavorites -> {
                 viewModelScope.launch {
                     if (intent.imageUiModel.isAiGenerated) {
-                        favoriteImagesRepository.updateImage(intent.imageUiModel.copy(isFavorite = true, timestamp = intent.imageUiModel.timestamp))
+                        favoriteImagesRepository.updateImage(
+                            intent.imageUiModel.copy(
+                                isFavorite = true,
+                                timestamp = intent.imageUiModel.timestamp
+                            )
+                        )
                     } else {
                         favoriteImagesRepository.insertImage(intent.imageUiModel.copy(isFavorite = true))
                     }
@@ -49,7 +54,12 @@ class HomeViewModel(
             is HomeContract.Intent.DeleteFromFavorites -> {
                 viewModelScope.launch {
                     if (intent.imageUiModel.isAiGenerated) {
-                        favoriteImagesRepository.updateImage(intent.imageUiModel.copy(isFavorite = false, timestamp = intent.imageUiModel.timestamp))
+                        favoriteImagesRepository.updateImage(
+                            intent.imageUiModel.copy(
+                                isFavorite = false,
+                                timestamp = intent.imageUiModel.timestamp
+                            )
+                        )
                     } else {
                         favoriteImagesRepository.deleteImage(intent.imageUiModel)
                     }
@@ -73,8 +83,8 @@ class HomeViewModel(
                         pagingResponseFlow,
                         favoriteImagesFlow
                     ) { pagingData, favoriteList ->
-                        pagingData.map {
-                            it.toUiModel(isFavorite = favoriteImagesRepository.isFavorite(it.id.toString()))
+                        pagingData.map { networkImage ->
+                            networkImage.toUiModel(isFavorite = favoriteList.any { it.id == networkImage.id.toString() })
                         }
                     }.cachedIn(viewModelScope)
 
@@ -96,12 +106,6 @@ class HomeViewModel(
                 _uiState.value =
                     _uiState.value.copy(categories = it.take(4))
             }
-        }
-    }
-
-    private fun handleAddToFavorites(image: ImageUiModel) {
-        viewModelScope.launch {
-
         }
     }
 }
