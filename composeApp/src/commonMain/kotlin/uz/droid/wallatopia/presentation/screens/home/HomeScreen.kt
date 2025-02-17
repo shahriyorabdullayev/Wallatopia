@@ -163,7 +163,7 @@ fun HomeScreen(
                                         if (isSelectionMode) {
                                             isSelectionMode = false
                                         } else {
-                                            navigateToImageDetails(image.thumbUrl, image.originalUrl)
+                                            navigateToImageDetails(image)
                                         }
                                     },
                                     onLongPress = {
