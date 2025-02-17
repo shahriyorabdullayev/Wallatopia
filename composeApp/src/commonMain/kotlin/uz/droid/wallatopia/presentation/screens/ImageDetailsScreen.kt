@@ -121,8 +121,6 @@ fun ImageDetailsScreen(
                         .data(originalUrl)
                         .crossfade(true)
                         .placeholderMemoryCacheKey(thumbUrl)
-                        .memoryCacheKey(thumbUrl)
-                        .diskCacheKey(thumbUrl)
                         .build(),
                     contentDescription = "image",
                     contentScale = ContentScale.Crop
