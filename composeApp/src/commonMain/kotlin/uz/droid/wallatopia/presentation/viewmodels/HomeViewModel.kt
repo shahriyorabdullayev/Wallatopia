@@ -66,6 +66,12 @@ class HomeViewModel(
                 }
             }
 
+            is HomeContract.Intent.DeleteAiGeneratedImage -> {
+                viewModelScope.launch {
+                    favoriteImagesRepository.deleteImage(intent.imageUiModel)
+                }
+            }
+
             HomeContract.Intent.Init -> {
                 handleCategoriesFetch()
                 val pagingResponseFlow = Pager(
