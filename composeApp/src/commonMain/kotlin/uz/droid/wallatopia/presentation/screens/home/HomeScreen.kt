@@ -51,6 +51,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.CategoryUiModel
+import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.presentation.components.AiGeneratedImageItem
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
@@ -74,7 +75,7 @@ fun HomeScreen(
     navigateToSearch: () -> Unit,
     navigateToCategories: () -> Unit,
     navigateToImageGenerate: () -> Unit,
-    navigateToImageDetails: (String, String) -> Unit,
+    navigateToImageDetails: (ImageUiModel) -> Unit,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -175,7 +176,7 @@ fun HomeScreen(
                     },
                     image = image,
                     onClick = {
-                        navigateToImageDetails(image.thumbUrl, image.originalUrl)
+                        navigateToImageDetails(image)
                     },
                     onFavoriteClick = {
                         if (it) {

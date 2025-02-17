@@ -17,6 +17,7 @@ import uz.droid.wallatopia.common.theme.colors.charcoalBlue
 import uz.droid.wallatopia.common.theme.colors.charlestonGray
 import uz.droid.wallatopia.common.theme.colors.chineseSilverGray
 import uz.droid.wallatopia.common.theme.colors.cyanBlue
+import uz.droid.wallatopia.common.theme.colors.darkCharcoal
 import uz.droid.wallatopia.common.theme.colors.dimGray
 import uz.droid.wallatopia.common.theme.colors.eerieBlack
 import uz.droid.wallatopia.common.theme.colors.gainsBoroGray
@@ -33,6 +34,7 @@ import uz.droid.wallatopia.common.theme.colors.platinumGray
 import uz.droid.wallatopia.common.theme.colors.purple4C00AD
 import uz.droid.wallatopia.common.theme.colors.purpleA800F7
 import uz.droid.wallatopia.common.theme.colors.quickSilverGray
+import uz.droid.wallatopia.common.theme.colors.radicalRed
 import uz.droid.wallatopia.common.theme.colors.silverGray
 import uz.droid.wallatopia.common.theme.colors.softWhite
 import uz.droid.wallatopia.common.theme.colors.sonicSilverGray
@@ -72,7 +74,9 @@ val darkColorScheme = AppColorScheme(
     onyxGray = onyxGray,
     silverGray = silverGray,
     softWhite = softWhite,
-    cyanBlue = cyanBlue
+    cyanBlue = cyanBlue,
+    darkCharcoal = darkCharcoal,
+    radicalRed = radicalRed
 )
 
 val lightColorScheme = AppColorScheme(
@@ -102,7 +106,9 @@ val lightColorScheme = AppColorScheme(
     onyxGray = onyxGray,
     silverGray = silverGray,
     softWhite = softWhite,
-    cyanBlue = cyanBlue
+    cyanBlue = cyanBlue,
+    darkCharcoal = darkCharcoal,
+    radicalRed = radicalRed
 )
 
 @Composable

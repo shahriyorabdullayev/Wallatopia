@@ -32,6 +32,7 @@ import uz.droid.wallatopia.presentation.viewmodels.CategoryDetailsViewModel
 import uz.droid.wallatopia.presentation.viewmodels.CategoryViewModel
 import uz.droid.wallatopia.presentation.viewmodels.FavoritesViewModel
 import uz.droid.wallatopia.presentation.viewmodels.HomeViewModel
+import uz.droid.wallatopia.presentation.viewmodels.ImageDetailsViewModel
 import uz.droid.wallatopia.presentation.viewmodels.ImageGenerateViewModel
 import uz.droid.wallatopia.presentation.viewmodels.SearchViewModel
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
@@ -67,6 +68,7 @@ val viewModelModule = module {
     viewModel { SearchViewModel(get(), get()) }
     viewModel { ImageGenerateViewModel(get(), get()) }
     viewModel { SettingsViewModel(get()) }
+    viewModel { ImageDetailsViewModel(get()) }
 }
 
 val httpClientModule = module {

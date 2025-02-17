@@ -17,5 +17,5 @@ interface FavoritesRepository {
 
     fun fetchAiGeneratedImages(): Flow<List<ImageUiModel>>
 
-    suspend fun isFavorite(id: String): Boolean
+    fun isFavorite(id: String): Flow<Boolean>
 }

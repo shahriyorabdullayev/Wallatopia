@@ -39,6 +39,7 @@ import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_language
 import wallatopia.composeapp.generated.resources.app_logo
 import wallatopia.composeapp.generated.resources.privacy_title
+import wallatopia.composeapp.generated.resources.rate_us
 import wallatopia.composeapp.generated.resources.settings_title
 import wallatopia.composeapp.generated.resources.terms_title
 
@@ -110,7 +111,7 @@ private fun SettingsSection(
                 .clickable(onClick = rateUsOnClick)
                 .padding(horizontal = 16.dp)
                 .alpha(0.7f),
-            settingName = "Rate Us"
+            settingName = stringResource(Res.string.rate_us)
         )
     }
 }

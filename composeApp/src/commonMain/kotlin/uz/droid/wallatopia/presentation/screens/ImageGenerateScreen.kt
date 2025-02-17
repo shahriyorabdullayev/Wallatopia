@@ -61,10 +61,12 @@ import wallatopia.composeapp.generated.resources.please_wait
 import wallatopia.composeapp.generated.resources.set_as_wallpaper
 import wallatopia.composeapp.generated.resources.stop
 
+const val NewGeneratedImageId = ""
+
 @Composable
 fun ImageGenerateScreen(
     onBackPressed: () -> Unit,
-    navigateToImageDetails: (String, String) -> Unit
+    navigateToImageDetails: (String) -> Unit
 ) {
 
     val viewModel: ImageGenerateViewModel = koinViewModel()
@@ -112,7 +114,11 @@ fun ImageGenerateScreen(
                                     isAiGenerated = true,
                                     timestamp = currentTimeInMilliSeconds
                                 )
-                                event(ImageGenerateContract.Intent.AddToImageGenerated(generatedImageUiModel))
+                                event(
+                                    ImageGenerateContract.Intent.AddToImageGenerated(
+                                        generatedImageUiModel
+                                    )
+                                )
                             }
                         )
                     } else if (uiState.starterImages.isNotEmpty()) {
@@ -160,7 +166,7 @@ fun ImageGenerateScreen(
                                 modifier = Modifier.fillMaxWidth()
                                     .padding(horizontal = 34.dp),
                                 onClick = {
-                                    navigateToImageDetails(uiState.generatedImageUrl,uiState.generatedImageUrl)
+                                    navigateToImageDetails(uiState.generatedImageUrl)
                                 },
                                 backgroundColor = AppTheme.colorScheme.softWhite,
                                 contentColor = AppTheme.colorScheme.eerieBlack,
