@@ -5,17 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,10 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
-import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
-import uz.droid.wallatopia.presentation.components.JiggleIconGridSample
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_language
@@ -60,17 +54,16 @@ fun SettingsScreen(
             .padding(top = systemBarsPadding.calculateTopPadding()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        JiggleIconGridSample(Modifier.fillMaxSize())
-//        TopBarSection()
-//        AppLogoSection()
-//        SettingsSection(
-//            languageOnClick = navigateToLanguage,
-//            termsOnClick = navigateToTerms,
-//            privacyOnClick = navigateToPrivacy,
-//            rateUsOnClick = {
-//
-//            },
-//        )
+        TopBarSection()
+        AppLogoSection()
+        SettingsSection(
+            languageOnClick = navigateToLanguage,
+            termsOnClick = navigateToTerms,
+            privacyOnClick = navigateToPrivacy,
+            rateUsOnClick = {
+
+            },
+        )
     }
 }
 

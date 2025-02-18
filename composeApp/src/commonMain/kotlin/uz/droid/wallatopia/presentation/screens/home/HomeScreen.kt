@@ -25,6 +25,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -94,7 +95,7 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 32.dp, end = 36.dp)
-                .pointerInput(Unit){
+                .pointerInput(Unit) {
                     detectTapGestures(
                         onTap = {
                             if (isSelectionMode) {
@@ -144,6 +145,7 @@ fun HomeScreen(
                     tabs = tabs,
                     selectedIndex = uiState.selectedTabIndex,
                     selectedTab = {
+                        isSelectionMode = false
                         event(HomeContract.Intent.SelectTab(it))
                     }
                 )
