@@ -9,8 +9,8 @@ import androidx.compose.ui.platform.LocalContext
 actual class ShareManager(private val context: Context) {
     actual fun share(url: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
-            flags += Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(Intent.EXTRA_TEXT, url)
+            type = "text/plain"
         }
         val chooser = Intent.createChooser(intent, null)
         context.startActivity(chooser)
