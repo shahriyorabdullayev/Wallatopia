@@ -75,13 +75,15 @@ fun HavHostMain(navController: NavHostController) {
         }
         composable<Screens.CategoryDetailsScreen> { backStackEntry ->
             val category: Screens.CategoryDetailsScreen = backStackEntry.toRoute()
-            CategoryDetailsScreen(
-                categoryName = category.categoryName,
-                onBackPressed = navController::popBackStack,
-                navigateToImageDetails = { thumbUrl, originalUrl ->
-                    navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
-                }
-            )
+            CompositionLocalProvider(LocalAnimatedVisibility provides this) {
+                CategoryDetailsScreen(
+                    categoryName = category.categoryName,
+                    onBackPressed = navController::popBackStack,
+                    navigateToImageDetails = { thumbUrl, originalUrl ->
+                        navController.navigate(Screens.ImageDetailsScreen(thumbUrl, originalUrl))
+                    }
+                )
+            }
         }
         composable<Screens.SearchScreen> {
             SearchScreen(
