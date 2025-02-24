@@ -25,6 +25,11 @@
     <string name="share">Uzatish</string>
     <string name="set">O'RNATISH</string>
     <string name="download">YUKLASH</string>
+    <string name="set_home_screen">Asosiy oynaga o'rnatish</string>
+    <string name="set_lock_screen">Qulf oynaga o'rnatish</string>
+    <string name="set_both_screens">Ikkala oynaga o'rnatish</string>
+    <string name="close">Yopish</string>
+    <string name="rate_us">Bizni baholang</string>
     <string name="privacy_policy">1. Kirish
 
 Ushbu Maxfiylik siyosati Wallatopia ("biz", "bizning" yoki "bizga") ilovasi sizning shaxsiy ma'lumotlaringizni qanday to'plashini, foydalanishini va himoya qilishini tushuntiradi.

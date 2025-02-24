@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -24,6 +25,7 @@ import uz.droid.wallatopia.common.theme.AppTheme
 fun DetailsActionButton(
     titleRes: StringResource,
     iconRes: DrawableResource,
+    tint:Color = AppTheme.colorScheme.immutableWhite,
     sharedAnimationModifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -44,7 +46,7 @@ fun DetailsActionButton(
                         shape = CircleShape
                     )
                     .padding(10.dp),
-                tint = AppTheme.colorScheme.immutableWhite
+                tint = tint
             )
         }
         Text(

@@ -3,7 +3,6 @@ package uz.droid.wallatopia.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import uz.droid.wallatopia.currentTimeInMilliSeconds
 
 const val WALLATOPIA_IMAGES_TABLE = "wallatopia_images"
 

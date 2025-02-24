@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.cash.paging.compose.collectAsLazyPagingItems
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.resources.Drawables
+import uz.droid.wallatopia.domain.model.ImageUiModel
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryTopBar
 import uz.droid.wallatopia.presentation.components.MainImageItem
@@ -30,7 +31,7 @@ import uz.droid.wallatopia.presentation.viewmodels.CategoryDetailsViewModel
 fun CategoryDetailsScreen(
     categoryName: String,
     onBackPressed: () -> Unit,
-    navigateToImageDetails: (String, String) -> Unit,
+    navigateToImageDetails: (ImageUiModel) -> Unit,
 ) {
     val viewModel: CategoryDetailsViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -38,7 +39,7 @@ fun CategoryDetailsScreen(
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
     val categoryPhotos = uiState.categoryPhotos.collectAsLazyPagingItems()
 
-    LaunchedEffect(categoryName){
+    LaunchedEffect(Unit) {
         event(CategoryDetailsContract.Intent.LoadCategoryImages(categoryName))
     }
 
@@ -69,7 +70,7 @@ fun CategoryDetailsScreen(
                     MainImageItem(
                         image = image,
                         onClick = {
-                            navigateToImageDetails(image.thumbUrl,image.originalUrl)
+                            navigateToImageDetails(image)
                         },
                         onFavoriteClick = {
                             event(CategoryDetailsContract.Intent.AddToFavorite(image))

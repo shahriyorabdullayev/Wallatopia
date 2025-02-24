@@ -25,6 +25,11 @@
     <string name="share">Share</string>
     <string name="set">SET</string>
     <string name="download">DOWNLOAD</string>
+    <string name="set_home_screen">Set on Home screen</string>
+    <string name="set_lock_screen">Set on Lock screen</string>
+    <string name="set_both_screens">Set on Both screens</string>
+    <string name="close">Close</string>
+    <string name="rate_us">Rate Us</string>
     <string name="privacy_policy">1. Introduction
 
 This Privacy Policy explains how Wallatopia ("we," "our," or "us") collects, uses, and protects your personal information when using our App.

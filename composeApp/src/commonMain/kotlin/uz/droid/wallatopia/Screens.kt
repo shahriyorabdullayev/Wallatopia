@@ -1,6 +1,7 @@
 package uz.droid.wallatopia
 
 import kotlinx.serialization.Serializable
+import uz.droid.wallatopia.domain.model.ImageUiModel
 
 object Screens {
 
@@ -26,7 +27,9 @@ object Screens {
     object TermsScreen
 
     @Serializable
-    data class ImageDetailsScreen(val thumbUrl: String, val originalUrl: String)
+    data class ImageDetailsScreen(
+        val imageUiModel: ImageUiModel
+    )
 
     @Serializable
     object HomeGraph {

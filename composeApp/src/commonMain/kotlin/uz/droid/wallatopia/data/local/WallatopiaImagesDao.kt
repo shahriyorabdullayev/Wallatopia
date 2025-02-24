@@ -31,6 +31,6 @@ interface WallatopiaImagesDao {
     fun getAllAiGeneratedImagesByOrdered(): Flow<List<WallatopiaImageEntity>>
 
     @Query("SELECT EXISTS(SELECT * FROM wallatopia_images WHERE id = :id AND is_favorite = true)")
-    suspend fun isFavorite(id: String): Boolean
+    fun isFavorite(id: String): Flow<Boolean>
 
 }
