@@ -1,5 +1,6 @@
 package uz.droid.wallatopia.presentation.components
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,10 +24,13 @@ import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
+import uz.droid.wallatopia.LocalAnimatedVisibility
+import uz.droid.wallatopia.LocalSharedTransition
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.ImageUiModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MainImageItem(
     modifier: Modifier = Modifier,
@@ -34,67 +38,88 @@ fun MainImageItem(
     onClick: () -> Unit,
     onFavoriteClick: (Boolean) -> Unit = {}
 ) {
-    Box(
-        Modifier.then(modifier)
-            .advancedShadow(
-                offsetY = 4.dp,
-                blur = 4.dp
-            )
-            .clip(AppTheme.shape.rounded7)
-            .clickable(
-                onClick = onClick,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = ripple()
-            )
-            .height(170.dp)
-    ) {
-
-        val painter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(
-                LocalPlatformContext.current
-            ).data(image.thumbUrl).crossfade(true).build(),
-            contentScale = ContentScale.Crop
-        )
-
-        Box {
-            Image(
-                modifier = Modifier.fillMaxSize(),
-                painter = painter,
-                contentDescription = image.thumbUrl,
-                contentScale = ContentScale.Crop,
-            )
-        }
-
+    val sharedTransitionScope = LocalSharedTransition.current!!
+    val animatedVisibilityScope = LocalAnimatedVisibility.current!!
+    with(sharedTransitionScope) {
         Box(
-            modifier = Modifier
-                .size(40.dp)
-                .align(Alignment.BottomStart)
-                .bounceClickable {
-                    onFavoriteClick(image.isFavorite)
-                },
-            contentAlignment = Alignment.BottomStart
+            Modifier.then(modifier)
+                .advancedShadow(
+                    offsetY = 4.dp,
+                    blur = 4.dp
+                )
+                .sharedElement(
+                    state = rememberSharedContentState(image.thumbUrl),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    clipInOverlayDuringTransition = OverlayClip(AppTheme.shape.rounded7)
+                )
+                .clip(AppTheme.shape.rounded7)
+                .clickable(
+                    onClick = onClick,
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple()
+                )
+                .height(170.dp)
         ) {
+
+            val painter = rememberAsyncImagePainter(
+                model = ImageRequest
+                    .Builder(LocalPlatformContext.current)
+                    .data(image.thumbUrl)
+                    .crossfade(true)
+                    .diskCacheKey(image.thumbUrl)
+                    .placeholderMemoryCacheKey(image.thumbUrl)
+                    .memoryCacheKey(image.thumbUrl)
+                    .build(),
+                contentScale = ContentScale.Crop
+            )
+
+            Box {
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painter,
+                    contentDescription = image.thumbUrl,
+                    contentScale = ContentScale.Crop,
+                )
+
+            }
+
             Box(
-                contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .size(32.dp)
-                    .padding(start = 4.dp, bottom = 3.dp)
-                    .clip(AppTheme.shape.circular)
+                    .size(40.dp)
+                    .align(Alignment.BottomStart)
                     .bounceClickable {
                         onFavoriteClick(image.isFavorite)
-                    }
-                    .background(AppTheme.colorScheme.charcoalBlue.copy(0.53f), shape = CircleShape)
-                    .padding(top = if (image.isFavorite) 1.dp else 0.dp)
+                    },
+                contentAlignment = Alignment.BottomStart
             ) {
-                Image(
-                    painter = painterResource(
-                        if (image.isFavorite) Drawables.Icons.FavouriteSelected else Drawables.Icons.FavoriteOutlined
-                    ),
-                    contentDescription = "favorite",
-                    modifier = Modifier.size(16.dp)
-                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .padding(start = 4.dp, bottom = 3.dp)
+                        .sharedBounds(
+                            sharedContentState = rememberSharedContentState("favorite-bounds-${image.thumbUrl}"),
+                            animatedVisibilityScope = animatedVisibilityScope
+                        )
+                        .clip(AppTheme.shape.circular)
+                        .bounceClickable {
+                            onFavoriteClick(image.isFavorite)
+                        }
+                        .background(
+                            AppTheme.colorScheme.charcoalBlue.copy(0.53f),
+                            shape = CircleShape
+                        )
+                        .padding(top = if (image.isFavorite) 1.dp else 0.dp)
+                ) {
+                    Image(
+                        painter = painterResource(
+                            if (image.isFavorite) Drawables.Icons.FavouriteSelected else Drawables.Icons.FavoriteOutlined
+                        ),
+                        contentDescription = "favorite",
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
         }
-
     }
 }
