@@ -1,10 +1,7 @@
 package uz.droid.wallatopia.presentation.navigation
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,8 +35,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.painterResource
-import uz.droid.wallatopia.LocalAnimatedVisibility
-import uz.droid.wallatopia.LocalSharedTransition
 import uz.droid.wallatopia.Screens
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.components.advancedShadow
@@ -114,11 +110,8 @@ fun HomeNavGraph(
 }
 
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun BottomNavigationCustom(navController: NavHostController) {
-    val sharedTransitionScope = LocalSharedTransition.current
-    val animatedVisibilityScope = LocalAnimatedVisibility.current!!
     val bottomScreens = remember {
         listOf(
             BottomScreens.Home,
@@ -129,66 +122,55 @@ fun BottomNavigationCustom(navController: NavHostController) {
     }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    with(animatedVisibilityScope) {
-        with(sharedTransitionScope) {
-            val sharedTransitionModifier = if (this != null) {
-                Modifier
-                    .renderInSharedTransitionScopeOverlay(zIndexInOverlay = 1f)
-                    .animateEnterExit(
-                        enter = slideInVertically(tween(500)) { it },
-                        exit = slideOutVertically(tween(500)) { it }
-                    )
-            } else Modifier
-            BottomNavigation(
+    BottomNavigation(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(74.dp)
+            .advancedShadow(
+                shape = RectangleShape,
+                offsetY = (-9).dp,
+                blur = 18.dp
+            ),
+        backgroundColor = AppTheme.colorScheme.charlestonGray
+    ) {
+        bottomScreens.forEach { screen ->
+            val isSelected =
+                currentDestination?.hierarchy?.any { it.route == screen.route::class.qualifiedName } == true
+            BottomNavigationItem(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(74.dp)
-                    .advancedShadow(
-                        shape = RectangleShape,
-                        offsetY = (-9).dp,
-                        blur = 18.dp
-                    ).then(sharedTransitionModifier),
-                backgroundColor = AppTheme.colorScheme.charlestonGray
-            ) {
-                bottomScreens.forEach { screen ->
-                    val isSelected =
-                        currentDestination?.hierarchy?.any { it.route == screen.route::class.qualifiedName } == true
-                    BottomNavigationItem(
+                    .navigationBarsPadding(),
+                selected = isSelected,
+                icon = {
+                    Icon(
+                        painter = painterResource(screen.icon),
+                        contentDescription = screen.name,
                         modifier = Modifier
-                            .navigationBarsPadding(),
-                        selected = isSelected,
-                        icon = {
-                            Icon(
-                                painter = painterResource(screen.icon),
-                                contentDescription = screen.name,
-                                modifier = Modifier
-                                    .padding(top = 6.dp)
-                                    .size(32.dp),
-                            )
-                        },
-                        label = {
-                            Text(
-                                text = screen.name,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight(500)
-                                )
-                            )
-                        },
-                        onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        selectedContentColor = Color(0xFF00AD9F),
-                        unselectedContentColor = Color(0xFF545454)
+                            .padding(top = 6.dp)
+                            .size(32.dp),
                     )
-                }
-            }
+                },
+                label = {
+                    Text(
+                        text = screen.name,
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight(500)
+                        )
+                    )
+                },
+                onClick = {
+                    navController.navigate(screen.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                selectedContentColor = Color(0xFF00AD9F),
+                unselectedContentColor = Color(0xFF545454)
+            )
         }
     }
+
 }

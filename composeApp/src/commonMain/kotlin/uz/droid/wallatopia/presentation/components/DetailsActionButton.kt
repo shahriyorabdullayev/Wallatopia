@@ -26,7 +26,6 @@ fun DetailsActionButton(
     titleRes: StringResource,
     iconRes: DrawableResource,
     tint:Color = AppTheme.colorScheme.immutableWhite,
-    sharedAnimationModifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Column(
@@ -39,7 +38,6 @@ fun DetailsActionButton(
                 contentDescription = "DetailsActionButton",
                 modifier = Modifier
                     .size(38.dp)
-                    .then(sharedAnimationModifier)
                     .clip(CircleShape)
                     .background(
                         color = AppTheme.colorScheme.charcoalBlue.copy(alpha = 0.53f),
