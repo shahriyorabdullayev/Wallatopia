@@ -16,6 +16,7 @@ class ImageDetailsContract {
     )
 
     sealed interface Intent {
+        data object ShareImage : Intent
         data class Init(val imageUiModel: ImageUiModel) : Intent
         data object HandleInFavorites : Intent
     }

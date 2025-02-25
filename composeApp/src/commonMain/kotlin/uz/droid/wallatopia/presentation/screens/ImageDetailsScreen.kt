@@ -57,7 +57,6 @@ import uz.droid.wallatopia.presentation.components.ImageDetailsTopBar
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.ImageDetailsContract
 import uz.droid.wallatopia.presentation.viewmodels.ImageDetailsViewModel
-import uz.droid.wallatopia.rememberShareManager
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.download
 import wallatopia.composeapp.generated.resources.favorites_title
@@ -78,7 +77,6 @@ fun ImageDetailsScreen(
         initialValue = ModalBottomSheetValue.Hidden
     )
     val scope = rememberCoroutineScope()
-    val shareManager = rememberShareManager()
 
     LaunchedEffect(Unit) {
         event(ImageDetailsContract.Intent.Init(imageUiModel = imageUiModel))
@@ -159,9 +157,7 @@ fun ImageDetailsScreen(
                     DetailsActionButton(
                         titleRes = Res.string.share,
                         iconRes = Drawables.Icons.Share,
-                        onClick = {
-                            shareManager.share(uiState.imageUiModel.originalUrl)
-                        }
+                        onClick = {}
                     )
 
                     Column(

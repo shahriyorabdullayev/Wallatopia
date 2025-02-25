@@ -23,6 +23,10 @@ class ImageDetailsViewModel(
                 checkIsFavoriteById(_uiState.value.imageUiModel.id)
             }
 
+            ImageDetailsContract.Intent.ShareImage -> {
+
+            }
+
             ImageDetailsContract.Intent.HandleInFavorites -> {
                 if (_uiState.value.imageUiModel.isFavorite){
                     removeFromFavorites()
