@@ -1,9 +1,5 @@
 package uz.droid.wallatopia.presentation.screens
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,8 +45,6 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import uz.droid.wallatopia.LocalAnimatedVisibility
-import uz.droid.wallatopia.LocalSharedTransition
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.ImageDetailsBottomSheetContent
 import uz.droid.wallatopia.common.resources.Drawables
@@ -70,7 +64,6 @@ import wallatopia.composeapp.generated.resources.favorites_title
 import wallatopia.composeapp.generated.resources.set
 import wallatopia.composeapp.generated.resources.share
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ImageDetailsScreen(
     imageUiModel: ImageUiModel,
@@ -81,8 +74,6 @@ fun ImageDetailsScreen(
     val event = viewModel::onEventDispatch
     val statusBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
     val navigationBarsPadding = WindowInsets.navigationBars.asPaddingValues(LocalDensity.current)
-    val sharedTransitionScope = LocalSharedTransition.current!!
-    val animatedVisibilityScope = LocalAnimatedVisibility.current!!
     val scaffoldState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
@@ -96,12 +87,7 @@ fun ImageDetailsScreen(
     val painterBlur = rememberAsyncImagePainter(
         model = ImageRequest.Builder(
             LocalPlatformContext.current
-        ).data(uiState.imageUiModel.thumbUrl)
-            .crossfade(true)
-            .placeholderMemoryCacheKey(imageUiModel.thumbUrl)
-            .memoryCacheKey(imageUiModel.thumbUrl)
-            .diskCacheKey(imageUiModel.thumbUrl)
-            .build(),
+        ).data(uiState.imageUiModel.thumbUrl).crossfade(true).build(),
         contentScale = ContentScale.Crop
     )
     ModalBottomSheetLayout(
@@ -120,123 +106,110 @@ fun ImageDetailsScreen(
         },
         sheetShape = AppTheme.shape.rounded15
     ) {
-        with(sharedTransitionScope) {
-            Box(
-                modifier = Modifier.fillMaxSize()
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Image(
+                painter = painterBlur,
+                contentDescription = "Wallpaper",
+                modifier = Modifier.fillMaxSize().blur(radius = 70.dp),
+                contentScale = ContentScale.Crop
+            )
+            if (isVersionBelow12) {
+                Box(Modifier.fillMaxSize().background(AppTheme.colorScheme.cyanBlue.copy(.5f)))
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterBlur,
-                    contentDescription = "Wallpaper",
-                    modifier = Modifier.fillMaxSize().blur(radius = 70.dp),
+                ImageDetailsTopBar(
+                    modifier = Modifier
+                        .padding(
+                            top = statusBarsPadding.calculateTopPadding() + 8.dp,
+                            start = 10.dp,
+                            end = 10.dp
+                        ),
+                    onBackPressed = onBackPressed
+                )
+
+                SubcomposeAsyncImage(
+                    modifier = Modifier.weight(1f)
+                        .padding(vertical = 24.dp)
+                        .padding(horizontal = 40.dp)
+                        .advancedShadow(
+                            blur = 13.dp
+                        )
+                        .clip(AppTheme.shape.rounded15),
+                    model = ImageRequest.Builder(
+                        LocalPlatformContext.current
+                    )
+                        .data(uiState.imageUiModel.originalUrl)
+                        .crossfade(true).build(),
+                    contentDescription = "image",
                     contentScale = ContentScale.Crop
                 )
-                if (isVersionBelow12) {
-                    Box(Modifier.fillMaxSize().background(AppTheme.colorScheme.cyanBlue.copy(.5f)))
-                }
-                Column(
+
+                Row(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(bottom = navigationBarsPadding.calculateBottomPadding() + 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                    verticalAlignment = Alignment.Bottom
                 ) {
-                    ImageDetailsTopBar(
-                        modifier = Modifier
-                            .padding(
-                                top = statusBarsPadding.calculateTopPadding() + 8.dp,
-                                start = 10.dp,
-                                end = 10.dp
-                            ),
-                        onBackPressed = onBackPressed
+                    DetailsActionButton(
+                        titleRes = Res.string.share,
+                        iconRes = Drawables.Icons.Share,
+                        onClick = {
+                            shareManager.share(uiState.imageUiModel.originalUrl)
+                        }
                     )
 
-                    SubcomposeAsyncImage(
-                        modifier = Modifier.weight(1f)
-                            .padding(vertical = 24.dp)
-                            .padding(horizontal = 40.dp)
-                            .advancedShadow(
-                                blur = 13.dp
-                            )
-                            .sharedElement(
-                                state = rememberSharedContentState({ imageUiModel.thumbUrl }),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                clipInOverlayDuringTransition = OverlayClip(AppTheme.shape.rounded15),
-                            )
-                            .clip(AppTheme.shape.rounded15),
-                        model = ImageRequest.Builder(
-                            LocalPlatformContext.current
-                        )
-                            .data(uiState.imageUiModel.originalUrl)
-                            .crossfade(true)
-                            .placeholderMemoryCacheKey(imageUiModel.thumbUrl)
-                            .build(),
-                        contentDescription = "image",
-                        contentScale = ContentScale.Crop
-                    )
-
-                    Row(
-                        modifier = Modifier
-                            .padding(bottom = navigationBarsPadding.calculateBottomPadding() + 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(24.dp),
-                        verticalAlignment = Alignment.Bottom
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        DetailsActionButton(
-                            titleRes = Res.string.share,
-                            iconRes = Drawables.Icons.Share,
-                            onClick = {
-                                shareManager.share(uiState.imageUiModel.originalUrl)
+                        IconButton(onClick = {
+                            scope.launch {
+                                scaffoldState.show()
                             }
-                        )
-
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(10.dp)
-                        ) {
-                            IconButton(onClick = {
-                                scope.launch {
-                                    scaffoldState.show()
-                                }
-                            }) {
-                                Icon(
-                                    painter = painterResource(if (isAndroid) Drawables.Icons.SetWallpaper else Drawables.Icons.Download),
-                                    contentDescription = "Share download icon",
-                                    modifier = Modifier
-                                        .size(56.dp)
-                                        .clip(CircleShape)
-                                        .background(
-                                            color = AppTheme.colorScheme.immutableWhite,
-                                            shape = CircleShape
-                                        )
-                                        .padding(14.dp),
-                                    tint = AppTheme.colorScheme.immutableDark
-                                )
-                            }
-                            Text(
-                                text = stringResource(if (isAndroid) Res.string.set else Res.string.download),
-                                style = AppTheme.typography.buttonTextMedium,
-                                color = AppTheme.colorScheme.immutableWhite,
+                        }) {
+                            Icon(
+                                painter = painterResource(if (isAndroid) Drawables.Icons.SetWallpaper else Drawables.Icons.Download),
+                                contentDescription = "Share download icon",
                                 modifier = Modifier
+                                    .size(56.dp)
+                                    .clip(CircleShape)
                                     .background(
-                                        color = AppTheme.colorScheme.charcoalBlue.copy(
-                                            alpha = 0.53f
-                                        ),
-                                        shape = AppTheme.shape.rounded10
+                                        color = AppTheme.colorScheme.immutableWhite,
+                                        shape = CircleShape
                                     )
-                                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                                    .padding(14.dp),
+                                tint = AppTheme.colorScheme.immutableDark
                             )
                         }
-
-                        DetailsActionButton(
-                            titleRes = Res.string.favorites_title,
-                            iconRes = if (uiState.imageUiModel.isFavorite) Drawables.Icons.FavouriteSelected else Drawables.Icons.FavoriteOutlined,
-                            tint = if (uiState.imageUiModel.isFavorite) AppTheme.colorScheme.neonFuchsiaPink else AppTheme.colorScheme.immutableWhite,
-                            sharedAnimationModifier = Modifier.sharedElement(
-                                state = rememberSharedContentState("favorite-bounds-${imageUiModel.thumbUrl}"),
-                                animatedVisibilityScope = animatedVisibilityScope
-                            ),
-                            onClick = {
-                                event(ImageDetailsContract.Intent.HandleInFavorites)
-                            }
+                        Text(
+                            text = stringResource(if (isAndroid) Res.string.set else Res.string.download),
+                            style = AppTheme.typography.buttonTextMedium,
+                            color = AppTheme.colorScheme.immutableWhite,
+                            modifier = Modifier
+                                .background(
+                                    color = AppTheme.colorScheme.charcoalBlue.copy(
+                                        alpha = 0.53f
+                                    ),
+                                    shape = AppTheme.shape.rounded10
+                                )
+                                .padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
+
+                    DetailsActionButton(
+                        titleRes = Res.string.favorites_title,
+                        iconRes = if (uiState.imageUiModel.isFavorite) Drawables.Icons.FavouriteSelected else Drawables.Icons.FavoriteOutlined,
+                        tint = if (uiState.imageUiModel.isFavorite) AppTheme.colorScheme.neonFuchsiaPink else AppTheme.colorScheme.immutableWhite,
+                        onClick = {
+                            event(ImageDetailsContract.Intent.HandleInFavorites)
+                        }
+                    )
                 }
             }
         }
