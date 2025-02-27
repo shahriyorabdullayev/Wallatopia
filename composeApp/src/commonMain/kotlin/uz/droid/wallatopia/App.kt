@@ -4,6 +4,9 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -58,7 +61,15 @@ fun App() {
 
 @Composable
 fun HavHostMain(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screens.SplashScreen) {
+    NavHost(
+        navController = navController, startDestination = Screens.SplashScreen,
+        enterTransition = {
+            fadeIn(animationSpec = tween(300))
+        },
+        exitTransition = {
+            fadeOut(animationSpec = tween(300))
+        }
+    ) {
         composable<Screens.SplashScreen> {
             SplashScreen(
                 navigateToHome = {
@@ -85,10 +96,10 @@ fun HavHostMain(navController: NavHostController) {
                     onBackPressed = navController::popBackStack,
                     navigateToImageDetails = { imageUiModel ->
                         navController.navigate(
-                        Screens.ImageDetailsScreen(
-                            imageUiModel
+                            Screens.ImageDetailsScreen(
+                                imageUiModel
+                            )
                         )
-                    )
                     }
                 )
             }

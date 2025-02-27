@@ -135,8 +135,8 @@ fun BottomNavigationCustom(navController: NavHostController) {
                 Modifier
                     .renderInSharedTransitionScopeOverlay(zIndexInOverlay = 1f)
                     .animateEnterExit(
-                        enter = slideInVertically(tween(500)) { it },
-                        exit = slideOutVertically(tween(500)) { it }
+                        enter = slideInVertically(tween(300)) { it },
+                        exit = slideOutVertically(tween(300)) { it }
                     )
             } else Modifier
             BottomNavigation(
