@@ -1,6 +1,7 @@
 package uz.droid.wallatopia.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.EaseInOutQuad
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.RepeatMode
@@ -41,12 +42,15 @@ import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
+import uz.droid.wallatopia.LocalAnimatedVisibility
+import uz.droid.wallatopia.LocalSharedTransition
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.ImageUiModel
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.cross
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun AiGeneratedImageItem(
     modifier: Modifier = Modifier,
@@ -79,97 +83,107 @@ fun AiGeneratedImageItem(
     val transformOrigin = remember {
         transformOrigins.random()
     }
-
-    Box(
-        modifier = Modifier
-            .advancedShadow(
-                offsetY = 4.dp,
-                blur = 4.dp
-            )
-            .clip(AppTheme.shape.rounded7)
-            .height(170.dp)
-            .graphicsLayer {
-                if (isSelectionMode) {
-                    this.rotationZ = animatedDegree
-                    this.transformOrigin = transformOrigin
+    val sharedTransitionScope = LocalSharedTransition.current!!
+    val animatedVisibilityScope = LocalAnimatedVisibility.current!!
+    with(sharedTransitionScope) {
+        Box(
+            modifier = Modifier
+                .advancedShadow(
+                    offsetY = 4.dp,
+                    blur = 4.dp
+                )
+//                .sharedElement(
+//                    state = rememberSharedContentState(image.thumbUrl),
+//                    animatedVisibilityScope = animatedVisibilityScope,
+//                    clipInOverlayDuringTransition = OverlayClip(AppTheme.shape.rounded7)
+//                )
+                .clip(AppTheme.shape.rounded7)
+                .height(170.dp)
+                .graphicsLayer {
+                    if (isSelectionMode) {
+                        this.rotationZ = animatedDegree
+                        this.transformOrigin = transformOrigin
+                    }
                 }
-            }
-            .clickable(
-                onClick = onClick,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = ripple()
+                .clickable(
+                    onClick = onClick,
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple()
+                )
+        ) {
+            val painter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(
+                    LocalPlatformContext.current
+                ).data(image.thumbUrl).crossfade(true).build(),
+                contentScale = ContentScale.Crop
             )
-    ) {
-        val painter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(
-                LocalPlatformContext.current
-            ).data(image.thumbUrl).crossfade(true).build(),
-            contentScale = ContentScale.Crop
-        )
-        Box {
-            Image(
-                modifier = modifier,
-                painter = painter,
-                contentDescription = image.thumbUrl,
-                contentScale = ContentScale.Crop,
-            )
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .align(Alignment.BottomStart)
-                    .bounceClickable {
-                        onFavoriteClick(image.isFavorite)
-                    },
-                contentAlignment = Alignment.BottomStart
-            ) {
+            Box {
+                Image(
+                    modifier = modifier,
+                    painter = painter,
+                    contentDescription = image.thumbUrl,
+                    contentScale = ContentScale.Crop,
+                )
                 Box(
-                    contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .size(32.dp)
-                        .padding(start = 4.dp, bottom = 3.dp)
-                        .clip(AppTheme.shape.circular)
+                        .size(40.dp)
+                        .align(Alignment.BottomStart)
                         .bounceClickable {
                             onFavoriteClick(image.isFavorite)
-                        }
-                        .background(AppTheme.colorScheme.charcoalBlue.copy(0.53f), shape = CircleShape)
-                        .padding(top = if (image.isFavorite) 1.dp else 0.dp)
+                        },
+                    contentAlignment = Alignment.BottomStart
                 ) {
-                    Image(
-                        painter = painterResource(
-                            if (image.isFavorite) Drawables.Icons.FavouriteSelected else Drawables.Icons.FavoriteOutlined
-                        ),
-                        contentDescription = "favorite",
-                        modifier = Modifier.size(16.dp)
-                    )
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(32.dp)
+                            .padding(start = 4.dp, bottom = 3.dp)
+                            .clip(AppTheme.shape.circular)
+                            .bounceClickable {
+                                onFavoriteClick(image.isFavorite)
+                            }
+                            .background(
+                                AppTheme.colorScheme.charcoalBlue.copy(0.53f),
+                                shape = CircleShape
+                            )
+                            .padding(top = if (image.isFavorite) 1.dp else 0.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(
+                                if (image.isFavorite) Drawables.Icons.FavouriteSelected else Drawables.Icons.FavoriteOutlined
+                            ),
+                            contentDescription = "favorite",
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
                 }
             }
-        }
 
-        AnimatedVisibility(
-            isSelectionMode,
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(4.dp),
-            enter = scaleIn(),
-            exit = scaleOut()
-        ) {
-            Icon(
-                painter = painterResource(Res.drawable.cross),
-                contentDescription = "Delete Icon",
-                tint = Color.Red,
+            AnimatedVisibility(
+                isSelectionMode,
                 modifier = Modifier
-                    .padding(2.dp)
-                    .background(Color.Gray, CircleShape)
-                    .padding(2.dp)
-                    .size(24.dp)
-                    .clickable {
-                        deleteOnClick()
-                    }
-            )
+                    .align(Alignment.TopEnd)
+                    .padding(4.dp),
+                enter = scaleIn(),
+                exit = scaleOut()
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.cross),
+                    contentDescription = "Delete Icon",
+                    tint = Color.Red,
+                    modifier = Modifier
+                        .padding(2.dp)
+                        .background(Color.Gray, CircleShape)
+                        .padding(2.dp)
+                        .size(24.dp)
+                        .clickable {
+                            deleteOnClick()
+                        }
+                )
+            }
+
         }
-
     }
-
 }
 
 private val transformOrigins = listOf(

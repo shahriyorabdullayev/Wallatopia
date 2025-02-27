@@ -156,7 +156,7 @@ fun ImageDetailsScreen(
                                 blur = 13.dp
                             )
                             .sharedElement(
-                                state = rememberSharedContentState({ imageUiModel.thumbUrl }),
+                                state = rememberSharedContentState(imageUiModel.thumbUrl),
                                 animatedVisibilityScope = animatedVisibilityScope,
                                 clipInOverlayDuringTransition = OverlayClip(AppTheme.shape.rounded15),
                             )

@@ -58,6 +58,7 @@ import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.CategoryItem
 import uz.droid.wallatopia.presentation.components.HomeCustomTab
 import uz.droid.wallatopia.presentation.components.HomeSearchSection
+import uz.droid.wallatopia.presentation.components.MainImageItem
 import uz.droid.wallatopia.presentation.components.ScrollToTopButton
 import uz.droid.wallatopia.presentation.components.advancedShadow
 import uz.droid.wallatopia.presentation.screens.contracts.HomeContract
@@ -156,7 +157,7 @@ fun HomeScreen(
             ) { index ->
                 val image = if (uiState.selectedTabIndex == 0) pagingItems[index]
                     ?: return@items else uiState.aiGeneratedImages.ifEmpty { return@items }[index]
-                AiGeneratedImageItem(
+                MainImageItem(
                     modifier = if (uiState.selectedTabIndex != 0) {
                         Modifier
                             .pointerInput(Unit) {
@@ -187,10 +188,10 @@ fun HomeScreen(
                             event(HomeContract.Intent.AddToFavorites(image))
                         }
                     },
-                    isSelectionMode = isSelectionMode,
-                    deleteOnClick = {
-                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
-                    }
+//                    isSelectionMode = isSelectionMode,
+//                    deleteOnClick = {
+//                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
+//                    }
                 )
             }
         }
