@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
@@ -61,22 +62,17 @@ fun MainImageItem(
                 .height(170.dp)
         ) {
 
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest
-                    .Builder(LocalPlatformContext.current)
-                    .data(image.thumbUrl)
-                    .crossfade(true)
-                    .diskCacheKey(image.thumbUrl)
-                    .placeholderMemoryCacheKey(image.thumbUrl)
-                    .memoryCacheKey(image.thumbUrl)
-                    .build(),
-                contentScale = ContentScale.Crop
-            )
-
             Box {
-                Image(
+                AsyncImage(
+                    model = ImageRequest
+                        .Builder(LocalPlatformContext.current)
+                        .data(image.thumbUrl)
+                        .crossfade(true)
+                        .diskCacheKey(image.thumbUrl)
+                        .placeholderMemoryCacheKey(image.thumbUrl)
+                        .memoryCacheKey(image.thumbUrl)
+                        .build(),
                     modifier = Modifier.fillMaxSize(),
-                    painter = painter,
                     contentDescription = image.thumbUrl,
                     contentScale = ContentScale.Crop,
                 )
