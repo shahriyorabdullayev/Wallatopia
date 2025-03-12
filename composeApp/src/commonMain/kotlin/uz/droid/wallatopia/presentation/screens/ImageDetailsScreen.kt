@@ -1,9 +1,6 @@
 package uz.droid.wallatopia.presentation.screens
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,7 +27,10 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -39,6 +39,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.LocalPlatformContext
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.rememberAsyncImagePainter
@@ -49,13 +50,14 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import uz.droid.wallatopia.LocalAnimatedVisibility
-import uz.droid.wallatopia.LocalSharedTransition
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.ImageDetailsBottomSheetContent
+import uz.droid.wallatopia.LocalAnimatedVisibility
+import uz.droid.wallatopia.LocalSharedTransition
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.domain.model.ImageUiModel
+import uz.droid.wallatopia.domain.model.ShareImageModel
 import uz.droid.wallatopia.isAndroid
 import uz.droid.wallatopia.isVersionBelow12
 import uz.droid.wallatopia.presentation.components.DetailsActionButton
@@ -70,6 +72,7 @@ import wallatopia.composeapp.generated.resources.favorites_title
 import wallatopia.composeapp.generated.resources.set
 import wallatopia.composeapp.generated.resources.share
 
+@ExperimentalCoilApi
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ImageDetailsScreen(
@@ -88,9 +91,11 @@ fun ImageDetailsScreen(
     )
     val scope = rememberCoroutineScope()
     val shareManager = rememberShareManager()
+    var shareImageModel by remember { mutableStateOf<ShareImageModel?>(null) }
 
     LaunchedEffect(Unit) {
         event(ImageDetailsContract.Intent.Init(imageUiModel = imageUiModel))
+        shareImageModel = viewModel.fetchImageAsByteArray(imageUiModel.originalUrl)
     }
 
     val painterBlur = rememberAsyncImagePainter(
@@ -182,8 +187,13 @@ fun ImageDetailsScreen(
                             titleRes = Res.string.share,
                             iconRes = Drawables.Icons.Share,
                             onClick = {
-                                shareManager.share(uiState.imageUiModel.originalUrl)
-                            }
+                                scope.launch {
+                                    shareImageModel?.let { shared ->
+                                        shareManager.shareImage(shared)
+                                    }
+                                }
+                            },
+                            isLoading = uiState.isLoading
                         )
 
                         Column(
