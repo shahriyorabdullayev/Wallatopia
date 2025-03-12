@@ -238,7 +238,7 @@ fun HomeScreen(
             scrollTopVisible = scrollTopVisible,
             onClick = {
                 scope.launch {
-                    gridState.animateScrollToItem(0)
+                    gridState.scrollToItem(0)
                 }
             },
             modifier = Modifier
