@@ -6,10 +6,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import uz.droid.wallatopia.data.paging.PixabayPagingSource
 import uz.droid.wallatopia.data.mapper.toUiModel
@@ -80,9 +83,9 @@ class HomeViewModel(
                         enablePlaceholders = false
                     ),
                     pagingSourceFactory = { PixabayPagingSource(repository) }
-                ).flow.cachedIn(viewModelScope)
+                ).flow.cachedIn(viewModelScope).flowOn(Dispatchers.IO)
 
-                val favoriteImagesFlow = favoriteImagesRepository.fetchFavoriteImages()
+                val favoriteImagesFlow = favoriteImagesRepository.fetchFavoriteImages().flowOn(Dispatchers.IO)
 
                 val combinedFlow =
                     combine(
@@ -92,7 +95,7 @@ class HomeViewModel(
                         pagingData.map { networkImage ->
                             networkImage.toUiModel(isFavorite = favoriteList.any { it.id == networkImage.id.toString() })
                         }
-                    }.cachedIn(viewModelScope)
+                    }.cachedIn(viewModelScope).flowOn(Dispatchers.IO)
 
 
                 _uiState.value = uiState.value.copy(homeImages = combinedFlow)

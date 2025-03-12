@@ -1,5 +1,6 @@
 package uz.droid.wallatopia.presentation.screens.contracts
 
+import androidx.compose.runtime.Immutable
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -8,6 +9,7 @@ import uz.droid.wallatopia.domain.model.ImageUiModel
 
 class HomeContract {
 
+    @Immutable
     data class HomeState(
         val selectedTabIndex: Int = 0,
         val categories: List<CategoryUiModel> = emptyList(),
