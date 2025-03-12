@@ -152,11 +152,49 @@ fun HomeScreen(
                 )
             }
 
-            items(if (uiState.selectedTabIndex == 0) pagingItems.itemCount else uiState.aiGeneratedImages.size,
-                key = { it }
-            ) { index ->
-                val image = if (uiState.selectedTabIndex == 0) pagingItems[index]
-                    ?: return@items else uiState.aiGeneratedImages.ifEmpty { return@items }[index]
+            if (uiState.selectedTabIndex == 0) {
+                items(pagingItems.itemCount) { index ->
+                    val image = pagingItems[index] ?: return@items
+                    MainImageItem(
+                        modifier = if (uiState.selectedTabIndex != 0) {
+                            Modifier
+                                .pointerInput(Unit) {
+                                    detectTapGestures(
+                                        onTap = {
+                                            if (isSelectionMode) {
+                                                isSelectionMode = false
+                                            } else {
+                                                navigateToImageDetails(image)
+                                            }
+                                        },
+                                        onLongPress = {
+                                            isSelectionMode = !isSelectionMode
+                                        },
+                                    )
+                                }
+                        } else {
+                            Modifier
+                        },
+                        image = image,
+                        onClick = {
+                            navigateToImageDetails(image)
+                        },
+                        onFavoriteClick = {
+                            if (it) {
+                                event(HomeContract.Intent.DeleteFromFavorites(image))
+                            } else {
+                                event(HomeContract.Intent.AddToFavorites(image))
+                            }
+                        },
+//                    isSelectionMode = isSelectionMode,
+//                    deleteOnClick = {
+//                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
+//                    }
+                    )
+                }
+            }
+            items(uiState.aiGeneratedImages.size,) { index ->
+                val image = uiState.aiGeneratedImages.ifEmpty { return@items }[index]
                 MainImageItem(
                     modifier = if (uiState.selectedTabIndex != 0) {
                         Modifier
