@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -192,45 +193,45 @@ fun HomeScreen(
 //                    }
                     )
                 }
-            }
-            items(uiState.aiGeneratedImages.size,) { index ->
-                val image = uiState.aiGeneratedImages.ifEmpty { return@items }[index]
-                MainImageItem(
-                    modifier = if (uiState.selectedTabIndex != 0) {
-                        Modifier
-                            .pointerInput(Unit) {
-                                detectTapGestures(
-                                    onTap = {
-                                        if (isSelectionMode) {
-                                            isSelectionMode = false
-                                        } else {
-                                            navigateToImageDetails(image)
-                                        }
-                                    },
-                                    onLongPress = {
-                                        isSelectionMode = !isSelectionMode
-                                    },
-                                )
-                            }
-                    } else {
-                        Modifier
-                    },
-                    image = image,
-                    onClick = {
-                        navigateToImageDetails(image)
-                    },
-                    onFavoriteClick = {
-                        if (it) {
-                            event(HomeContract.Intent.DeleteFromFavorites(image))
+            } else {
+                items(uiState.aiGeneratedImages, key = { it.id }) { image ->
+                    MainImageItem(
+                        modifier = if (uiState.selectedTabIndex != 0) {
+                            Modifier
+                                .pointerInput(Unit) {
+                                    detectTapGestures(
+                                        onTap = {
+                                            if (isSelectionMode) {
+                                                isSelectionMode = false
+                                            } else {
+                                                navigateToImageDetails(image)
+                                            }
+                                        },
+                                        onLongPress = {
+                                            isSelectionMode = !isSelectionMode
+                                        },
+                                    )
+                                }
                         } else {
-                            event(HomeContract.Intent.AddToFavorites(image))
-                        }
-                    },
+                            Modifier
+                        },
+                        image = image,
+                        onClick = {
+                            navigateToImageDetails(image)
+                        },
+                        onFavoriteClick = {
+                            if (it) {
+                                event(HomeContract.Intent.DeleteFromFavorites(image))
+                            } else {
+                                event(HomeContract.Intent.AddToFavorites(image))
+                            }
+                        },
 //                    isSelectionMode = isSelectionMode,
 //                    deleteOnClick = {
 //                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
 //                    }
-                )
+                    )
+                }
             }
         }
         ScrollToTopButton(
