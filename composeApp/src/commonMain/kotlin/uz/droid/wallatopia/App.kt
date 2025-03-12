@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import coil3.annotation.ExperimentalCoilApi
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
@@ -59,6 +60,7 @@ fun App() {
     }
 }
 
+@ExperimentalCoilApi
 @Composable
 fun HavHostMain(navController: NavHostController) {
     NavHost(
@@ -105,19 +107,21 @@ fun HavHostMain(navController: NavHostController) {
             }
         }
         composable<Screens.SearchScreen> {
-            SearchScreen(
-                onBackPressed = navController::popBackStack,
-                navigateToCategoryDetails = {
-                    navController.navigate(Screens.CategoryDetailsScreen(it))
-                },
-                navigateToImageDetails = { imageUiModel ->
-                    navController.navigate(
-                        Screens.ImageDetailsScreen(
-                            imageUiModel
+            CompositionLocalProvider(LocalAnimatedVisibility provides this) {
+                SearchScreen(
+                    onBackPressed = navController::popBackStack,
+                    navigateToCategoryDetails = {
+                        navController.navigate(Screens.CategoryDetailsScreen(it))
+                    },
+                    navigateToImageDetails = { imageUiModel ->
+                        navController.navigate(
+                            Screens.ImageDetailsScreen(
+                                imageUiModel
+                            )
                         )
-                    )
-                }
-            )
+                    }
+                )
+            }
         }
         composable<Screens.ImageGenerateScreen> {
             ImageGenerateScreen(
