@@ -2,10 +2,20 @@ package uz.droid.wallatopia.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.readBytes
+import io.ktor.http.contentType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import uz.droid.wallatopia.currentTimeInMilliSeconds
+import uz.droid.wallatopia.domain.model.ShareImageModel
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.presentation.screens.contracts.ImageDetailsContract
 
@@ -24,9 +34,9 @@ class ImageDetailsViewModel(
             }
 
             ImageDetailsContract.Intent.HandleInFavorites -> {
-                if (_uiState.value.imageUiModel.isFavorite){
+                if (_uiState.value.imageUiModel.isFavorite) {
                     removeFromFavorites()
-                }else{
+                } else {
                     insertInFavorites()
                 }
             }
@@ -73,6 +83,48 @@ class ImageDetailsViewModel(
                     imageUiModel = currentModel.copy(isFavorite = isFavorite)
                 )
             }
+        }
+    }
+
+    suspend fun fetchImageAsByteArray(url: String): ShareImageModel? {
+        _uiState.value = _uiState.value.copy(
+            isLoading = true
+        )
+        return withContext(Dispatchers.IO) {
+            val client = HttpClient()
+            try {
+                val response: HttpResponse = client.get(url)
+
+                val byteArray = response.readBytes()
+
+                val contentType = response.contentType()?.toString()
+                val extension = mimeTypeToExtension(contentType)
+
+                ShareImageModel(
+                    "${currentTimeInMilliSeconds}.${extension}",
+                    byteArray
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            } finally {
+                client.close()
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    private fun mimeTypeToExtension(mimeType: String?): String {
+        return when (mimeType) {
+            "image/jpeg" -> "jpg"
+            "image/png" -> "png"
+            "image/webp" -> "webp"
+            "image/gif" -> "gif"
+            "image/bmp" -> "bmp"
+            "image/svg+xml" -> "svg"
+            else -> "jpg"
         }
     }
 }
