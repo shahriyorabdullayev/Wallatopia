@@ -6,6 +6,7 @@ import coil3.network.HttpException
 import okio.IOException
 import uz.droid.wallatopia.data.network.response.PixabayImage
 import uz.droid.wallatopia.domain.repository.MainRepository
+import kotlin.coroutines.cancellation.CancellationException
 
 class PixabayPagingSource(
     private val mainRepository: MainRepository
@@ -33,6 +34,7 @@ class PixabayPagingSource(
         } catch (exception: IOException) {
             LoadResult.Error(exception)
         } catch (exception: Exception) {
+            if (exception is CancellationException) throw exception
             LoadResult.Error(exception)
         }
     }
