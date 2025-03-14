@@ -152,11 +152,11 @@ room {
 fun Project.loadSecretProperty(
     propertyName: String,
 ): String {
-    val localProperties = Properties()
-    val localPropertiesFile = project.rootProject.file("secret.properties")
-    if (localPropertiesFile.exists()) {
-        localProperties.load(localPropertiesFile.inputStream())
-        return localProperties.getProperty(propertyName)
+    val secretProperties = Properties()
+    val secretPropertiesFile = project.rootProject.file("secret.properties")
+    if (secretPropertiesFile.exists()) {
+        secretProperties.load(secretPropertiesFile.inputStream())
+        return secretProperties.getProperty(propertyName)
     } else {
         throw GradleException("can not find property : $propertyName")
     }
