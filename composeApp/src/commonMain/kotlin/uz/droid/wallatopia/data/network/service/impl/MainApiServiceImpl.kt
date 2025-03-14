@@ -2,6 +2,7 @@ package uz.droid.wallatopia.data.network.service.impl
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import uz.droid.wallatopia.common.secrets.AppSecrets
 import uz.droid.wallatopia.data.local.STATIC_CATEGORIES
 import uz.droid.wallatopia.data.network.api.handle
 import uz.droid.wallatopia.data.network.json
@@ -13,7 +14,7 @@ import uz.droid.wallatopia.data.network.response.SearchResponse
 import uz.droid.wallatopia.data.network.response.SuggestionResponse
 import uz.droid.wallatopia.data.network.service.MainApiService
 
-const val PIXABAY_KEY = "26668198-7ea1a3552ef573fa65c198a0e"
+val PIXABAY_KEY = AppSecrets.pixabayApiKey
 
 class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
 

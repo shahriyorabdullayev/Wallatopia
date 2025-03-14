@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -106,11 +107,16 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
+        val pixabayApiKey = project.loadSecretProperty(propertyName = "pixabay_api_key")
+        buildConfigField("String", "pixabayApiKey", "\"$pixabayApiKey\"")
         applicationId = "uz.droid.wallatopia"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+    }
+    buildFeatures {
+        buildConfig = true
     }
     packaging {
         resources {
@@ -142,3 +148,17 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
+
+fun Project.loadSecretProperty(
+    propertyName: String,
+): String {
+    val secretProperties = Properties()
+    val secretPropertiesFile = project.rootProject.file("secret.properties")
+    if (secretPropertiesFile.exists()) {
+        secretProperties.load(secretPropertiesFile.inputStream())
+        return secretProperties.getProperty(propertyName)
+    } else {
+        throw GradleException("can not find property : $propertyName")
+    }
+
+}
