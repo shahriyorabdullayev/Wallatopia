@@ -42,6 +42,7 @@ import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
+import uz.droid.wallatopia.App
 import uz.droid.wallatopia.LocalAnimatedVisibility
 import uz.droid.wallatopia.LocalSharedTransition
 import uz.droid.wallatopia.common.resources.Drawables
@@ -64,7 +65,7 @@ fun AiGeneratedImageItem(
         (1..2).random() == 1
     }
     val randomExtra: Float = remember {
-        (200..400).random().toFloat() / 400f
+        (200..400).random().toFloat() / 1500f
     }
 
     val infiniteTransition = rememberInfiniteTransition(label = "")
@@ -73,7 +74,7 @@ fun AiGeneratedImageItem(
         targetValue = BASE_ROTATION_DEGREE + if (isMoreJigglingOnRight) randomExtra else randomExtra / 2f,
         animationSpec = infiniteRepeatable(
             tween(
-                durationMillis = 120,
+                durationMillis = 150,
                 easing = EaseInOutQuad
             ),
             repeatMode = RepeatMode.Reverse,
@@ -92,11 +93,11 @@ fun AiGeneratedImageItem(
                     offsetY = 4.dp,
                     blur = 4.dp
                 )
-//                .sharedElement(
-//                    state = rememberSharedContentState(image.thumbUrl),
-//                    animatedVisibilityScope = animatedVisibilityScope,
-//                    clipInOverlayDuringTransition = OverlayClip(AppTheme.shape.rounded7)
-//                )
+                .sharedElement(
+                    state = rememberSharedContentState(image.thumbUrl),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    clipInOverlayDuringTransition = OverlayClip(AppTheme.shape.rounded7)
+                )
                 .clip(AppTheme.shape.rounded7)
                 .height(170.dp)
                 .graphicsLayer {
@@ -158,29 +159,34 @@ fun AiGeneratedImageItem(
                     }
                 }
             }
-
-            AnimatedVisibility(
-                isSelectionMode,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(4.dp),
-                enter = scaleIn(),
-                exit = scaleOut()
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.cross),
-                    contentDescription = "Delete Icon",
-                    tint = Color.Red,
+            if (isSelectionMode) {
+                Box(
                     modifier = Modifier
-                        .padding(2.dp)
-                        .background(Color.Gray, CircleShape)
-                        .padding(2.dp)
-                        .size(24.dp)
-                        .clickable {
-                            deleteOnClick()
-                        }
-                )
+                        .fillMaxSize()
+                        .background(color = AppTheme.colorScheme.immutableDark.copy(alpha = .5f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    AnimatedVisibility(
+                        isSelectionMode,
+                        modifier = Modifier,
+                        enter = scaleIn(),
+                        exit = scaleOut()
+                    ) {
+                        Icon(
+                            painter = painterResource(Drawables.Icons.TrashIcon),
+                            contentDescription = "Delete Icon",
+                            tint = AppTheme.colorScheme.immutableWhite,
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clickable {
+                                    deleteOnClick()
+                                }
+                        )
+                    }
+
+                }
             }
+
 
         }
     }

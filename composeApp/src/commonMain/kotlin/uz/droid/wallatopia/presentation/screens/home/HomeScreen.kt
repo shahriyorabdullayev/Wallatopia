@@ -157,25 +157,6 @@ fun HomeScreen(
                 items(pagingItems.itemCount) { index ->
                     val image = pagingItems[index] ?: return@items
                     MainImageItem(
-                        modifier = if (uiState.selectedTabIndex != 0) {
-                            Modifier
-                                .pointerInput(Unit) {
-                                    detectTapGestures(
-                                        onTap = {
-                                            if (isSelectionMode) {
-                                                isSelectionMode = false
-                                            } else {
-                                                navigateToImageDetails(image)
-                                            }
-                                        },
-                                        onLongPress = {
-                                            isSelectionMode = !isSelectionMode
-                                        },
-                                    )
-                                }
-                        } else {
-                            Modifier
-                        },
                         image = image,
                         onClick = {
                             navigateToImageDetails(image)
@@ -187,15 +168,11 @@ fun HomeScreen(
                                 event(HomeContract.Intent.AddToFavorites(image))
                             }
                         },
-//                    isSelectionMode = isSelectionMode,
-//                    deleteOnClick = {
-//                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
-//                    }
                     )
                 }
             } else {
                 items(uiState.aiGeneratedImages, key = { it.id }) { image ->
-                    MainImageItem(
+                    AiGeneratedImageItem(
                         modifier = if (uiState.selectedTabIndex != 0) {
                             Modifier
                                 .pointerInput(Unit) {
@@ -226,10 +203,10 @@ fun HomeScreen(
                                 event(HomeContract.Intent.AddToFavorites(image))
                             }
                         },
-//                    isSelectionMode = isSelectionMode,
-//                    deleteOnClick = {
-//                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
-//                    }
+                    isSelectionMode = isSelectionMode,
+                    deleteOnClick = {
+                        event(HomeContract.Intent.DeleteAiGeneratedImage(image))
+                    }
                     )
                 }
             }

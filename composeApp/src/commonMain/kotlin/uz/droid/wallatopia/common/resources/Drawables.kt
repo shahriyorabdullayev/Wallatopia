@@ -26,6 +26,7 @@ import wallatopia.composeapp.generated.resources.ic_set_home
 import wallatopia.composeapp.generated.resources.ic_set_lock
 import wallatopia.composeapp.generated.resources.ic_set_wallpaper
 import wallatopia.composeapp.generated.resources.ic_share
+import wallatopia.composeapp.generated.resources.ic_trash
 import wallatopia.composeapp.generated.resources.ic_trending
 import wallatopia.composeapp.generated.resources.image_generate_background
 import wallatopia.composeapp.generated.resources.image_generate_placeholder
@@ -65,6 +66,7 @@ object Drawables {
         val HomeScreen = Res.drawable.ic_home_screen
         val LockScreen = Res.drawable.ic_lock_screen
         val BothScreens = Res.drawable.ic_both_screens
+        val TrashIcon = Res.drawable.ic_trash
     }
 
     object Images {

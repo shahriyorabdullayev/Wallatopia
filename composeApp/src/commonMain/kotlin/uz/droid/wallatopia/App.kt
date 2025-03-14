@@ -40,7 +40,7 @@ import kotlin.reflect.typeOf
 val LocalSharedTransition = staticCompositionLocalOf<SharedTransitionScope?> { null }
 val LocalAnimatedVisibility = staticCompositionLocalOf<AnimatedVisibilityScope?> { null }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalSharedTransitionApi::class, ExperimentalCoilApi::class)
 @Composable
 @Preview
 fun App() {
