@@ -31,6 +31,8 @@
     <string name="close">Закрыть</string>
     <string name="rate_us">Оцените нас</string>
     <string name="soon">Cкоро будет...</string>
+    <string name="high_quality">Загрузка в высоком качестве</string>
+    <string name="low_quality">Загрузка в низком качестве</string>
     <string name="privacy_policy">1. Введение
 
 Эта Политика конфиденциальности объясняет, как Wallatopia ("мы", "наш" или "нас") собирает, использует и защищает вашу личную информацию при использовании нашего Приложения.

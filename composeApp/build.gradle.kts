@@ -42,6 +42,7 @@ kotlin {
             implementation(libs.koin.androidx.compose)
             implementation(libs.ktor.client.android)
             implementation(libs.androidx.core.splashscreen)
+            implementation (libs.androidx.preference.ktx)
         }
         commonMain.dependencies {
             implementation(compose.runtime)

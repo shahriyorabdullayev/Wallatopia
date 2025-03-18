@@ -12,6 +12,7 @@ import wallatopia.composeapp.generated.resources.ic_back
 import wallatopia.composeapp.generated.resources.ic_both_screens
 import wallatopia.composeapp.generated.resources.ic_category
 import wallatopia.composeapp.generated.resources.ic_download
+import wallatopia.composeapp.generated.resources.ic_download_white
 import wallatopia.composeapp.generated.resources.ic_favorite
 import wallatopia.composeapp.generated.resources.ic_favorite_outlined
 import wallatopia.composeapp.generated.resources.ic_favorite_selected
@@ -30,13 +31,6 @@ import wallatopia.composeapp.generated.resources.ic_trending
 import wallatopia.composeapp.generated.resources.image_generate_background
 import wallatopia.composeapp.generated.resources.image_generate_placeholder
 import wallatopia.composeapp.generated.resources.search_background
-import wallatopia.composeapp.generated.resources.sora_bold
-import wallatopia.composeapp.generated.resources.sora_extra_bold
-import wallatopia.composeapp.generated.resources.sora_light
-import wallatopia.composeapp.generated.resources.sora_medium
-import wallatopia.composeapp.generated.resources.sora_regular
-import wallatopia.composeapp.generated.resources.sora_semi_bold
-import wallatopia.composeapp.generated.resources.sora_thin
 import wallatopia.composeapp.generated.resources.splash_background
 import wallatopia.composeapp.generated.resources.splash_logo
 
@@ -62,6 +56,7 @@ object Drawables {
         val SetHome = Res.drawable.ic_set_home
         val Share = Res.drawable.ic_share
         val Download = Res.drawable.ic_download
+        val DownloadWhite = Res.drawable.ic_download_white
         val HomeScreen = Res.drawable.ic_home_screen
         val LockScreen = Res.drawable.ic_lock_screen
         val BothScreens = Res.drawable.ic_both_screens

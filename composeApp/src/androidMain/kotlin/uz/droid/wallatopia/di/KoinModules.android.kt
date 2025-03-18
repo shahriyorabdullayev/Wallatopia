@@ -1,9 +1,8 @@
 package uz.droid.wallatopia.di
 
 import android.app.WallpaperManager
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import androidx.room.RoomDatabase
-import coil3.ImageLoader
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 import org.koin.android.ext.koin.androidContext

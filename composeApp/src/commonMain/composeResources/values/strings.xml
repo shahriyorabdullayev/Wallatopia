@@ -31,6 +31,8 @@
     <string name="close">Close</string>
     <string name="rate_us">Rate Us</string>
     <string name="soon">Coming soon...</string>
+    <string name="high_quality">Download high-quality</string>
+    <string name="low_quality">Download low-quality</string>
     <string name="privacy_policy">1. Introduction
 
 This Privacy Policy explains how Wallatopia ("we," "our," or "us") collects, uses, and protects your personal information when using our App.
