@@ -21,5 +21,5 @@ actual val platformModule = module {
         )
     }
     single { WallpaperManager.getInstance(androidContext()) }
-    single { WallatopiaWallpaperManager(get(), androidContext()) }
+    single { WallatopiaWallpaperManager(get()) }
 }

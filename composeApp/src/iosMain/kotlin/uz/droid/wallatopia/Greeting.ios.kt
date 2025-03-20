@@ -8,7 +8,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
@@ -17,17 +16,20 @@ import uz.droid.wallatopia.presentation.screens.SetScreenTypeItem
 import uz.droid.wallatopia.presentation.screens.SetScreenTypeItemDivider
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.close
+import wallatopia.composeapp.generated.resources.download_success
 import wallatopia.composeapp.generated.resources.high_quality
 import wallatopia.composeapp.generated.resources.low_quality
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 actual fun ImageDetailsBottomSheetContent(
     modifier: Modifier,
-    imageOriginalUrl: String,
+    imageByteArray: ByteArray,
+    onActionStart: (message: String) -> Unit,
+    onActionSuccess: (message: String) -> Unit,
     onClose: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
+    val successMessage = stringResource(Res.string.download_success)
 
     Column(
         Modifier
@@ -39,15 +41,14 @@ actual fun ImageDetailsBottomSheetContent(
             icon = Drawables.Icons.DownloadWhite,
             title = Res.string.high_quality,
             onClick = {
+//                onActionStart()
                 scope.launch {
                     saveImageToGallery(
-                        image = Res.readBytes("drawable/app_logo.png"),
+                        image = imageByteArray,
                         onSuccess = {
-                            println("Ios  saving: great")
+                            onActionSuccess(successMessage)
                         },
-                        onFailure = {
-                            println("Ios  saving: not great)))")
-                        }
+                        onFailure = {}
                     )
                 }
             }

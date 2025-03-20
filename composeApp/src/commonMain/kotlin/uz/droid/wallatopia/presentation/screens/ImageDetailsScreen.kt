@@ -114,14 +114,22 @@ fun ImageDetailsScreen(
         sheetElevation = 0.dp,
         sheetBackgroundColor = AppTheme.colorScheme.eerieBlack,
         sheetContent = {
-            SetWallpaperSheetContent(
-                imageOriginalUrl = uiState.imageUiModel.originalUrl,
-                onClose = {
-                    scope.launch {
-                        scaffoldState.hide()
+            shareImageModel?.let {
+                SetWallpaperSheetContent(
+                    imageByteArray = it.bytes,
+                    onActionStart = {},
+                    onActionSuccess = {
+                        scope.launch {
+                            scaffoldState.hide()
+                        }
+                    },
+                    onClose = {
+                        scope.launch {
+                            scaffoldState.hide()
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         sheetShape = AppTheme.shape.rounded15
     ) {
@@ -256,12 +264,16 @@ fun ImageDetailsScreen(
 @Composable
 fun SetWallpaperSheetContent(
     modifier: Modifier = Modifier,
-    imageOriginalUrl: String,
+    imageByteArray: ByteArray,
+    onActionStart: (message: String) -> Unit,
+    onActionSuccess: (message: String) -> Unit,
     onClose: () -> Unit
 ) {
     ImageDetailsBottomSheetContent(
         modifier = modifier,
-        imageOriginalUrl = imageOriginalUrl,
+        imageByteArray = imageByteArray,
+        onActionStart = onActionStart,
+        onActionSuccess = onActionSuccess,
         onClose = onClose
     )
 }

@@ -25,7 +25,9 @@ import wallatopia.composeapp.generated.resources.set_lock_screen
 @Composable
 actual fun ImageDetailsBottomSheetContent(
     modifier: Modifier,
-    imageOriginalUrl: String,
+    imageByteArray: ByteArray,
+    onActionStart: (message: String) -> Unit,
+    onActionSuccess: (message: String) -> Unit,
     onClose: () -> Unit
 ) {
     val myWallpaperManager: WallatopiaWallpaperManager = koinInject()
@@ -42,7 +44,7 @@ actual fun ImageDetailsBottomSheetContent(
             title = Res.string.set_home_screen,
             onClick = {
                 scope.launch {
-                    myWallpaperManager.setOnHomeScreen(imageOriginalUrl)
+                    myWallpaperManager.setOnHomeScreen(imageByteArray)
                 }
             }
         )
@@ -52,7 +54,7 @@ actual fun ImageDetailsBottomSheetContent(
             title = Res.string.set_lock_screen,
             onClick = {
                 scope.launch {
-                    myWallpaperManager.setOnLockScreen(imageOriginalUrl)
+                    myWallpaperManager.setOnLockScreen(imageByteArray)
                 }
             })
         SetScreenTypeItemDivider()
@@ -61,7 +63,7 @@ actual fun ImageDetailsBottomSheetContent(
             title = Res.string.set_both_screens,
             onClick = {
                 scope.launch {
-                    myWallpaperManager.setOnBothScreens(imageOriginalUrl)
+                    myWallpaperManager.setOnBothScreens(imageByteArray)
                 }
             })
 
