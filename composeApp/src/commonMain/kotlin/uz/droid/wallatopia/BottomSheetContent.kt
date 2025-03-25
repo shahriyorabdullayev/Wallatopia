@@ -6,6 +6,8 @@ import androidx.compose.ui.Modifier
 @Composable
 expect fun ImageDetailsBottomSheetContent(
     modifier: Modifier,
-    imageOriginalUrl: String,
+    imageByteArray: ByteArray,
+    onActionStart: (message: String) -> Unit,
+    onActionSuccess: (message: String) -> Unit,
     onClose: () -> Unit
 )

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -35,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -46,6 +48,7 @@ import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import kotlinx.coroutines.launch
+import multiplatform.network.cmptoast.showToast
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -92,6 +95,7 @@ fun ImageDetailsScreen(
     val scope = rememberCoroutineScope()
     val shareManager = rememberShareManager()
     var shareImageModel by remember { mutableStateOf<ShareImageModel?>(null) }
+    var isLoading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         event(ImageDetailsContract.Intent.Init(imageUiModel = imageUiModel))
@@ -114,14 +118,26 @@ fun ImageDetailsScreen(
         sheetElevation = 0.dp,
         sheetBackgroundColor = AppTheme.colorScheme.eerieBlack,
         sheetContent = {
-            SetWallpaperSheetContent(
-                imageOriginalUrl = uiState.imageUiModel.originalUrl,
-                onClose = {
-                    scope.launch {
-                        scaffoldState.hide()
+            shareImageModel?.let {
+                SetWallpaperSheetContent(
+                    imageByteArray = it.bytes,
+                    onActionStart = { message->
+                        isLoading = true
+                        scope.launch { scaffoldState.hide() }
+                        showToast(message = message)
+                    },
+                    onActionSuccess = { message->
+                        isLoading = false
+                        scope.launch { scaffoldState.hide() }
+                        showToast(message = message)
+                    },
+                    onClose = {
+                        scope.launch {
+                            scaffoldState.hide()
+                        }
                     }
-                }
-            )
+                )
+            }
         },
         sheetShape = AppTheme.shape.rounded15
     ) {
@@ -205,19 +221,34 @@ fun ImageDetailsScreen(
                                     scaffoldState.show()
                                 }
                             }) {
-                                Icon(
-                                    painter = painterResource(if (isAndroid) Drawables.Icons.SetWallpaper else Drawables.Icons.Download),
-                                    contentDescription = "Share download icon",
-                                    modifier = Modifier
-                                        .size(56.dp)
-                                        .clip(CircleShape)
-                                        .background(
-                                            color = AppTheme.colorScheme.immutableWhite,
-                                            shape = CircleShape
-                                        )
-                                        .padding(14.dp),
-                                    tint = AppTheme.colorScheme.immutableDark
-                                )
+                                if (isLoading) {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(56.dp)
+                                            .clip(CircleShape)
+                                            .background(
+                                                color = AppTheme.colorScheme.charcoalBlue.copy(alpha = 0.53f),
+                                                shape = CircleShape
+                                            )
+                                            .padding(10.dp),
+                                        color = AppTheme.colorScheme.immutableWhite,
+                                        strokeWidth = 1.dp,
+                                        strokeCap = StrokeCap.Butt
+                                    )
+                                } else {
+                                    Icon(
+                                        painter = painterResource(if (isAndroid) Drawables.Icons.SetWallpaper else Drawables.Icons.Download),
+                                        contentDescription = "Share download icon",
+                                        modifier = Modifier
+                                            .size(56.dp)
+                                            .clip(CircleShape)
+                                            .background(
+                                                color = AppTheme.colorScheme.immutableWhite,
+                                                shape = CircleShape
+                                            )
+                                            .padding(14.dp),
+                                        tint = AppTheme.colorScheme.immutableDark
+                                    )
+                                }
                             }
                             Text(
                                 text = stringResource(if (isAndroid) Res.string.set else Res.string.download),
@@ -256,12 +287,16 @@ fun ImageDetailsScreen(
 @Composable
 fun SetWallpaperSheetContent(
     modifier: Modifier = Modifier,
-    imageOriginalUrl: String,
+    imageByteArray: ByteArray,
+    onActionStart: (message: String) -> Unit,
+    onActionSuccess: (message: String) -> Unit,
     onClose: () -> Unit
 ) {
     ImageDetailsBottomSheetContent(
         modifier = modifier,
-        imageOriginalUrl = imageOriginalUrl,
+        imageByteArray = imageByteArray,
+        onActionStart = onActionStart,
+        onActionSuccess = onActionSuccess,
         onClose = onClose
     )
 }

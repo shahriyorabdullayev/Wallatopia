@@ -15,16 +15,18 @@ import platform.Foundation.dataWithBytes
 import platform.Foundation.writeToFile
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
+import platform.UIKit.UIImage
+import platform.UIKit.UIImageWriteToSavedPhotosAlbum
 import uz.droid.wallatopia.domain.model.ShareImageModel
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class ShareManager {
     actual suspend fun shareImage(image: ShareImageModel): Result<Unit> {
         return kotlin.runCatching {
-            val url = withContext(Dispatchers.IO){
-                saveFile(image.bytes,image.fileName)
+            val url = withContext(Dispatchers.IO) {
+                saveFile(image.bytes, image.fileName)
             }
-            val activityViewController = UIActivityViewController(listOf(url),null)
+            val activityViewController = UIActivityViewController(listOf(url), null)
             UIApplication.sharedApplication.keyWindow?.rootViewController?.presentViewController(
                 activityViewController, animated = true, completion = null
             )
@@ -47,4 +49,24 @@ actual class ShareManager {
 @Composable
 actual fun rememberShareManager(): ShareManager {
     return remember { ShareManager() }
+}
+
+@OptIn(ExperimentalForeignApi::class)
+suspend fun saveImageToGallery(image: ByteArray, onSuccess: () -> Unit, onFailure: () -> Unit) {
+    withContext(Dispatchers.IO) {
+        image.usePinned {
+            val nsData = NSData.dataWithBytes(it.addressOf(0), image.size.toULong())
+            val uiImage = UIImage.imageWithData(nsData)
+            if (uiImage != null) {
+                UIImageWriteToSavedPhotosAlbum(uiImage, null, null, null)
+                withContext(Dispatchers.Main) {
+                    onSuccess()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    onFailure()
+                }
+            }
+        }
+    }
 }

@@ -28,9 +28,15 @@
     <string name="set_home_screen">Asosiy oynaga o'rnatish</string>
     <string name="set_lock_screen">Qulf oynaga o'rnatish</string>
     <string name="set_both_screens">Ikkala oynaga o'rnatish</string>
+    <string name="set_start">O'rnatilmoqda...</string>
+    <string name="set_success">Muvoffaqiyatli o'rnatildi</string>
     <string name="close">Yopish</string>
     <string name="rate_us">Bizni baholang</string>
     <string name="soon">Tez orada...</string>
+    <string name="high_quality">Yuqori sifatli yuklash</string>
+    <string name="low_quality">Past sifatli yuklash</string>
+    <string name="download_success">Muvoffaqiyatli yuklandi</string>
+    <string name="download_start">Yuklanmoqda...</string>
     <string name="privacy_policy">1. Kirish
 
 Ushbu Maxfiylik siyosati Wallatopia ("biz", "bizning" yoki "bizga") ilovasi sizning shaxsiy ma'lumotlaringizni qanday to'plashini, foydalanishini va himoya qilishini tushuntiradi.
