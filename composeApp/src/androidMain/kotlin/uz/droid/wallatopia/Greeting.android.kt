@@ -21,6 +21,8 @@ import wallatopia.composeapp.generated.resources.close
 import wallatopia.composeapp.generated.resources.set_both_screens
 import wallatopia.composeapp.generated.resources.set_home_screen
 import wallatopia.composeapp.generated.resources.set_lock_screen
+import wallatopia.composeapp.generated.resources.set_start
+import wallatopia.composeapp.generated.resources.set_success
 
 @Composable
 actual fun ImageDetailsBottomSheetContent(
@@ -32,6 +34,8 @@ actual fun ImageDetailsBottomSheetContent(
 ) {
     val myWallpaperManager: WallatopiaWallpaperManager = koinInject()
     val scope = rememberCoroutineScope()
+    val successMessage = stringResource(Res.string.set_success)
+    val setStartMessage = stringResource(Res.string.set_start)
 
     Column(
         Modifier
@@ -43,8 +47,11 @@ actual fun ImageDetailsBottomSheetContent(
             icon = Drawables.Icons.HomeScreen,
             title = Res.string.set_home_screen,
             onClick = {
+                onActionStart(setStartMessage)
                 scope.launch {
-                    myWallpaperManager.setOnHomeScreen(imageByteArray)
+                    myWallpaperManager.setOnHomeScreen(
+                        imageByteArray,
+                        onSuccess = { onActionSuccess(successMessage) })
                 }
             }
         )
@@ -53,8 +60,11 @@ actual fun ImageDetailsBottomSheetContent(
             icon = Drawables.Icons.LockScreen,
             title = Res.string.set_lock_screen,
             onClick = {
+                onActionStart(setStartMessage)
                 scope.launch {
-                    myWallpaperManager.setOnLockScreen(imageByteArray)
+                    myWallpaperManager.setOnLockScreen(
+                        imageByteArray,
+                        onSuccess = { onActionSuccess(successMessage) })
                 }
             })
         SetScreenTypeItemDivider()
@@ -62,8 +72,11 @@ actual fun ImageDetailsBottomSheetContent(
             icon = Drawables.Icons.BothScreens,
             title = Res.string.set_both_screens,
             onClick = {
+                onActionStart(setStartMessage)
                 scope.launch {
-                    myWallpaperManager.setOnBothScreens(imageByteArray)
+                    myWallpaperManager.setOnBothScreens(
+                        imageByteArray,
+                        onSuccess = { onActionSuccess(successMessage) })
                 }
             })
 

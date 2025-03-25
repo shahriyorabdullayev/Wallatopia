@@ -16,6 +16,7 @@ import uz.droid.wallatopia.presentation.screens.SetScreenTypeItem
 import uz.droid.wallatopia.presentation.screens.SetScreenTypeItemDivider
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.close
+import wallatopia.composeapp.generated.resources.download_start
 import wallatopia.composeapp.generated.resources.download_success
 import wallatopia.composeapp.generated.resources.high_quality
 import wallatopia.composeapp.generated.resources.low_quality
@@ -30,6 +31,7 @@ actual fun ImageDetailsBottomSheetContent(
 ) {
     val scope = rememberCoroutineScope()
     val successMessage = stringResource(Res.string.download_success)
+    val downloadStartMessage = stringResource(Res.string.download_start)
 
     Column(
         Modifier
@@ -41,7 +43,7 @@ actual fun ImageDetailsBottomSheetContent(
             icon = Drawables.Icons.DownloadWhite,
             title = Res.string.high_quality,
             onClick = {
-//                onActionStart()
+                onActionStart(downloadStartMessage)
                 scope.launch {
                     saveImageToGallery(
                         image = imageByteArray,
@@ -58,8 +60,15 @@ actual fun ImageDetailsBottomSheetContent(
             icon = Drawables.Icons.DownloadWhite,
             title = Res.string.low_quality,
             onClick = {
+                onActionStart(downloadStartMessage)
                 scope.launch {
-
+                    saveImageToGallery(
+                        image = imageByteArray,
+                        onSuccess = {
+                            onActionSuccess(successMessage)
+                        },
+                        onFailure = {}
+                    )
                 }
             })
 

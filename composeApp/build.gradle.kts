@@ -90,6 +90,8 @@ kotlin {
             implementation(libs.paging.compose.common)
 
             implementation(libs.uri.kmp)
+
+            implementation(libs.cmptoast)
         }
 
         iosMain.dependencies {

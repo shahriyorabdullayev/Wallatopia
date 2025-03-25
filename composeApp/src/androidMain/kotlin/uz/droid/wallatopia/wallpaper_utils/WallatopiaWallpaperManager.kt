@@ -8,19 +8,22 @@ class WallatopiaWallpaperManager(
     private val wallpaperManager: WallpaperManager
 ) {
 
-    fun setOnHomeScreen(imageByteArray: ByteArray) {
+    fun setOnHomeScreen(imageByteArray: ByteArray, onSuccess: () -> Unit) {
         val bitmap = imageByteArray.convertToBitmap()
-            wallpaperManager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_SYSTEM)
+        wallpaperManager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_SYSTEM)
+        onSuccess()
     }
 
-    fun setOnLockScreen(imageByteArray: ByteArray) {
+    fun setOnLockScreen(imageByteArray: ByteArray, onSuccess: () -> Unit) {
         val bitmap = imageByteArray.convertToBitmap()
-            wallpaperManager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_LOCK)
+        wallpaperManager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_LOCK)
+        onSuccess()
     }
 
-    fun setOnBothScreens(imageByteArray: ByteArray) {
+    fun setOnBothScreens(imageByteArray: ByteArray, onSuccess: () -> Unit) {
         val bitmap = imageByteArray.convertToBitmap()
-            wallpaperManager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_SYSTEM)
+        wallpaperManager.setBitmap(bitmap, null, false, WallpaperManager.FLAG_SYSTEM)
+        onSuccess()
     }
 
     private fun ByteArray.convertToBitmap(): Bitmap {

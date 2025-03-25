@@ -52,15 +52,21 @@ actual fun rememberShareManager(): ShareManager {
 }
 
 @OptIn(ExperimentalForeignApi::class)
-fun saveImageToGallery(image: ByteArray, onSuccess: () -> Unit, onFailure: () -> Unit) {
-    image.usePinned {
-        val nsData = NSData.dataWithBytes(it.addressOf(0), image.size.toULong())
-        val uiImage = UIImage.imageWithData(nsData)
-        if (uiImage != null) {
-            UIImageWriteToSavedPhotosAlbum(uiImage, null, null, null)
-            onSuccess()
-        } else {
-            onFailure()
+suspend fun saveImageToGallery(image: ByteArray, onSuccess: () -> Unit, onFailure: () -> Unit) {
+    withContext(Dispatchers.IO) {
+        image.usePinned {
+            val nsData = NSData.dataWithBytes(it.addressOf(0), image.size.toULong())
+            val uiImage = UIImage.imageWithData(nsData)
+            if (uiImage != null) {
+                UIImageWriteToSavedPhotosAlbum(uiImage, null, null, null)
+                withContext(Dispatchers.Main) {
+                    onSuccess()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    onFailure()
+                }
+            }
         }
     }
 }

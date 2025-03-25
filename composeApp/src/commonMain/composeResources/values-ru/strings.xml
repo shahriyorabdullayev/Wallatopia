@@ -28,12 +28,15 @@
     <string name="set_home_screen">Установить на главном экране</string>
     <string name="set_lock_screen">Установить на экране блокировки</string>
     <string name="set_both_screens">Установить на обоих экранах</string>
+    <string name="set_start">Установка...</string>
+    <string name="set_success">Установлено успешно</string>
     <string name="close">Закрыть</string>
     <string name="rate_us">Оцените нас</string>
     <string name="soon">Cкоро будет...</string>
     <string name="high_quality">Загрузка в высоком качестве</string>
     <string name="low_quality">Загрузка в низком качестве</string>
     <string name="download_success">Загружено успешно</string>
+    <string name="download_start">Загрузка...</string>
     <string name="privacy_policy">1. Введение
 
 Эта Политика конфиденциальности объясняет, как Wallatopia ("мы", "наш" или "нас") собирает, использует и защищает вашу личную информацию при использовании нашего Приложения.
