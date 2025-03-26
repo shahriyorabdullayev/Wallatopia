@@ -124,12 +124,12 @@ fun ImageDetailsScreen(
                     onActionStart = { message->
                         isLoading = true
                         scope.launch { scaffoldState.hide() }
-                        showToast(message = message)
+                        showToast(message = message, bottomPadding = 16)
                     },
                     onActionSuccess = { message->
                         isLoading = false
                         scope.launch { scaffoldState.hide() }
-                        showToast(message = message)
+                        showToast(message = message, bottomPadding = 16)
                     },
                     onClose = {
                         scope.launch {
