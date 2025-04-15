@@ -21,11 +21,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
-import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.LocalAnimatedVisibility
 import uz.droid.wallatopia.LocalSharedTransition
@@ -68,7 +65,7 @@ fun MainImageItem(
                 AsyncImage(
                     model = ImageRequest
                         .Builder(LocalPlatformContext.current)
-                        .dispatcher(Dispatchers.IO)
+//                        .dispatcher(Dispatchers.IO)
                         .data(image.thumbUrl)
                         .crossfade(true)
                         .diskCacheKey(image.thumbUrl)

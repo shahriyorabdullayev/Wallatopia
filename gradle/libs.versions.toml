@@ -13,17 +13,17 @@ koin = "4.0.1"
 koinComposeMultiplatform = "4.0.1"
 navigationCompose = "2.8.0-alpha11"
 lifecycleViewModel = "2.8.7"
-ktor = "2.3.11"
-coil3 = "3.0.0-alpha06"
+ktor = "3.0.3"
+coil = "3.1.0"
 napierVersion = "2.6.1"
-core = "1.15.0"
+core = "1.16.0"
 preferenceKtx = "1.2.1"
-room = "2.7.0-alpha12"
+room = "2.7.0"
 ksp = "2.0.21-1.0.25"
-sqlite = "2.5.0-alpha12"
+sqlite = "2.5.0"
 multiplatformSettings = "1.1.1"
 pagingCommonVersion = "3.3.0-alpha02-0.4.0"
-uriKmp = "0.0.18"
+uriKmp = "0.0.19"
 
 
 [libraries]
@@ -46,10 +46,8 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 kotlin-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
-coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil3" }
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
-coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 napier = { module = "io.github.aakira:napier", version.ref = "napierVersion" }
 androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
