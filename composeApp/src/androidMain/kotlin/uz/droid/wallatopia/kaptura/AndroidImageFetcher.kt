@@ -23,8 +23,8 @@ class AndroidImageFetcher(
                 try {
                     val connection = URL(url).openConnection() as HttpURLConnection
                     connection.apply {
-                        connectTimeout = 10_000
-                        readTimeout = 10_000
+                        connectTimeout = 20_000
+                        readTimeout = 20_000
                         doOutput
                         connect()
                     }

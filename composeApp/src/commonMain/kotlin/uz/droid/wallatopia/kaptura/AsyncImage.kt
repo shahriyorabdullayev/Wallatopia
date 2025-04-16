@@ -59,26 +59,19 @@ fun RuntimeAsyncImage(
     }
 
 
-    LaunchedEffect(
-        Unit,
-    ) {
+    LaunchedEffect(Unit) {
         result = kapture.load(url)
-
     }
     Box(
         modifier = modifier,
     ) {
         when (result) {
             is ImageResult.Done -> {
-
-                Column {
-                    Image(
-                        bitmap = (result as ImageResult.Done).imageData.bytes.decodeToImageBitmap(),
-                        contentDescription = contentDescription,
-                        contentScale = ContentScale.Crop,
-                    )
-                    Text("Image Loaded From :${(result as ImageResult.Done).imageData.source.name}")
-                }
+                Image(
+                    bitmap = (result as ImageResult.Done).imageData.bytes.decodeToImageBitmap(),
+                    contentDescription = contentDescription,
+                    contentScale = ContentScale.Crop,
+                )
                 success()
             }
 
