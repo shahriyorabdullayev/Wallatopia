@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.LocalPlatformContext
-import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -48,6 +47,7 @@ import uz.droid.wallatopia.common.resources.Drawables
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.currentTimeInMilliSeconds
 import uz.droid.wallatopia.domain.model.ImageUiModel
+import uz.droid.wallatopia.kaptura.AsyncImage
 import uz.droid.wallatopia.presentation.components.AppButton
 import uz.droid.wallatopia.presentation.components.BaseBackground
 import uz.droid.wallatopia.presentation.components.ImageGenerateTopBar
@@ -302,26 +302,47 @@ fun GeneratedImage(
     generatedImageUrl: String,
     onImageLoaded: () -> Unit
 ) {
-    SubcomposeAsyncImage(
+
+    AsyncImage(
         modifier = Modifier.then(modifier)
             .advancedShadow(
                 blur = 13.dp
             )
             .clip(AppTheme.shape.rounded15),
-        model = ImageRequest.Builder(
-            LocalPlatformContext.current
-        )
-            .data(generatedImageUrl)
-            .crossfade(true).build(),
-        contentDescription = "image",
-        contentScale = ContentScale.Crop,
+        url = generatedImageUrl,
+        contentDescription = "GeneratedImage",
         loading = {
             ImageGeneratingPlaceHolder(Modifier.fillMaxSize())
         },
-        onSuccess = {
-            onImageLoaded()
+        success = onImageLoaded,
+        error = {
+
         }
     )
+
+//    SubcomposeAsyncImage(
+//        modifier = Modifier.then(modifier)
+//            .advancedShadow(
+//                blur = 13.dp
+//            )
+//            .clip(AppTheme.shape.rounded15),
+//        model = ImageRequest.Builder(
+//            LocalPlatformContext.current
+//        )
+//            .data(generatedImageUrl)
+//            .crossfade(true).build(),
+//        contentDescription = "image",
+//        contentScale = ContentScale.Crop,
+//        loading = {
+//            ImageGeneratingPlaceHolder(Modifier.fillMaxSize())
+//        },
+//        onSuccess = {
+//            onImageLoaded()
+//        },
+//        onError = {
+//            it.result.throwable.printStackTrace()
+//        }
+//    )
 }
 
 @Composable
