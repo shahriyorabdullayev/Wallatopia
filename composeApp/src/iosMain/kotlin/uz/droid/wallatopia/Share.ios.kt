@@ -19,6 +19,8 @@ import platform.UIKit.UIImage
 import platform.UIKit.UIImageWriteToSavedPhotosAlbum
 import uz.droid.wallatopia.domain.model.ShareImageModel
 
+const val RATE_IOS_URL = ""
+
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class ShareManager {
     actual suspend fun shareImage(image: ShareImageModel): Result<Unit> {
@@ -43,6 +45,13 @@ actual class ShareManager {
         }
 
         return if (saved) NSURL.fileURLWithPath(sharedFile) else null
+    }
+
+    actual fun openRateUs() {
+        val nsURL = NSURL.URLWithString(RATE_IOS_URL)
+        nsURL?.let {
+            UIApplication.sharedApplication.openURL(it)
+        }
     }
 }
 

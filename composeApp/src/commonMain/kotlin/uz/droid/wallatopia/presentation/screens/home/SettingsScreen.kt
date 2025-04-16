@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -29,6 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
+import uz.droid.wallatopia.rememberShareManager
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_language
 import wallatopia.composeapp.generated.resources.app_logo
@@ -47,6 +47,8 @@ fun SettingsScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val event = viewModel::onEventDispatch
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
+    val shareManager = rememberShareManager()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +63,7 @@ fun SettingsScreen(
             termsOnClick = navigateToTerms,
             privacyOnClick = navigateToPrivacy,
             rateUsOnClick = {
-
+                shareManager.openRateUs()
             },
         )
     }
@@ -102,8 +104,7 @@ private fun SettingsSection(
         SettingsItem(
             modifier = Modifier
                 .clickable(onClick = rateUsOnClick)
-                .padding(horizontal = 16.dp)
-                .alpha(0.7f),
+                .padding(horizontal = 16.dp),
             settingName = stringResource(Res.string.rate_us)
         )
     }
