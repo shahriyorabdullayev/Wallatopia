@@ -16,6 +16,7 @@
     <string name="browse_by_category">Kategoriyalar bo'yicha ko'rish</string>
     <string name="abstract_wallpaper">Abstrakt fon rasmi</string>
     <string name="start_generating">Yaratishni boshlash</string>
+    <string name="retry">Qayta urinish</string>
     <string name="generate_again">Yana yaratish</string>
     <string name="set_as_wallpaper">Fon rasmi sifatida o'rnatish</string>
     <string name="stop">To'xtatish</string>
@@ -37,6 +38,7 @@
     <string name="low_quality">Past sifatli yuklash</string>
     <string name="download_success">Muvoffaqiyatli yuklandi</string>
     <string name="download_start">Yuklanmoqda...</string>
+    <string name="image_generating_error">Noma'lum xatolik sodir bo'ldi</string>
     <string name="privacy_policy">1. Kirish
 
 Ushbu Maxfiylik siyosati Wallatopia ("biz", "bizning" yoki "bizga") ilovasi sizning shaxsiy ma'lumotlaringizni qanday to'plashini, foydalanishini va himoya qilishini tushuntiradi.

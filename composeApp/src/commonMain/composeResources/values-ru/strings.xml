@@ -16,6 +16,7 @@
     <string name="browse_by_category">Просмотр по категориям</string>
     <string name="abstract_wallpaper">Абстрактные обои</string>
     <string name="start_generating">Начать создание</string>
+    <string name="retry">Повторить попытку</string>
     <string name="generate_again">Создать снова</string>
     <string name="set_as_wallpaper">Установить как обои</string>
     <string name="stop">Стоп</string>
@@ -37,6 +38,7 @@
     <string name="low_quality">Загрузка в низком качестве</string>
     <string name="download_success">Загружено успешно</string>
     <string name="download_start">Загрузка...</string>
+    <string name="image_generating_error">Что-то пошло не так</string>
     <string name="privacy_policy">1. Введение
 
 Эта Политика конфиденциальности объясняет, как Wallatopia ("мы", "наш" или "нас") собирает, использует и защищает вашу личную информацию при использовании нашего Приложения.

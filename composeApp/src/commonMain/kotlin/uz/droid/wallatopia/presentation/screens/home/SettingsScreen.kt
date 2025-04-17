@@ -20,15 +20,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import uz.droid.wallatopia.AppStoreLink
 import uz.droid.wallatopia.common.theme.AppTheme
 import uz.droid.wallatopia.presentation.viewmodels.SettingsViewModel
-import uz.droid.wallatopia.rememberShareManager
 import wallatopia.composeapp.generated.resources.Res
 import wallatopia.composeapp.generated.resources.app_language
 import wallatopia.composeapp.generated.resources.app_logo
@@ -47,7 +48,7 @@ fun SettingsScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val event = viewModel::onEventDispatch
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
-    val shareManager = rememberShareManager()
+    val uriHandler = LocalUriHandler.current
 
     Column(
         modifier = Modifier
@@ -63,7 +64,8 @@ fun SettingsScreen(
             termsOnClick = navigateToTerms,
             privacyOnClick = navigateToPrivacy,
             rateUsOnClick = {
-                shareManager.openRateUs()
+                uriHandler.openUri(AppStoreLink)
+//                shareManager.openRateUs()
             },
         )
     }

@@ -15,6 +15,7 @@ data class ImageUiModel(
     val color: String = "",
     val isFavorite: Boolean = false,
     val isAiGenerated: Boolean = false,
+    val pageURL:String = "",
     val timestamp: Long
 )
 

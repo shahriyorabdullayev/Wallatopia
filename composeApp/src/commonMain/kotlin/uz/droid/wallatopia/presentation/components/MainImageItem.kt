@@ -23,6 +23,8 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.jetbrains.compose.resources.painterResource
 import uz.droid.wallatopia.LocalAnimatedVisibility
 import uz.droid.wallatopia.LocalSharedTransition
@@ -60,12 +62,11 @@ fun MainImageItem(
                 )
                 .height(170.dp)
         ) {
-
             Box {
                 AsyncImage(
                     model = ImageRequest
                         .Builder(LocalPlatformContext.current)
-//                        .dispatcher(Dispatchers.IO)
+                        .fetcherCoroutineContext(Dispatchers.IO)
                         .data(image.thumbUrl)
                         .crossfade(true)
                         .diskCacheKey(image.thumbUrl)
@@ -74,7 +75,7 @@ fun MainImageItem(
                         .build(),
                     modifier = Modifier.fillMaxSize(),
                     contentDescription = image.thumbUrl,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.Crop
                 )
 
             }

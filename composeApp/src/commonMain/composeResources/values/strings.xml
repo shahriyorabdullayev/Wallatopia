@@ -16,6 +16,7 @@
     <string name="browse_by_category">Browse By Category</string>
     <string name="abstract_wallpaper">Abstract Wallpaper</string>
     <string name="start_generating">Start Generating</string>
+    <string name="retry">Try again</string>
     <string name="generate_again">Generate Again</string>
     <string name="set_as_wallpaper">Set as Wallpaper</string>
     <string name="stop">Stop</string>
@@ -37,6 +38,7 @@
     <string name="low_quality">Download low-quality</string>
     <string name="download_success">Downloaded successfully</string>
     <string name="download_start">Downloading...</string>
+    <string name="image_generating_error">Something went wrong</string>
     <string name="privacy_policy">1. Introduction
 
 This Privacy Policy explains how Wallatopia ("we," "our," or "us") collects, uses, and protects your personal information when using our App.
