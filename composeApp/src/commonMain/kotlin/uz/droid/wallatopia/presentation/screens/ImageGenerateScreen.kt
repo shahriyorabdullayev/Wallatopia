@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -75,6 +76,7 @@ fun ImageGenerateScreen(
     val event = viewModel::onEventDispatch
     val systemBarsPadding = WindowInsets.statusBars.asPaddingValues(LocalDensity.current)
     val screenSize = remember { mutableStateOf(IntSize(-1, -1)) }
+    val uriHandler = LocalUriHandler.current
 
     Layout(
         content = {
@@ -97,41 +99,38 @@ fun ImageGenerateScreen(
                         onBack = onBackPressed
                     )
 
-                    if (uiState.generatedImageUrl.isNotBlank()) {
-                        GeneratedImage(
-                            modifier = Modifier.weight(1f)
-                                .padding(vertical = 30.dp)
-                                .padding(horizontal = 34.dp),
-                            generatedImageUrl = uiState.generatedImageUrl,
-                            onImageLoaded = {
-                                event(ImageGenerateContract.Intent.GenerationFinished)
-                                val generatedImageUrl = uiState.generatedImageUrl
-                                val generatedImageUiModel = ImageUiModel(
-                                    id = randomUUID,
-                                    thumbUrl = generatedImageUrl,
-                                    originalUrl = generatedImageUrl,
-                                    isFavorite = false,
-                                    isAiGenerated = true,
-                                    timestamp = currentTimeInMilliSeconds
+                    GeneratedImage(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(vertical = 30.dp)
+                            .padding(horizontal = 34.dp),
+                        previewModifier = Modifier.weight(1f),
+                        generatedImageUrl = uiState.generatedImageUrl,
+                        starterImages = uiState.starterImages,
+                        onPreviewImageClick = { imageUiModel->
+                            uriHandler.openUri(imageUiModel.pageURL)
+                        },
+                        onImageLoaded = {
+                            event(ImageGenerateContract.Intent.GenerationFinished)
+                            val generatedImageUrl = uiState.generatedImageUrl
+                            val generatedImageUiModel = ImageUiModel(
+                                id = randomUUID,
+                                thumbUrl = generatedImageUrl,
+                                originalUrl = generatedImageUrl,
+                                isFavorite = false,
+                                isAiGenerated = true,
+                                timestamp = currentTimeInMilliSeconds
+                            )
+                            event(
+                                ImageGenerateContract.Intent.AddToImageGenerated(
+                                    generatedImageUiModel
                                 )
-                                event(
-                                    ImageGenerateContract.Intent.AddToImageGenerated(
-                                        generatedImageUiModel
-                                    )
-                                )
-                            }
-                        )
-                    } else if (uiState.starterImages.isNotEmpty()) {
-                        StartAiWallpaperSection(
-                            modifier = Modifier.weight(1f)
-                                .padding(vertical = 60.dp)
-                                .padding(horizontal = 34.dp),
-                            starterImages = uiState.starterImages,
-                            onClick = {
-
-                            }
-                        )
-                    }
+                            )
+                        },
+                        onFailure = {
+                        }
+                    )
 
                     when (generationState) {
                         ImageGenerateContract.ImageGenerateProcessState.Idle -> {
@@ -231,6 +230,16 @@ fun StartAiWallpaperSection(
 }
 
 @Composable
+fun ImageGenerateError(error: String) {
+    Text(
+        text = error,
+        style = AppTheme.typography.bodyText,
+        color = AppTheme.colorScheme.immutableWhite,
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
 fun StartRow(
     modifier: Modifier = Modifier,
     images: List<ImageUiModel>,
@@ -256,7 +265,7 @@ fun StartAiWallpaperItem(
         model = ImageRequest.Builder(
             LocalPlatformContext.current
         ).data(image.thumbUrl).crossfade(true).build(),
-        placeholder = ColorPainter(Color(placeHolderColor)),
+        placeholder = ColorPainter(Color(placeHolderColor).copy(alpha = 0.2f)),
         contentScale = ContentScale.Crop
     )
 
@@ -299,8 +308,12 @@ fun StartAiWallpaperItem(
 @Composable
 fun GeneratedImage(
     modifier: Modifier = Modifier,
+    previewModifier: Modifier = Modifier,
+    starterImages: List<ImageUiModel> = emptyList(),
     generatedImageUrl: String,
-    onImageLoaded: () -> Unit
+    onPreviewImageClick: (ImageUiModel) -> Unit,
+    onImageLoaded: () -> Unit,
+    onFailure: () -> Unit,
 ) {
 
     AsyncImage(
@@ -315,34 +328,25 @@ fun GeneratedImage(
             ImageGeneratingPlaceHolder(Modifier.fillMaxSize())
         },
         success = onImageLoaded,
-        error = {
-
-        }
+        error = { error ->
+            ImageGenerateError(
+                error = error
+            )
+            onFailure()
+        },
+        forPreview = if (generatedImageUrl.isEmpty()) {
+            {
+                if (starterImages.isNotEmpty())
+                    StartAiWallpaperSection(
+                        modifier = previewModifier
+                            .padding(vertical = 60.dp)
+                            .padding(horizontal = 34.dp),
+                        starterImages = starterImages,
+                        onClick = onPreviewImageClick
+                    )
+            }
+        } else null
     )
-
-//    SubcomposeAsyncImage(
-//        modifier = Modifier.then(modifier)
-//            .advancedShadow(
-//                blur = 13.dp
-//            )
-//            .clip(AppTheme.shape.rounded15),
-//        model = ImageRequest.Builder(
-//            LocalPlatformContext.current
-//        )
-//            .data(generatedImageUrl)
-//            .crossfade(true).build(),
-//        contentDescription = "image",
-//        contentScale = ContentScale.Crop,
-//        loading = {
-//            ImageGeneratingPlaceHolder(Modifier.fillMaxSize())
-//        },
-//        onSuccess = {
-//            onImageLoaded()
-//        },
-//        onError = {
-//            it.result.throwable.printStackTrace()
-//        }
-//    )
 }
 
 @Composable

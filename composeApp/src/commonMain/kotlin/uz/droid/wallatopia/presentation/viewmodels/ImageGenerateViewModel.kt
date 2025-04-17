@@ -12,6 +12,7 @@ import uz.droid.wallatopia.data.network.POLLINATIONS_IMAGE_URL
 import uz.droid.wallatopia.domain.repository.FavoritesRepository
 import uz.droid.wallatopia.domain.repository.MainRepository
 import uz.droid.wallatopia.presentation.screens.contracts.ImageGenerateContract
+import kotlin.random.Random
 
 class ImageGenerateViewModel(
     private val mainRepository: MainRepository,
@@ -86,7 +87,7 @@ class ImageGenerateViewModel(
 
     private fun handleInitialSearch() {
         viewModelScope.launch {
-            mainRepository.searchPhotos("abstract art").onSuccess {
+            mainRepository.searchPhotos("abstract art", page = Random.nextInt(1,10)).onSuccess {
                 _uiState.value =
                     _uiState.value.copy(
                         starterImages = it.hits.shuffled().take(4).map { it.toUiModel }

@@ -46,13 +46,6 @@ actual class ShareManager {
 
         return if (saved) NSURL.fileURLWithPath(sharedFile) else null
     }
-
-    actual fun openRateUs() {
-        val nsURL = NSURL.URLWithString(RATE_IOS_URL)
-        nsURL?.let {
-            UIApplication.sharedApplication.openURL(it)
-        }
-    }
 }
 
 @Composable

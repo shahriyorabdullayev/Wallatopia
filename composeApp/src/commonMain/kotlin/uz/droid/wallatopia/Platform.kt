@@ -1,7 +1,11 @@
 package uz.droid.wallatopia
 
-interface Platform {
-    val name: String
-}
+expect val currentTimeInMilliSeconds: Long
 
-expect fun getPlatform(): Platform
+expect val randomUUID: String
+
+expect val AppStoreLink: String
+
+expect val isAndroid: Boolean
+
+expect val isVersionBelow12:Boolean

@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import uz.droid.wallatopia.domain.repository.SettingsRepository
-import uz.droid.wallatopia.getAppCurrentLanguage
 import uz.droid.wallatopia.presentation.screens.contracts.SettingsContract
 
 class SettingsViewModel(
