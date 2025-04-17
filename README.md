@@ -1,14 +1,39 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# 📱 Wallatopia — AI-Powered Wallpapers at Your Fingertips
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+Welcome to **Wallatopia**, a modern and sleek wallpaper app that lets you explore and create stunning AI-generated wallpapers. Whether you're into nature, minimalism, or abstract styles — Wallatopia gives you a beautiful and unique experience with just a few taps.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+[![Get it on Google Play](https://img.shields.io/badge/Get%20it%20on%20Google%20Play-000?logo=google-play&logoColor=white&style=for-the-badge)](https://play.google.com/store/apps/details?id=uz.droid.wallatopia)
 
+---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## ✨ Key Features
+
+- 🤖 **AI-Generated Wallpapers** – Generate one-of-a-kind wallpapers using built-in AI tools.
+- 🖼 **Handpicked HD/4K Wallpapers** – A wide collection of visually stunning wallpapers.
+- 🧠 **Smart Categorization** – Browse by mood, theme, or color.
+- 🌙 **Dark Mode** – Smooth and eye-comforting UI.
+- ⚡️ **Fast and Lightweight** – Optimized for speed and smooth experience.
+- 📥 **Save & Apply Instantly** – One-tap download or set as wallpaper.
+
+---
+
+## 🧠 Built With
+
+- **Language**: Kotlin
+- **UI**: Jetpack Compose
+- **Architecture**: Clean Architecture
+- **Pattern**: MVI (Model-View-Intent)
+- **Dependency Injection**: Koin
+- **Networking**: Retrofit + Kotlinx Serialization + Flow
+- **Image Generation**: AI-based backend integration
+- **Image Loading**: Coil
+
+---
+
+## 🚀 Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/wallatopia.git
+cd wallatopia
