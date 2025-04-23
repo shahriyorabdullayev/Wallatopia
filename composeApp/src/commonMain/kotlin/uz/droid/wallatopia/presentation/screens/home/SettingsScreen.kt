@@ -65,7 +65,6 @@ fun SettingsScreen(
             privacyOnClick = navigateToPrivacy,
             rateUsOnClick = {
                 uriHandler.openUri(AppStoreLink)
-//                shareManager.openRateUs()
             },
         )
     }
