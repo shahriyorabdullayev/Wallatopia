@@ -4,11 +4,15 @@ Welcome to **Wallatopia**, a modern and sleek wallpaper app that lets you explor
 
 <a href="https://play.google.com/store/apps/details?id=uz.droid.wallatopia" target="_blank">
   <img src="https://img.shields.io/badge/Get%20it%20on%20Google%20Play-10B981?logo=google-play&logoColor=white&style=for-the-badge&labelColor=10B981" 
-       style="height: 50px;" 
+       style="height: 40px;" 
        alt="Get it on Google Play"/>
 </a>
-
-
+&nbsp;&nbsp;&nbsp;
+<a href="#" target="_blank">
+  <img src="https://img.shields.io/badge/coming%20soon...-blue?logo=apple&logoColor=white&style=for-the-badge&labelColor=blue" 
+       style="height: 40px;" 
+       alt="Coming Soon on App Store"/>
+</a>
 
 ---
 
