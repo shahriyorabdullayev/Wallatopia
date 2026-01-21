@@ -177,7 +177,7 @@ fun BottomNavigationCustom(navController: NavHostController) {
                         },
                         onClick = {
                             navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
+                                popUpTo(navController.graph.findStartDestination()) {
                                     saveState = true
                                 }
                                 launchSingleTop = true
