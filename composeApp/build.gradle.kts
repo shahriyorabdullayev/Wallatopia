@@ -113,8 +113,8 @@ android {
         applicationId = "uz.droid.wallatopia"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 10
+        versionName = "1.4"
     }
     buildFeatures {
         buildConfig = true

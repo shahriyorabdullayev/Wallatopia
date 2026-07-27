@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -176,12 +175,11 @@ fun BottomNavigationCustom(navController: NavHostController) {
                             )
                         },
                         onClick = {
-                            navController.navigate(screen.route) {
-                                popUpTo(navController.graph.findStartDestination()) {
-                                    saveState = true
+                            if (!isSelected) {
+                                navController.navigate(screen.route) {
+                                    popUpTo(Screens.HomeGraph.HomeScreen)
+                                    launchSingleTop = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
                             }
                         },
                         selectedContentColor = Color(0xFF00AD9F),
