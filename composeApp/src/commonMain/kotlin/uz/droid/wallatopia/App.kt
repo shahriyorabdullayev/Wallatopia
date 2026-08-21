@@ -9,6 +9,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -47,8 +49,10 @@ fun App() {
     KoinContext {
         WallatopiaAppTheme {
             val settingsViewModel: SettingsViewModel = koinViewModel()
-            val state = settingsViewModel.uiState.collectAsStateWithLifecycle()
-            changeLang(state.value.language)
+            val state by settingsViewModel.uiState.collectAsStateWithLifecycle()
+            LaunchedEffect(state.language) {
+                changeLang(state.language)
+            }
             val navController = rememberNavController()
 
             SharedTransitionLayout {
