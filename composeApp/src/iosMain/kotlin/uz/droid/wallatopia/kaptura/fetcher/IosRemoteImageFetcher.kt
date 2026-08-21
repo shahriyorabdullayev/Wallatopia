@@ -9,6 +9,7 @@ import platform.Foundation.NSMutableURLRequest
 import platform.Foundation.NSURL
 import platform.Foundation.NSURLSession
 import platform.Foundation.dataTaskWithRequest
+import uz.droid.wallatopia.kaptura.DEFAULT_IMAGE_QUALITY
 import uz.droid.wallatopia.kaptura.ImageCompression
 import uz.droid.wallatopia.kaptura.ImageFetcher
 import uz.droid.wallatopia.kaptura.toByteArray
@@ -58,7 +59,7 @@ class IosRemoteImageFetcher(
                 )
                 task.resume()
             }
-            compressor.compressImage(bytes, maxSize = 80)
+            compressor.compressImage(bytes, quality = DEFAULT_IMAGE_QUALITY)
         }
     }
 }

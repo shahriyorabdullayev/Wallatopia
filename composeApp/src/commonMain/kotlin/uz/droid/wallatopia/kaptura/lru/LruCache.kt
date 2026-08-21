@@ -1,19 +1,24 @@
 package uz.droid.wallatopia.kaptura.lru
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+
 class LruCache<K, V>(
     private val maxSize: Long
 ) {
 
     private val cache = mutableMapOf<K, Node<K, V>>()
+    private val mutex = Mutex()
 
     private var head: Node<K, V>? = null
     private var tail: Node<K, V>? = null
-    fun save(k: K, v: V) {
-        if (cache.containsKey(k)) {
-            val mruNode = cache[k]!!
-            mruNode.data = v
-            removeNode(mruNode)
-            addToHead(mruNode)
+
+    suspend fun save(k: K, v: V) = mutex.withLock {
+        val existing = cache[k]
+        if (existing != null) {
+            existing.data = v
+            removeNode(existing)
+            addToHead(existing)
         } else {
             val newNode = Node(k, v)
             cache[k] = newNode
@@ -22,20 +27,19 @@ class LruCache<K, V>(
                 removeLeastRecentlyUsed()
             }
         }
-
     }
 
+    suspend fun get(k: K): V? = mutex.withLock {
+        val node = cache[k] ?: return@withLock null
+        removeNode(node)
+        addToHead(node)
+        node.data
+    }
 
     private fun removeLeastRecentlyUsed() {
         tail?.let { lru ->
             cache.remove(lru.key)
             removeNode(lru)
-
-            if (lru.prev == null) {
-                head = null
-            }
-            tail = lru.prev
-            tail?.next = null
         }
     }
 
@@ -51,25 +55,18 @@ class LruCache<K, V>(
         } else {
             tail = node.prev
         }
+
+        node.prev = null
+        node.next = null
     }
 
-
     private fun addToHead(node: Node<K, V>) {
+        node.prev = null
         node.next = head
         head?.prev = node
         head = node
-        head?.prev = null
         if (tail == null) {
             tail = head
         }
     }
-
-    fun get(k: K): V? {
-        val node = cache[k] ?: return null
-        removeNode(node)
-        addToHead(node)
-        return node.data
-    }
-
-
 }

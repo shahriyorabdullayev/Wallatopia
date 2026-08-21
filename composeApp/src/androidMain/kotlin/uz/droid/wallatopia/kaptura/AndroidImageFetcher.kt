@@ -47,7 +47,7 @@ class AndroidImageFetcher(
                     continuation.resumeWithException(e)
                 }
             }
-            compressor.compressImage(bytes, 80)
+            compressor.compressImage(bytes, DEFAULT_IMAGE_QUALITY)
         }
     }
 }

@@ -13,7 +13,7 @@ interface Kapture {
 
 class KaptureImpl(
     private val imageFetcher: ImageFetcher,
-    private val lru: ImageLRU = ImageLRU(20),
+    private val lru: ImageLRU = imageMemoryCache,
     private val imageIo: ImageIO,
 ) : Kapture {
 

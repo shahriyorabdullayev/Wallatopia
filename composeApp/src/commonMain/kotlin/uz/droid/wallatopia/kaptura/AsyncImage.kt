@@ -54,29 +54,35 @@ fun RuntimeAsyncImage(
     contentDescription: String? = null,
 ) {
     val kapture = rememberKapture()
-    var result by remember {
+    var result by remember(url) {
         mutableStateOf<ImageResult>(ImageResult.Loading)
     }
 
-
-    LaunchedEffect(Unit) {
+    LaunchedEffect(url) {
         result = kapture.load(url)
     }
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        when (result) {
+        when (val current = result) {
             is ImageResult.Done -> {
+                val bitmap = remember(current.imageData.bytes) {
+                    current.imageData.bytes.decodeToImageBitmap()
+                }
                 Image(
-                    bitmap = (result as ImageResult.Done).imageData.bytes.decodeToImageBitmap(),
+                    bitmap = bitmap,
                     contentDescription = contentDescription,
                     contentScale = ContentScale.Crop,
                 )
-                success()
+                LaunchedEffect(current) { success() }
             }
 
-            is ImageResult.Error -> error((result as ImageResult.Error).error?.message ?: stringResource(Res.string.image_generating_error))
+            is ImageResult.Error -> {
+                error(current.error?.message ?: stringResource(Res.string.image_generating_error))
+            }
+
             ImageResult.Loading -> loading()
         }
     }
