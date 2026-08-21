@@ -22,7 +22,16 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         return httpClient.handle {
             this.get {
                 json()
-                pixabayApiUrl("api/?key=$PIXABAY_KEY&image_type=all&pretty=true&page=$page&safesearch=true")
+                pixabayApiUrl(
+                    "api",
+                    parameters = mapOf(
+                        "key" to PIXABAY_KEY,
+                        "image_type" to "all",
+                        "pretty" to "true",
+                        "page" to page.toString(),
+                        "safesearch" to "true"
+                    )
+                )
             }
         }
     }
@@ -35,7 +44,17 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         return httpClient.handle {
             this.get {
                 json()
-                pixabayApiUrl("api/?key=$PIXABAY_KEY&image_type=all&pretty=true&q=$query&page=$page")
+                pixabayApiUrl(
+                    "api",
+                    parameters = mapOf(
+                        "key" to PIXABAY_KEY,
+                        "image_type" to "all",
+                        "pretty" to "true",
+                        "q" to query.trim(),
+                        "page" to page.toString(),
+                        "safesearch" to "true"
+                    )
+                )
             }
         }
     }
@@ -44,7 +63,10 @@ class MainApiServiceImpl(private val httpClient: HttpClient) : MainApiService {
         return httpClient.handle {
             this.get {
                 json()
-                pollinationsApiUrl("5commonsuggestionwordsandphrasesstartingwith${query}andresponselistnamenamedsuggestions?json=true")
+                pollinationsApiUrl(
+                    "5commonsuggestionwordsandphrasesstartingwith${query}andresponselistnamenamedsuggestions",
+                    parameters = mapOf("json" to "true")
+                )
             }
         }
     }
