@@ -16,3 +16,5 @@ actual val isAndroid: Boolean
     get() = true
 actual val isVersionBelow12: Boolean
     get() = Build.VERSION.SDK_INT < Build.VERSION_CODES.S
+actual val isDebug: Boolean
+    get() = BuildConfig.DEBUG

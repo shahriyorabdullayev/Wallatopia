@@ -12,7 +12,7 @@ class WallatopiaApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Napier.base(DebugAntilog())
+        if (isDebug) Napier.base(DebugAntilog())
         AppContext.apply { set(applicationContext) }
 
         initKoin {

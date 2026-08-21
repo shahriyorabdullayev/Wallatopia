@@ -1,5 +1,7 @@
 package uz.droid.wallatopia
 
+import kotlin.experimental.ExperimentalNativeApi
+import kotlin.native.Platform
 import platform.Foundation.NSDate
 import platform.Foundation.NSUUID
 import platform.Foundation.timeIntervalSince1970
@@ -17,3 +19,6 @@ actual val isAndroid: Boolean
     get() = false
 actual val isVersionBelow12: Boolean
     get() = false
+@OptIn(ExperimentalNativeApi::class)
+actual val isDebug: Boolean
+    get() = Platform.isDebugBinary

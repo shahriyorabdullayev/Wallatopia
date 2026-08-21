@@ -9,3 +9,4 @@ expect val AppStoreLink: String
 expect val isAndroid: Boolean
 
 expect val isVersionBelow12:Boolean
+expect val isDebug: Boolean

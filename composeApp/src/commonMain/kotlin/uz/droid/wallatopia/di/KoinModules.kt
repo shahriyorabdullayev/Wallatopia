@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.serialization.json.Json
+import uz.droid.wallatopia.isDebug
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
@@ -77,11 +78,13 @@ val httpClientModule = module {
             install(HttpTimeout) {
                 requestTimeoutMillis = 60_000
             }
-            install(Logging) {
-                level = LogLevel.ALL
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        Napier.d(tag = "HTTP Client", message = message)
+            if (isDebug) {
+                install(Logging) {
+                    level = LogLevel.ALL
+                    logger = object : Logger {
+                        override fun log(message: String) {
+                            Napier.d(tag = "HTTP Client", message = message)
+                        }
                     }
                 }
             }
